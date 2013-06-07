@@ -1,0 +1,7 @@
+bin/flash/bin/Slavaracorehx.swf
+bin/flash/haxe/ApplicationMain.hx
+bin/flash/haxe/NMEPreloader.hx
+bin/flash/haxe/debug.hxml
+bin/flash/haxe/nme/AssetData.hx
+bin/flash/haxe/release.hxml
+openfl-readme.txt
