@@ -1,6 +1,6 @@
 package slavara.haxe.core.controllers;
-import flash.display.DisplayObject;
-import flash.display.DisplayObjectContainer;
+import slavara.haxe.core.display.DisplayObject;
+import slavara.haxe.core.display.DisplayObjectContainer;
 import slavara.haxe.core.models.Data;
 
 /**
