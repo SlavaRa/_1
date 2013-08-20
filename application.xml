@@ -3,10 +3,10 @@
 	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
 	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
-	<meta title="Slavara_core-hx" package="Slavaracorehx" version="1.0.0" company="SlavaRa" />
+	<meta title="Slavara-core-haxe" package="slavara.haxe.core" version="1.0.0" company="SlavaRa" />
 	
 	<!-- output -->
-	<app main="slavara.Main" file="Slavaracorehx" path="bin" />
+	<app main="slavara.Main" file="Slavaracorehaxe" path="bin" />
 	
 	<window background="#000000" fps="60" />
 	<window width="800" height="480" unless="mobile" />
@@ -15,11 +15,6 @@
 	<!-- classpath, haxe libs -->
 	<source path="src" />
 	<haxelib name="openfl" />
-	<haxelib name="actuate" />
-	
-	<!-- assets -->
-	<icon path="assets/openfl.svg" />
-	<assets path="assets/img" rename="img" />
 	
 	<!-- optimize output -->
 	<haxeflag name="-dce std" if="haxe3" />

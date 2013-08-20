@@ -3,8 +3,7 @@ package slavara;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.Lib;
-import haxe.Log;
-import slavara.haxe.core.utils.Validate;
+import slavara.haxe.tests.ModelTest;
 
 /**
  * @author SlavaRa
@@ -38,6 +37,7 @@ class Main extends Sprite {
 	}
 	
 	function initialize() {
+		new ModelTest();
 	}
 
 }
