@@ -37,7 +37,7 @@ class DataContainer extends Data {
 	
 	public function removeChildAt(index:Int):Data return removeChild(_list[index]);
 	
-	public function removeChildren(beginIndex:Int = 0, endIndex:Int = -1) {
+	public function removeChildren(beginIndex:Int = 0, ?endIndex:Int = -1) {
 		if(_list.length == 0) {
 			return;
 		}

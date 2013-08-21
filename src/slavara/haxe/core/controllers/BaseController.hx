@@ -1,20 +1,32 @@
 package slavara.haxe.core.controllers;
-import slavara.haxe.core.display.DisplayObjectContainer;
+import flash.display.DisplayObjectContainer;
 import slavara.haxe.core.models.Data;
 
 /**
  * @author SlavaRa
  */
-class BaseController {
+interface IController {
+	public var container(default, null):DisplayObjectContainer;
+	public var data(default, null):Data;
+}
+
+/**
+ * @author SlavaRa
+ */
+class BaseController implements IController {
 
 	public function new(container:DisplayObjectContainer, data:Data) {
 		this.container = container;
 		this.data = data;
 	}
 	
-	public function destroy():Void {
+	public var container(default, null):DisplayObjectContainer;
+	public var data(default, null):Data;
+	
+	public function dispose():Null<IController> {
 		container = null;
 		data = null;
+		return null;
 	}
 	
 }
