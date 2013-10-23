@@ -28,5 +28,4 @@ class BaseController implements IController {
 		data = null;
 		return null;
 	}
-	
 }
