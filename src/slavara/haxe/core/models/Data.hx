@@ -1,9 +1,11 @@
 package slavara.haxe.core.models;
 import flash.events.EventDispatcher;
 import slavara.haxe.core.events.models.DataBaseEvent;
+import slavara.haxe.core.models.Data.DataContainer;
 
 /**
  * @author SlavaRa
+ * TODO: сделать обертку для баблинга
  */
 class Data extends EventDispatcher {
 
