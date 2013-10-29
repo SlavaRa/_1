@@ -2,10 +2,12 @@ package slavara.haxe.core.models;
 import flash.events.EventDispatcher;
 import slavara.haxe.core.events.models.DataBaseEvent;
 import slavara.haxe.core.models.Data.DataContainer;
+import slavara.haxe.core.utils.ValidateUtils;
 
 /**
  * @author SlavaRa
  * TODO: сделать обертку для баблинга
+ * TODO: добавить валидацию параметров паблик методов
  */
 class Data extends EventDispatcher {
 
@@ -39,11 +41,11 @@ class DataContainer extends Data {
 		_list = [];
 	}
 	
+	var _list:Array<Data>;
+	
 	public var numChildren(get, null):Int;
 	
 	function get_numChildren():Int return _list.length;
-	
-	var _list:Array<Data>;
 	
 	public function addChild(child:Data):Data return addChildAt(child, _list.length);
 	
@@ -92,7 +94,25 @@ class DataContainer extends Data {
 				return child;
 			}
 		}
+		
+		if(name.indexOf(".") != -1) {
+			return getChildByPath(this, name);
+		}
+		
 		return null;
+	}
+	
+	@:noComplete
+	function getChildByPath(container:DataContainer, path:String):Data {
+		var names = path.split(".");
+		var child = container.getChildByName(names.shift());
+		if(ValidateUtils.isNotNull(child) && names.length == 0) {
+			return child;
+		} else if(!Std.is(child, DataContainer)) {
+			return null;
+		}
+		
+		return getChildByPath(cast(child, DataContainer), names.join("."));
 	}
 	
 	public function getChildIndex(child:Data):Int return Lambda.indexOf(_list, child);
