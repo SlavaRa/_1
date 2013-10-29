@@ -1,5 +1,4 @@
 package slavara.haxe.core.utils;
-import flash.display.Sprite;
 import massive.munit.Assert;
 import slavara.haxe.core.utils.ValidateUtils;
 
@@ -13,19 +12,19 @@ class ValidateUtilsTest {
 	
 	@Test
 	public function isNullTest() {
-		var s0:Sprite = null;
-		var s1:Sprite = new Sprite();
+		var d0:Dynamic = null;
+		var d1:Dynamic = { };
 		
-		Assert.isTrue(ValidateUtils.isNull(s0));
-		Assert.isFalse(ValidateUtils.isNull(s1));
+		Assert.isTrue(ValidateUtils.isNull(d0));
+		Assert.isFalse(ValidateUtils.isNull(d1));
 	}
 	
 	@Test
 	public function isNotNullTest() {
-		var s0:Sprite = null;
-		var s1:Sprite = new Sprite();
+		var d0:Dynamic = null;
+		var d1:Dynamic = { };
 		
-		Assert.isFalse(ValidateUtils.isNotNull(s0));
-		Assert.isTrue(ValidateUtils.isNotNull(s1));
+		Assert.isFalse(ValidateUtils.isNotNull(d0));
+		Assert.isTrue(ValidateUtils.isNotNull(d1));
 	}
 }
