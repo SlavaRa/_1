@@ -1,5 +1,4 @@
 package slavara;
-
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.Lib;
