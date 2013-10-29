@@ -139,7 +139,7 @@ class DataContainer extends Data {
 		return false;
 	}
 	
-	public function sort(f : Data -> Data -> Int) return _list.sort(f);
+	public function sort(f : Data -> Data -> Int) _list.sort(f);
 	
 	@:noComplete
 	function getChildByPath(container:DataContainer, path:String):Data {
