@@ -26,7 +26,6 @@ class Main extends Sprite {
 		#else
 		initialize();
 		#end
-		
 	}
 	
 	function initialize() {
