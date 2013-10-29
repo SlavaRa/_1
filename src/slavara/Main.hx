@@ -22,7 +22,6 @@ class Main extends Sprite {
 	
 	function onAddedToStage(_) {
 		removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-		stage.addEventListener(Event.RESIZE, onResize);
 		#if ios
 		haxe.Timer.delay(initialize, 100); // iOS 6
 		#else
@@ -31,11 +30,6 @@ class Main extends Sprite {
 		
 	}
 	
-	function onResize(_) {
-		
-	}
-	
 	function initialize() {
 	}
-
 }
