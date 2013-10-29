@@ -1,4 +1,4 @@
-package test.slavara.haxe.core.utils;
+package slavara.haxe.core.utils;
 import massive.munit.Assert;
 
 using slavara.haxe.core.utils.StringUtils;

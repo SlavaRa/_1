@@ -1,4 +1,4 @@
-package test.slavara.haxe.core.utils;
+package slavara.haxe.core.utils;
 import flash.display.Sprite;
 import massive.munit.Assert;
 import slavara.haxe.core.utils.ValidateUtils;

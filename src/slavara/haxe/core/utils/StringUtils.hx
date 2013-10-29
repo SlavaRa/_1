@@ -14,7 +14,7 @@ class StringUtils {
 	static var trim_endEReg:EReg = ~/(?:[\s]+)$/gm;
 	
 	public static function trim(s:String):String {
-		var result = trim_beginEReg.replace(s, "");
-		return trim_endEReg.replace(result, "");
+		s = trim_beginEReg.replace(s, "");
+		return trim_endEReg.replace(s, "");
 	}
 }

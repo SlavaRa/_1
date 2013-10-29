@@ -14,9 +14,9 @@ class Main extends Sprite {
 		Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 		Lib.current.addChild(new Main());
 	}
-
+	
 	public function new() {
-		super();	
+		super();
 		addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 	}
 	
