@@ -14,7 +14,7 @@ class ValidateUtilsTest {
 	@Test
 	public function isNullTest() {
 		var s0:Sprite = null;
-		var s1:String = new Sprite();
+		var s1:Sprite = new Sprite();
 		
 		Assert.isTrue(ValidateUtils.isNull(s0));
 		Assert.isFalse(ValidateUtils.isNull(s1));
@@ -23,7 +23,7 @@ class ValidateUtilsTest {
 	@Test
 	public function isNotNullTest() {
 		var s0:Sprite = null;
-		var s1:String = new Sprite();
+		var s1:Sprite = new Sprite();
 		
 		Assert.isFalse(ValidateUtils.isNotNull(s0));
 		Assert.isTrue(ValidateUtils.isNotNull(s1));
