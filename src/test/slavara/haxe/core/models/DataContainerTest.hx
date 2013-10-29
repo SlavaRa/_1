@@ -117,4 +117,31 @@ class DataContainerTest extends Data {
 		Assert.areEqual(child1, container.getChildAt(0));
 	}
 	
+	@Test
+	public function swapChildrenAtTest() {
+		var container:DataContainer = Type.createInstance(DataContainer, []);
+		var child0:Data = Type.createEmptyInstance(Data);
+		var child1:Data = Type.createEmptyInstance(Data);
+		
+		container.addChild(child0);
+		container.addChild(child1);
+		
+		container.swapChildrenAt(0, 1);
+		
+		Assert.areEqual(child0, container.getChildAt(1));
+		Assert.areEqual(child1, container.getChildAt(0));
+	}
+	
+	@Test
+	public function containsTest() {
+		var container0:DataContainer = Type.createInstance(DataContainer, []);
+		var container1:DataContainer = Type.createInstance(DataContainer, []);
+		var child:Data = Type.createEmptyInstance(Data);
+		
+		container0.addChild(container1);
+		container1.addChild(child);
+		
+		Assert.isTrue(container0.contains(child));
+	}
+	
 }
