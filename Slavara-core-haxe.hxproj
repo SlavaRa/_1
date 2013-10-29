@@ -17,7 +17,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="src\test" />
+    <class path="test" />
     <class path="bin\windows\cpp\haxe" />
   </classpaths>
   <!-- Build options -->

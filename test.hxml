@@ -47,4 +47,8 @@
 #
 #-cp src
 #-cp test
+#-D HXCPP_CHECK_POINTER
+#-D DHXCPP_STACK_TRACE
+#-D HXCPP_STACK_LINE
+#-D HXCPP_DEBUG_LINK
 #-cpp bin/test/cpp_test
