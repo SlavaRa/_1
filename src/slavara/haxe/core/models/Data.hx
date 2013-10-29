@@ -102,19 +102,6 @@ class DataContainer extends Data {
 		return null;
 	}
 	
-	@:noComplete
-	function getChildByPath(container:DataContainer, path:String):Data {
-		var names = path.split(".");
-		var child = container.getChildByName(names.shift());
-		if(ValidateUtils.isNotNull(child) && names.length == 0) {
-			return child;
-		} else if(!Std.is(child, DataContainer)) {
-			return null;
-		}
-		
-		return getChildByPath(cast(child, DataContainer), names.join("."));
-	}
-	
 	public function getChildIndex(child:Data):Int return Lambda.indexOf(_list, child);
 	
 	public function setChildIndex(child:Data, index:Int) {
@@ -153,4 +140,17 @@ class DataContainer extends Data {
 	}
 	
 	public function sort(f : Data -> Data -> Int) return _list.sort(f);
+	
+	@:noComplete
+	function getChildByPath(container:DataContainer, path:String):Data {
+		var names = path.split(".");
+		var child = container.getChildByName(names.shift());
+		if(ValidateUtils.isNotNull(child) && names.length == 0) {
+			return child;
+		} else if(!Std.is(child, DataContainer)) {
+			return null;
+		}
+		
+		return getChildByPath(cast(child, DataContainer), names.join("."));
+	}
 }
