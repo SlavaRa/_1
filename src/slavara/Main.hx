@@ -29,6 +29,5 @@ class Main extends Sprite {
 	}
 	
 	function initialize() {
-		new TestMain();
 	}
 }

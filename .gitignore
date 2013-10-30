@@ -806,3 +806,14 @@ bin/windows/neko/haxe/NMEPreloader.hx
 bin/windows/neko/haxe/debug.hxml
 bin/windows/neko/haxe/release.hxml
 bin/windows/neko/obj/ApplicationMain.n
+bin/html5/bin/Slavaracorehaxe.js
+bin/html5/bin/Slavaracorehaxe.js.map
+bin/html5/bin/index.html
+bin/html5/bin/webgl-debug.js
+bin/html5/haxe/ApplicationMain.hx
+bin/html5/haxe/DefaultAssetLibrary.hx
+bin/html5/haxe/NMEPreloader.hx
+bin/html5/haxe/debug.hxml
+bin/html5/haxe/release.hxml
+bin/windows/cpp/obj/include/slavara/haxe/core/models/_Data/EventContainer.h
+bin/windows/cpp/obj/src/slavara/haxe/core/models/_Data/EventContainer.cpp
