@@ -5,11 +5,11 @@ package slavara.haxe.core.utils;
  */
 class ValidateUtils {
 	
-	public static function isNull(d:Dynamic):Bool {
+	public static inline function isNull(d:Dynamic):Bool {
 		return d == null;
 	}
 	
-	public static function isNotNull(d:Dynamic):Bool {
+	public static inline function isNotNull(d:Dynamic):Bool {
 		return d != null;
 	}
 	

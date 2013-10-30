@@ -6,7 +6,7 @@ import haxe.Log;
  */
 class StringUtils {
 	
-	public static function isNullOrEmpty(s:String):Bool {
+	public static inline function isNullOrEmpty(s:String):Bool {
 		return s == null || trim(s).length == 0;
 	}
 	
