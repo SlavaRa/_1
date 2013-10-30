@@ -1,10 +1,11 @@
 package slavara.haxe.core.events.models;
 import flash.events.Event;
+import slavara.haxe.core.models.Data.DataBaseNativeEvent;
 
 /**
  * @author SlavaRa
  */
-class DataBaseEvent extends Event {
+class DataBaseEvent extends DataBaseNativeEvent {
 
 	public static inline var ADDED = "added";
 	public static inline var REMOVED = "removed";

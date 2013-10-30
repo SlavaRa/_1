@@ -1,7 +1,12 @@
 package slavara.haxe.core.models;
+import flash.events.Event;
 import flash.events.EventDispatcher;
+import flash.events.EventPhase;
+import haxe.Log;
 import slavara.haxe.core.events.models.DataBaseEvent;
+import slavara.haxe.core.models.Data.DataBaseNativeEvent;
 import slavara.haxe.core.models.Data.DataContainer;
+import slavara.haxe.core.utils.StringUtils;
 import slavara.haxe.core.utils.ValidateUtils;
 
 /**
@@ -10,24 +15,108 @@ import slavara.haxe.core.utils.ValidateUtils;
  * TODO: добавить валидацию параметров паблик методов
  */
 class Data extends EventDispatcher {
-
+	
+	#if flash
+	//@:noCompletion
+	//static var eventContainer = new EventContainer();
+	#end
+	
 	function new() super();
 	
 	public var name:String;
 	public var parent(default, null):DataContainer;
+	
+	@:noCompletion
+	var _bubbleParent:Data;
 	
 	function setParent(value:DataContainer) {
 		if(value == parent) {
 			return;
 		}
 		
-		if(parent != null) {
-			dispatchEvent(new DataBaseEvent(DataBaseEvent.REMOVED, true));
+		if(ValidateUtils.isNotNull(parent)) {
+			_bubbleParent = parent;
+			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.REMOVED, true));
 		}
 		parent = value;
-		if(parent != null) {
-			dispatchEvent(new DataBaseEvent(DataBaseEvent.ADDED, true));
+		_bubbleParent = value;
+		if(ValidateUtils.isNotNull(value)) {
+			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.ADDED, true));
 		}
+	}
+	
+	public override function dispatchEvent(event:Event):Bool {
+		if (event.bubbles) {
+			if (Std.is(event, DataBaseEvent)) {
+				return dispatchEventFunction(cast(event, DataBaseEvent));
+			}
+			throw "bubbling поддерживается только у событий наследованных от DataBaseEvent";
+		}
+		return super.dispatchEvent(event);
+	}
+	
+	@:noCompletion
+	public override function willTrigger(type:String):Bool {
+		if (hasEventListener(type)) {
+			return true;
+		}
+		
+		var target = _bubbleParent;
+		while (ValidateUtils.isNotNull(target)) {
+			if (target.hasEventListener(type)) {
+				return true;
+			}
+			target = target._bubbleParent;
+		}
+		return false;
+	}
+	
+	@:noCompletion
+	function safeDispatchEvent(event:Event):Bool return super.dispatchEvent(event);
+	
+	@:noCompletion
+	function dispatchEventFunction(event:DataBaseNativeEvent):Bool {
+		var canceled = false;
+		if (hasEventListener(event.type)) {
+			canceled = !(super.dispatchEvent(event));
+		}
+		
+		#if (cpp || neko)
+		var stopped = Reflect.getProperty(event, "__isCancelledNow");
+		#elseif js
+		var stopped = Reflect.getProperty(event, "nmeIsCancelled");
+		#elseif flash
+		//TODO: implement me
+		#end
+		
+		if(!stopped){
+			var target = _bubbleParent;
+			while (ValidateUtils.isNotNull(target)) {
+				if (target.hasEventListener(event.type)) {
+					event = cast(event.clone(), DataBaseNativeEvent);
+					#if (cpp || neko)
+					event.target = this;
+					target.safeDispatchEvent(event);
+					canceled = Reflect.getProperty(event, "__isCancelled");
+					if(Reflect.getProperty(event, "__isCancelledNow")) {
+						break;
+					}
+					#elseif js
+					Reflect.setProperty(event, "target", this);
+					target.safeDispatchEvent(event);
+					canceled = Reflect.getProperty(event, "nmeIsCancelled");
+					if (Reflect.getProperty(event, "nmeIsCancelledNow")) {
+						break;
+					}
+					#elseif flash
+					//TODO:
+					#end
+				}
+				
+				target = target._bubbleParent;
+			}
+		}
+		return !canceled;
 	}
 }
 
@@ -152,5 +241,84 @@ class DataContainer extends Data {
 		}
 		
 		return getChildByPath(cast(child, DataContainer), names.join("."));
+	}
+}
+
+#if flash
+/**
+ * @author SlavaRa
+ * @private
+ */
+private class EventContainer extends Event {
+	
+	public function new() super("", true);
+	
+	@:getter(target)
+	function get_target():Dynamic return { };
+	
+	public var event:Event;
+	public override function clone():Event return event;
+}
+#end
+
+/**
+ * @author SlavaRa
+ */
+class DataBaseNativeEvent extends Event {
+	
+	function new(type:String, ?bubbles:Bool, ?cancelable:Bool) {
+		super(type, bubbles, cancelable);
+	}
+	
+	#if flash
+	var _target:Dynamic;
+	var _stopped:Bool;
+	var _canceled:Bool;
+	var _eventPhase:EventPhase;
+	
+	@:getter(target)
+	private function get_target():Dynamic {
+		return ValidateUtils.isNotNull(_target) ? _target : target;
+	}
+	
+	@:getter(eventPhase)
+	private function get_eventPhase():EventPhase {
+		return ValidateUtils.isNotNull(_eventPhase) ? _eventPhase : eventPhase;
+	}
+	
+	public override function stopPropagation() _stopped = true;
+	
+	public override function isDefaultPrevented():Bool return _canceled;
+	
+	public override function preventDefault() {
+		if (cancelable) {
+			super.preventDefault();
+			_canceled = true;
+		}
+	}
+	
+	public override function stopImmediatePropagation() {
+		super.stopImmediatePropagation();
+		_stopped = true;
+	}
+	
+	public override function formatToString(className:String, ?p1 : Dynamic, ?p2 : Dynamic, ?p3 : Dynamic, ?p4 : Dynamic, ?p5 : Dynamic):String {
+		if(!StringUtils.isNullOrEmpty(className)) {
+			className = "DataBaseNativeEvent";
+		}
+		return super.formatToString(className, p1, p2, p3, p4, p5);
+	}
+	#end
+	
+	public override function toString():String {
+		#if flash
+		return super.formatToString("DataBaseNativeEvent", "type", "bubbles", "cancelable");
+		#else
+		return "[Event type=DataBaseNativeEvent bubbles=" + bubbles + " cancelable=" + cancelable + "]";
+		#end
+	}
+	
+	public override function clone():Event {
+		return Type.createInstance(DataBaseNativeEvent, [type, bubbles, cancelable]);
 	}
 }
