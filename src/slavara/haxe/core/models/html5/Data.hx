@@ -19,6 +19,7 @@ class Data extends EventDispatcher {
 	@:noCompletion
 	var _bubbleParent:Data;
 	
+	@:final
 	function setParent(value:DataContainer) {
 		if(value == parent) {
 			return;

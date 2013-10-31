@@ -13,6 +13,7 @@ import slavara.haxe.core.utils.ValidateUtils;
  */
 class Data extends EventDispatcher {
 	
+	@:noCompletion
 	static var eventContainer:EventContainer = new EventContainer();
 	
 	function new() {
@@ -25,6 +26,7 @@ class Data extends EventDispatcher {
 	@:noCompletion
 	var _bubbleParent:Data;
 	
+	@:final
 	function setParent(value:DataContainer) {
 		if(value == parent) {
 			return;
@@ -99,6 +101,7 @@ class Data extends EventDispatcher {
 	}
 }
 
+@:noCompletion
 extern class EventContainer extends Event {
 	function new();
 	var event:Event;

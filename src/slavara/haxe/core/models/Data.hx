@@ -136,6 +136,7 @@ class DataContainer extends Data {
 }
 
 #if flash
+//TODO: доступ к полям должен быть через неймспейс
 extern class DataBaseNativeEvent extends Event {
 	function new(type:String, ?bubbles:Bool, ?cancelable:Bool);
 	var _target:Dynamic;
