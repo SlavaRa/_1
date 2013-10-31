@@ -2,6 +2,10 @@ package slavara;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.Lib;
+import haxe.Log;
+import slavara.haxe.core.events.models.DataBaseEvent;
+import slavara.haxe.core.models.Data;
+import slavara.haxe.core.models.Data.DataContainer;
 
 /**
  * @author SlavaRa
@@ -29,5 +33,16 @@ class Main extends Sprite {
 	}
 	
 	function initialize() {
+		var container0:DataContainer = Type.createInstance(DataContainer, []);
+		var container1:DataContainer = Type.createInstance(DataContainer, []);
+		var child:Data = Type.createEmptyInstance(Data);
+		
+		container0.addChild(container1);
+		
+		container0.addEventListener(DataBaseEvent.ADDED, function(event:Event) {
+			Log.trace(event.target == child);
+		});
+		
+		container1.addChild(child);
 	}
 }

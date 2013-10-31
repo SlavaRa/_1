@@ -2,23 +2,20 @@
 <project>
 	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
-	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
 	<meta title="Slavara-core-haxe" package="slavara.haxe.core" version="1.0.0" company="SlavaRa" />
 	
-	<!-- output -->
 	<app main="slavara.Main" file="Slavaracorehaxe" path="bin" />
+	<app swf-version="11.8" if="flash" />
 	
 	<window background="#000000" fps="60" />
 	<window width="800" height="480" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
 	
-	<!-- classpath, haxe libs -->
 	<source path="src" />
 	<source path="test" />
 	<haxelib name="openfl" />
 	<haxelib name="munit" />
 	
-	<!-- optimize output -->
+	<haxeflag name="-swf-lib" value="libs/datahelpers.swf" if="flash" />
 	<haxeflag name="-dce std" if="haxe3" />
-	
 </project>

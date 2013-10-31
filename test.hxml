@@ -4,7 +4,8 @@
 -lib hamcrest
 -cp src
 -cp test
--swf-version 11
+-swf-version 11.8
+-swf-lib libs/datahelpers.swf
 -swf bin/test/as3_test.swf
 
 --next

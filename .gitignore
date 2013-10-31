@@ -817,3 +817,7 @@ bin/html5/haxe/debug.hxml
 bin/html5/haxe/release.hxml
 bin/windows/cpp/obj/include/slavara/haxe/core/models/_Data/EventContainer.h
 bin/windows/cpp/obj/src/slavara/haxe/core/models/_Data/EventContainer.cpp
+bin/windows/cpp/obj/include/slavara/haxe/core/models/DataBaseNativeEvent.h
+bin/windows/cpp/obj/include/slavara/haxe/core/models/native/Data.h
+bin/windows/cpp/obj/src/slavara/haxe/core/models/DataBaseNativeEvent.cpp
+bin/windows/cpp/obj/src/slavara/haxe/core/models/native/Data.cpp
