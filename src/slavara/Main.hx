@@ -1,12 +1,12 @@
 package slavara;
-import flash.display.Sprite;
 import flash.events.Event;
 import flash.Lib;
+import slavara.haxe.core.display.BaseSprite;
 
 /**
  * @author SlavaRa
  */
-class Main extends Sprite {
+class Main extends BaseSprite {
 
 	public static function main() {
 		Lib.current.stage.align = flash.display.StageAlign.TOP_LEFT;
@@ -14,13 +14,9 @@ class Main extends Sprite {
 		Lib.current.addChild(new Main());
 	}
 	
-	public function new() {
-		super();
-		addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-	}
+	public function new() super();
 	
-	function onAddedToStage(_) {
-		removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+	override function onAddedToStage() {
 		#if ios
 		haxe.Timer.delay(initialize, 100); // iOS 6
 		#else

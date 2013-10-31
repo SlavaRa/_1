@@ -821,3 +821,4 @@ bin/windows/cpp/obj/include/slavara/haxe/core/models/DataBaseNativeEvent.h
 bin/windows/cpp/obj/include/slavara/haxe/core/models/native/Data.h
 bin/windows/cpp/obj/src/slavara/haxe/core/models/DataBaseNativeEvent.cpp
 bin/windows/cpp/obj/src/slavara/haxe/core/models/native/Data.cpp
+bin/flash/bin/Slavaracorehaxe.swf
