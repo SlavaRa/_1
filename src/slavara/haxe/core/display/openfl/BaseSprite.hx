@@ -1,4 +1,5 @@
 package slavara.haxe.core.display.openfl;
+import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.Event;
 
@@ -35,4 +36,9 @@ class BaseSprite extends Sprite {
 	
 	function onAddedToStage() { };
 	function onRemovedFromStage() { };
+	
+	public override function getChildByName(name:String):DisplayObject {
+		//TODO: by path support
+		return super.getChildByName(name);
+	}
 }
