@@ -1,7 +1,7 @@
 package slavara;
 import flash.events.Event;
 import flash.Lib;
-import slavara.haxe.core.display.BaseSprite;
+import slavara.haxe.core.display.DisplayObject.BaseSprite;
 
 /**
  * @author SlavaRa

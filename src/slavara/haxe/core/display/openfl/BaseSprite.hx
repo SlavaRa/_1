@@ -8,7 +8,7 @@ import slavara.haxe.core.utils.ValidateUtils;
 /**
  * @author SlavaRa
  */
-class BaseSprite extends Sprite {
+@:noCompletion class BaseSprite extends Sprite {
 
 	public function new() {
 		super();

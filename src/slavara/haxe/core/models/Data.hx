@@ -132,7 +132,6 @@ class DataContainer extends Data {
 		} else if(!Std.is(child, DataContainer)) {
 			return null;
 		}
-		
 		return getChildByPath(cast(child, DataContainer), names.join("."));
 	}
 }
