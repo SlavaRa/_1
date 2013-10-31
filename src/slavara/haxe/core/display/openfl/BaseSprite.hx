@@ -1,7 +1,9 @@
 package slavara.haxe.core.display.openfl;
 import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
+import slavara.haxe.core.utils.ValidateUtils;
 
 /**
  * @author SlavaRa
@@ -38,7 +40,29 @@ class BaseSprite extends Sprite {
 	function onRemovedFromStage() { };
 	
 	public override function getChildByName(name:String):DisplayObject {
-		//TODO: by path support
-		return super.getChildByName(name);
+		var child = super.getChildByName(name);
+		if (ValidateUtils.isNull(child) && name.indexOf(".") != -1) {
+			return getChildByPath(this, name);
+		}
+		return child;
+	}
+	
+	@:noCompletion
+	@:final function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
+		var child:DisplayObject = null;
+		var names = path.split(".");
+		while (names.length > 0) {
+			var name = names.shift();
+			child = container.getChildByName(name);
+			if(names.length == 0) {
+				return child;
+			}
+			if(ValidateUtils.isNull(child) || !Std.is(child, DisplayObjectContainer)) {
+				return null;
+			}
+			container = cast(child, DisplayObjectContainer);
+		}
+		
+		return child;
 	}
 }
