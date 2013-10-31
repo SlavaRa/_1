@@ -2,6 +2,8 @@ package slavara.haxe.core.models;
 import flash.events.Event;
 import slavara.haxe.core.utils.ValidateUtils;
 
+using Lambda;
+
 #if (cpp || neko)
 typedef Data = slavara.haxe.core.models.native.Data;
 #elseif js 
@@ -82,7 +84,7 @@ class DataContainer extends Data {
 		return null;
 	}
 	
-	public function getChildIndex(child:Data):Int return Lambda.indexOf(_list, child);
+	public function getChildIndex(child:Data):Int return _list.indexOf(child);
 	
 	public function setChildIndex(child:Data, index:Int) {
 		_list.remove(child);
@@ -90,8 +92,8 @@ class DataContainer extends Data {
 	}
 	
 	public function swapChildren(child1:Data, child2:Data) {
-		var index1 = Lambda.indexOf(_list, child1);
-		var index2 = Lambda.indexOf(_list, child2);
+		var index1 = _list.indexOf(child1);
+		var index2 = _list.indexOf(child2);
 		
 		_list.remove(child1);
 		_list.remove(child2);
@@ -125,7 +127,7 @@ class DataContainer extends Data {
 	function getChildByPath(container:DataContainer, path:String):Data {
 		var names = path.split(".");
 		var child = container.getChildByName(names.shift());
-		if(ValidateUtils.isNotNull(child) && names.length == 0) {
+		if(ValidateUtils.isNotNull(child) && names.empty()) {
 			return child;
 		} else if(!Std.is(child, DataContainer)) {
 			return null;
