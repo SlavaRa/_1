@@ -121,7 +121,7 @@ class DataContainer extends Data {
 	
 	public function sort(f : Data -> Data -> Int) _list.sort(f);
 	
-	@:noComplete
+	@:noCompletion
 	function getChildByPath(container:DataContainer, path:String):Data {
 		var names = path.split(".");
 		var child = container.getChildByName(names.shift());
