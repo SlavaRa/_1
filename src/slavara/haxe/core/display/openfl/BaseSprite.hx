@@ -13,8 +13,8 @@ import slavara.haxe.core.utils.ValidateUtils;
 	public function new() {
 		super();
 		mouseEnabled = false;
-		addEventListener(Event.ADDED_TO_STAGE, onAddedToStageHandler, false, 0, true);
-		addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStageHandler, false, 0, true);
+		addEventListener(Event.ADDED_TO_STAGE, onAddedToStageHandler);
+		addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStageHandler);
 	}
 	
 	@:noCompletion
