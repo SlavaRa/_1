@@ -1,8 +1,5 @@
 package slavara;
-import flash.display.BitmapData;
 import flash.Lib;
-import haxe.Log;
-import openfl.Assets;
 import slavara.haxe.core.display.DisplayObject.BaseSprite;
 
 /**
