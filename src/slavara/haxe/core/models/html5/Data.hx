@@ -16,11 +16,9 @@ class Data extends EventDispatcher {
 	public var name:String;
 	public var parent(default, null):DataContainer;
 	
-	@:noCompletion
-	var _bubbleParent:Data;
+	@:noCompletion var _bubbleParent:Data;
 	
-	@:final
-	function setParent(value:DataContainer) {
+	@:final function setParent(value:DataContainer) {
 		if(value == parent) {
 			return;
 		}
@@ -46,8 +44,7 @@ class Data extends EventDispatcher {
 		return super.dispatchEvent(event);
 	}
 	
-	@:noCompletion
-	public override function willTrigger(type:String):Bool {
+	@:noCompletion public override function willTrigger(type:String):Bool {
 		if (hasEventListener(type)) {
 			return true;
 		}
@@ -62,11 +59,9 @@ class Data extends EventDispatcher {
 		return false;
 	}
 	
-	@:noCompletion
-	function safeDispatchEvent(event:Event):Bool return super.dispatchEvent(event);
+	@:noCompletion function safeDispatchEvent(event:Event):Bool return super.dispatchEvent(event);
 	
-	@:noCompletion
-	function dispatchEventFunction(event:DataBaseNativeEvent):Bool {
+	@:noCompletion function dispatchEventFunction(event:DataBaseNativeEvent):Bool {
 		var canceled = false;
 		if (hasEventListener(event.type)) {
 			canceled = !(super.dispatchEvent(event));

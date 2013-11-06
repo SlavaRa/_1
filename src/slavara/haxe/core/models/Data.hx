@@ -1,7 +1,6 @@
 package slavara.haxe.core.models;
 import flash.events.Event;
 import slavara.haxe.core.utils.Validate;
-
 using Lambda;
 
 #if (cpp || neko)
@@ -123,8 +122,7 @@ class DataContainer extends Data {
 	
 	public function sort(f : Data -> Data -> Int) _list.sort(f);
 	
-	@:noCompletion
-	function getChildByPath(container:DataContainer, path:String):Data {
+	@:noCompletion function getChildByPath(container:DataContainer, path:String):Data {
 		var names = path.split(".");
 		var child = container.getChildByName(names.shift());
 		if(Validate.isNotNull(child) && names.empty()) {
