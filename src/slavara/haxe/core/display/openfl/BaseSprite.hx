@@ -3,25 +3,27 @@ import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
+import slavara.haxe.core.utils.Destroyable.IDestroyable;
 import slavara.haxe.core.utils.Validate;
 
 /**
  * @author SlavaRa
  */
-@:noCompletion class BaseSprite extends Sprite {
+@:noCompletion class BaseSprite extends Sprite implements IDestroyable {
 
 	public function new() {
 		super();
 		mouseEnabled = false;
+		_addedToStage = false;
 		addEventListener(Event.ADDED_TO_STAGE, onAddedToStageHandler);
 		addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStageHandler);
 	}
 	
-	@:noCompletion
-	var _addedToStage:Bool;
+	public function destroy() {}
 	
-	@:noCompletion
-	@:final function onAddedToStageHandler(event:Event) {
+	@:noCompletion var _addedToStage:Bool;
+	
+	@:final @:noCompletion function onAddedToStageHandler(event:Event) {
 		if(_addedToStage) {
 			event.stopImmediatePropagation();
 		} else {
@@ -30,8 +32,8 @@ import slavara.haxe.core.utils.Validate;
 		}
 	}
 	
-	@:noCompletion
-	@:final function onRemovedFromStageHandler(_) {
+	
+	@:final @:noCompletion function onRemovedFromStageHandler(_) {
 		_addedToStage = false;
         onRemovedFromStage();
 	}
@@ -47,8 +49,7 @@ import slavara.haxe.core.utils.Validate;
 		return child;
 	}
 	
-	@:noCompletion
-	@:final function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
+	@:final @:noCompletion function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
 		var child:DisplayObject = null;
 		var names = path.split(".");
 		while (names.length > 0) {
