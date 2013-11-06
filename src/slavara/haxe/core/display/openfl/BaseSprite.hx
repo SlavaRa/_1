@@ -3,7 +3,7 @@ import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
-import slavara.haxe.core.utils.ValidateUtils;
+import slavara.haxe.core.utils.Validate;
 
 /**
  * @author SlavaRa
@@ -41,7 +41,7 @@ import slavara.haxe.core.utils.ValidateUtils;
 	
 	public override function getChildByName(name:String):DisplayObject {
 		var child = super.getChildByName(name);
-		if (ValidateUtils.isNull(child) && name.indexOf(".") != -1) {
+		if (Validate.isNull(child) && name.indexOf(".") != -1) {
 			return getChildByPath(this, name);
 		}
 		return child;
@@ -57,7 +57,7 @@ import slavara.haxe.core.utils.ValidateUtils;
 			if(names.length == 0) {
 				return child;
 			}
-			if(ValidateUtils.isNull(child) || !Std.is(child, DisplayObjectContainer)) {
+			if(Validate.isNull(child) || !Std.is(child, DisplayObjectContainer)) {
 				return null;
 			}
 			container = cast(child, DisplayObjectContainer);

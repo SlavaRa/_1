@@ -6,7 +6,7 @@ import slavara.haxe.core.events.models.DataBaseEvent;
 import slavara.haxe.core.models.Data.DataBaseNativeEvent;
 import slavara.haxe.core.models.Data.DataContainer;
 import slavara.haxe.core.models.flash.Data.EventContainer;
-import slavara.haxe.core.utils.ValidateUtils;
+import slavara.haxe.core.utils.Validate;
 
 /**
  * @author SlavaRa
@@ -32,13 +32,13 @@ class Data extends EventDispatcher {
 			return;
 		}
 		
-		if(ValidateUtils.isNotNull(parent)) {
+		if(Validate.isNotNull(parent)) {
 			_bubbleParent = parent;
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.REMOVED, true));
 		}
 		parent = value;
 		_bubbleParent = value;
-		if(ValidateUtils.isNotNull(value)) {
+		if(Validate.isNotNull(value)) {
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.ADDED, true));
 		}
 	}
@@ -60,7 +60,7 @@ class Data extends EventDispatcher {
 		}
 		
 		var target = _bubbleParent;
-		while (ValidateUtils.isNotNull(target)) {
+		while (Validate.isNotNull(target)) {
 			if (target.hasEventListener(type)) {
 				return true;
 			}
@@ -81,7 +81,7 @@ class Data extends EventDispatcher {
 		
 		if(!Reflect.getProperty(event, "_stopped")){
 			var target = _bubbleParent;
-			while (ValidateUtils.isNotNull(target)) {
+			while (Validate.isNotNull(target)) {
 				if (target.hasEventListener(event.type)) {
 					event = cast(event.clone(), DataBaseNativeEvent);
 					Reflect.setProperty(event, "_eventPhase", EventPhase.BUBBLING_PHASE);

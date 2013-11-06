@@ -1,6 +1,6 @@
 package slavara.haxe.core.models;
 import flash.events.Event;
-import slavara.haxe.core.utils.ValidateUtils;
+import slavara.haxe.core.utils.Validate;
 
 using Lambda;
 
@@ -127,7 +127,7 @@ class DataContainer extends Data {
 	function getChildByPath(container:DataContainer, path:String):Data {
 		var names = path.split(".");
 		var child = container.getChildByName(names.shift());
-		if(ValidateUtils.isNotNull(child) && names.empty()) {
+		if(Validate.isNotNull(child) && names.empty()) {
 			return child;
 		} else if(!Std.is(child, DataContainer)) {
 			return null;
