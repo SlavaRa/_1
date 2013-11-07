@@ -17,9 +17,10 @@ interface IController {
  */
 class BaseController implements IController implements IDestroyable {
 
-	public function new(container:DisplayObjectContainer, ?data:Data) {
+	public function new(container:DisplayObjectContainer, data:Data) {
 		#if debug
 		if(Validate.isNull(container)) throw "container is null";
+		if(Validate.isNull(data)) throw "the data argument must not be null";
 		#end
 		this.container = container;
 		this.data = data;
