@@ -51,7 +51,7 @@ class BaseController implements IBaseController implements IDestroyable {
 /**
  * @author SlavaRa
  */
-class AbstractController implements IController {
+class AbstractController implements IController implements IDestroyable {
 	
 	public function new(controller:IController) {
 		#if debug
@@ -59,8 +59,16 @@ class AbstractController implements IController {
 		#end
 		baseController = controller;
 		data = controller.data;
+		initialize();
 	}
 	
 	public var baseController(default, null):IController;
 	public var data(default, null):Data;
+	
+	/**virtual*/ public function initialize() {}
+	public function destroy() {
+		baseController = null;
+		data = null;
+	}
+	
 }

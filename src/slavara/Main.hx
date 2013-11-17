@@ -14,15 +14,4 @@ class Main extends BaseSprite {
 	}
 	
 	public function new() super();
-	
-	override function onAddedToStage() {
-		#if ios
-		haxe.Timer.delay(initialize, 100); // iOS 6
-		#else
-		initialize();
-		#end
-	}
-	
-	function initialize() {
-	}
 }
