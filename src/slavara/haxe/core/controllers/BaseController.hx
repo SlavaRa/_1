@@ -24,11 +24,13 @@ class BaseController implements IController implements IDestroyable {
 		#end
 		this.container = container;
 		this.data = data;
+		initialize();
 	}
 	
 	public var container(default, null):DisplayObjectContainer;
 	public var data(default, null):Data;
 	
+	/**virtual*/ public function initialize() { }
 	public function destroy() {
 		container = null;
 		data = null;
