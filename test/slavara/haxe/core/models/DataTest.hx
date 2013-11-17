@@ -1,18 +1,13 @@
 package slavara.haxe.core.models;
-import haxe.Timer;
 import massive.munit.Assert;
-import massive.munit.async.AsyncFactory;
-import slavara.haxe.core.events.models.DataBaseEvent;
 import slavara.haxe.core.models.Data;
 
 /**
  * @author SlavaRa
  */
-class DataTest extends Data {
+class DataTest {
 
-	public function new() {
-		super();
-	}
+	public function new() { }
 	
 	@Test
 	public function containerAddChildTest() {

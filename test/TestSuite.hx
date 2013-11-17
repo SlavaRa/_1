@@ -1,6 +1,7 @@
 import massive.munit.TestSuite;
 
 import ExampleTest;
+import slavara.haxe.core.controllers.BaseControllerTest;
 import slavara.haxe.core.display.BaseSpriteTest;
 import slavara.haxe.core.display.ResourceSpriteTest;
 import slavara.haxe.core.models.DataEventBubblingTest;
@@ -22,6 +23,7 @@ class TestSuite extends massive.munit.TestSuite
 		super();
 
 		add(ExampleTest);
+		add(slavara.haxe.core.controllers.BaseControllerTest);
 		add(slavara.haxe.core.display.BaseSpriteTest);
 		add(slavara.haxe.core.display.ResourceSpriteTest);
 		add(slavara.haxe.core.models.DataEventBubblingTest);

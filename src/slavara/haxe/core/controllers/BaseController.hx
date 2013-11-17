@@ -45,6 +45,7 @@ class BaseController implements IBaseController implements IDestroyable {
 	public function destroy() {
 		container = null;
 		data = null;
+		baseController = null;
 	}
 }
 

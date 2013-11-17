@@ -5,8 +5,7 @@ package slavara.haxe.core.display;
  */
 class ResourceSpriteTest{
 
-	public function new() {
-	}
+	public function new() { }
 	
 	//TODO: implement me
 }

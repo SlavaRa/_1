@@ -7,8 +7,7 @@ import slavara.haxe.core.utils.Validate;
  */
 class ValidateTest {
 
-	public function new() {
-	}
+	public function new() { }
 	
 	@Test
 	public function isNullTest() {

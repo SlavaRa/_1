@@ -9,8 +9,7 @@ import slavara.haxe.core.models.Data.DataContainer;
  */
 class DataEventBubblingTest {
 
-	public function new() {
-	}
+	public function new() { }
 	
 	@AsyncTest
 	public function dataEventBubblingTest(factory:AsyncFactory) {
@@ -32,5 +31,4 @@ class DataEventBubblingTest {
 		
 		container1.addChild(child);
 	}
-	
 }

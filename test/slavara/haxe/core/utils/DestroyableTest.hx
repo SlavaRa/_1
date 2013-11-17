@@ -5,8 +5,7 @@ package slavara.haxe.core.utils;
  */
 class DestroyableTest {
 
-	public function new() {
-	}
+	public function new() { }
 	
 	//TODO: implement me
 }

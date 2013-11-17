@@ -1,6 +1,5 @@
 package slavara.haxe.core.utils;
 import massive.munit.Assert;
-
 using slavara.haxe.core.utils.StringUtils;
 
 /**
@@ -8,8 +7,7 @@ using slavara.haxe.core.utils.StringUtils;
  */
 class StringUtilsTest {
 
-	public function new() {
-	}
+	public function new() { }
 	
 	@Test
 	public function stringIsNullOrEmptyTest() {

@@ -7,8 +7,7 @@ import slavara.haxe.core.display.DisplayObject.BaseSprite;
  */
 class BaseSpriteTest {
 
-	public function new() {
-	}
+	public function new() { }
 	
 	@Test
 	public function getChildByPathTest() {
@@ -25,5 +24,4 @@ class BaseSpriteTest {
 		
 		Assert.areEqual(sprite2, sprite0.getChildByName("sprite1.sprite2"));
 	}
-	
 }
