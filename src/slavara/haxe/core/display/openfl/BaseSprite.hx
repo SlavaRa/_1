@@ -17,9 +17,11 @@ import slavara.haxe.core.utils.Validate;
 		_addedToStage = false;
 		addEventListener(Event.ADDED_TO_STAGE, onAddedToStageHandler);
 		addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStageHandler);
+		initialize();
 	}
 	
-	public function destroy() {}
+	public function initialize() { }
+	public function destroy() { }
 	
 	@:noCompletion var _addedToStage:Bool;
 	
@@ -38,8 +40,8 @@ import slavara.haxe.core.utils.Validate;
         onRemovedFromStage();
 	}
 	
-	function onAddedToStage() { };
-	function onRemovedFromStage() { };
+	function onAddedToStage() { }
+	function onRemovedFromStage() { }
 	
 	public override function getChildByName(name:String):DisplayObject {
 		var child = super.getChildByName(name);
