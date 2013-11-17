@@ -21,12 +21,4 @@ class StringUtilsTest {
 		Assert.isTrue(s1.isNullOrEmpty());
 		Assert.isFalse(s2.isNullOrEmpty());
 	}
-	
-	@Test
-	public function trimTest() {
-		var s0 = " abc  abc   ";
-		var s1 = "abc  abc";
-		
-		Assert.areEqual(s0.trim(), s1);
-	}
 }
