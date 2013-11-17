@@ -13,9 +13,9 @@ class StringUtilsTest {
 	
 	@Test
 	public function stringIsNullOrEmptyTest() {
-		var s0:String = "";
+		var s0 = "";
 		var s1:String = null;
-		var s2:String = "abc";
+		var s2 = "abc";
 		
 		Assert.isTrue(s0.isNullOrEmpty());
 		Assert.isTrue(s1.isNullOrEmpty());

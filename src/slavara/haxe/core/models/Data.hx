@@ -31,6 +31,10 @@ class DataContainer extends Data {
 	public function addChild(child:Data):Data return addChildAt(child, _list.length);
 	
 	public function addChildAt(child:Data, index:Int):Data {
+		#if debug
+		if(child == null) throw "the child argument must not be null";
+		#end
+		
 		if (child.parent == this) {
 			setChildIndex(child, index);
 			return child;
