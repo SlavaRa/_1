@@ -1,6 +1,6 @@
 package slavara.haxe.core.utils;
 import massive.munit.Assert;
-using slavara.haxe.core.utils.StringUtils;
+using slavara.haxe.core.utils.Utils.StringUtil;
 
 /**
  * @author SlavaRa

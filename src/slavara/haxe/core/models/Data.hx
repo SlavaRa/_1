@@ -1,6 +1,6 @@
 package slavara.haxe.core.models;
 import flash.events.Event;
-import slavara.haxe.core.utils.Validate;
+import slavara.haxe.core.utils.Utils.ValidateUtil;
 using Lambda;
 
 #if (cpp || neko)
@@ -32,7 +32,7 @@ class DataContainer extends Data {
 	
 	public function addChildAt(child:Data, index:Int):Data {
 		#if debug
-		if(child == null) throw "the child argument must not be null";
+		if(ValidateUtil.isNull(child)) throw "the child argument must not be null";
 		#end
 		
 		if (child.parent == this) {
@@ -79,11 +79,9 @@ class DataContainer extends Data {
 				return child;
 			}
 		}
-		
 		if(name.indexOf(".") != -1) {
 			return getChildByPath(this, name);
 		}
-		
 		return null;
 	}
 	
@@ -129,7 +127,7 @@ class DataContainer extends Data {
 	@:noCompletion function getChildByPath(container:DataContainer, path:String):Data {
 		var names = path.split(".");
 		var child = container.getChildByName(names.shift());
-		if(Validate.isNotNull(child) && names.empty()) {
+		if(ValidateUtil.isNotNull(child) && names.empty()) {
 			return child;
 		} else if(!Std.is(child, DataContainer)) {
 			return null;

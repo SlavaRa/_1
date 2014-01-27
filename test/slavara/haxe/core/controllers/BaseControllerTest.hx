@@ -3,7 +3,7 @@ import flash.display.Sprite;
 import massive.munit.Assert;
 import slavara.haxe.core.controllers.BaseController;
 import slavara.haxe.core.models.Data;
-import slavara.haxe.core.utils.Destroyable.DestroyUtils;
+import slavara.haxe.core.utils.Utils.DestroyUtil;
 
 /**
  * @author SlavaRa
@@ -30,7 +30,7 @@ class BaseControllerTest {
 	
 	@Test
 	public function destroyBaseControllerTest() {
-		DestroyUtils.destroy(_baseController);
+		DestroyUtil.destroy(_baseController);
 		Assert.isNull(_baseController.container);
 		Assert.isNull(_baseController.data);
 		Assert.isNull(_baseController.baseController);
@@ -48,7 +48,7 @@ class BaseControllerTest {
 	public function destroyAbstractControllerTest() {
 		var controller = new AbstractController(_baseController);
 		
-		DestroyUtils.destroy(controller);
+		DestroyUtil.destroy(controller);
 		Assert.isNull(controller.data);
 		Assert.isNull(controller.baseController);
 	}

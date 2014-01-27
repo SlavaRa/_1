@@ -1,6 +1,6 @@
 package slavara.haxe.core.utils;
 import massive.munit.Assert;
-import slavara.haxe.core.utils.Validate;
+import slavara.haxe.core.utils.Utils.ValidateUtil;
 
 /**
  * @author SlavaRa
@@ -14,8 +14,8 @@ class ValidateTest {
 		var d0:Dynamic = null;
 		var d1:Dynamic = { };
 		
-		Assert.isTrue(Validate.isNull(d0));
-		Assert.isFalse(Validate.isNull(d1));
+		Assert.isTrue(ValidateUtil.isNull(d0));
+		Assert.isFalse(ValidateUtil.isNull(d1));
 	}
 	
 	@Test
@@ -23,7 +23,7 @@ class ValidateTest {
 		var d0:Dynamic = null;
 		var d1:Dynamic = { };
 		
-		Assert.isFalse(Validate.isNotNull(d0));
-		Assert.isTrue(Validate.isNotNull(d1));
+		Assert.isFalse(ValidateUtil.isNotNull(d0));
+		Assert.isTrue(ValidateUtil.isNotNull(d1));
 	}
 }

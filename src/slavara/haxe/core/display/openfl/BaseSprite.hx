@@ -3,8 +3,8 @@ import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
-import slavara.haxe.core.utils.Destroyable.IDestroyable;
-import slavara.haxe.core.utils.Validate;
+import slavara.haxe.core.utils.Utils.IDestroyable;
+import slavara.haxe.core.utils.Utils.ValidateUtil;
 
 /**
  * @author SlavaRa
@@ -34,7 +34,6 @@ import slavara.haxe.core.utils.Validate;
 		}
 	}
 	
-	
 	@:final @:noCompletion function onRemovedFromStageHandler(_) {
 		_addedToStage = false;
         onRemovedFromStage();
@@ -45,7 +44,7 @@ import slavara.haxe.core.utils.Validate;
 	
 	public override function getChildByName(name:String):DisplayObject {
 		var child = super.getChildByName(name);
-		if (Validate.isNull(child) && name.indexOf(".") != -1) {
+		if (ValidateUtil.isNull(child) && name.indexOf(".") != -1) {
 			return getChildByPath(this, name);
 		}
 		return child;
@@ -60,7 +59,7 @@ import slavara.haxe.core.utils.Validate;
 			if(names.length == 0) {
 				return child;
 			}
-			if(Validate.isNull(child) || !Std.is(child, DisplayObjectContainer)) {
+			if(ValidateUtil.isNull(child) || !Std.is(child, DisplayObjectContainer)) {
 				return null;
 			}
 			container = cast(child, DisplayObjectContainer);

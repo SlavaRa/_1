@@ -4,7 +4,7 @@ import flash.events.EventDispatcher;
 import slavara.haxe.core.events.models.DataBaseEvent;
 import slavara.haxe.core.models.Data.DataBaseNativeEvent;
 import slavara.haxe.core.models.Data.DataContainer;
-import slavara.haxe.core.utils.Validate;
+import slavara.haxe.core.utils.Utils.ValidateUtil;
 
 /**
  * @author SlavaRa
@@ -22,14 +22,13 @@ class Data extends EventDispatcher {
 		if(value == parent) {
 			return;
 		}
-		
-		if(Validate.isNotNull(parent)) {
+		if(ValidateUtil.isNotNull(parent)) {
 			_bubbleParent = parent;
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.REMOVED, true));
 		}
 		parent = value;
 		_bubbleParent = value;
-		if(Validate.isNotNull(value)) {
+		if(ValidateUtil.isNotNull(value)) {
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.ADDED, true));
 		}
 	}
@@ -48,9 +47,8 @@ class Data extends EventDispatcher {
 		if (hasEventListener(type)) {
 			return true;
 		}
-		
 		var target = _bubbleParent;
-		while (Validate.isNotNull(target)) {
+		while (ValidateUtil.isNotNull(target)) {
 			if (target.hasEventListener(type)) {
 				return true;
 			}
@@ -66,10 +64,9 @@ class Data extends EventDispatcher {
 		if (hasEventListener(event.type)) {
 			canceled = !(super.dispatchEvent(event));
 		}
-		
 		if(!Reflect.getProperty(event, "__isCancelledNow")){
 			var target = _bubbleParent;
-			while (Validate.isNotNull(target)) {
+			while (ValidateUtil.isNotNull(target)) {
 				if (target.hasEventListener(event.type)) {
 					event = cast(event.clone(), DataBaseNativeEvent);
 					event.target = this;
