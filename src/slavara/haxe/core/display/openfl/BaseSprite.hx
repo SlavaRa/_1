@@ -4,7 +4,9 @@ import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
 import slavara.haxe.core.utils.Utils.IDestroyable;
-import slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.utils.Utils.ValidateUtil;
+using Lambda;
+using Std;
 
 /**
  * @author SlavaRa
@@ -34,37 +36,37 @@ import slavara.haxe.core.utils.Utils.ValidateUtil;
 		}
 	}
 	
-	@:final @:noCompletion function onRemovedFromStageHandler(_) {
+	@:final @:noCompletion function onRemovedFromStageHandler(?_) {
 		_addedToStage = false;
         onRemovedFromStage();
 	}
 	
 	function onAddedToStage() { }
+	
 	function onRemovedFromStage() { }
 	
 	public override function getChildByName(name:String):DisplayObject {
 		var child = super.getChildByName(name);
-		if (ValidateUtil.isNull(child) && name.indexOf(".") != -1) {
+		if(child.isNull() && name.indexOf(".") != -1) {
 			return getChildByPath(this, name);
 		}
 		return child;
 	}
 	
-	@:final @:noCompletion function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
+	@:final @:noCompletion inline function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
 		var child:DisplayObject = null;
 		var names = path.split(".");
-		while (names.length > 0) {
-			var name = names.shift();
-			child = container.getChildByName(name);
-			if(names.length == 0) {
-				return child;
+		while(!names.empty()) {
+			child = container.getChildByName(names.shift());
+			if(names.empty()) {
+				break;
 			}
-			if(ValidateUtil.isNull(child) || !Std.is(child, DisplayObjectContainer)) {
-				return null;
+			if(child.isNull() || !child.is(DisplayObjectContainer) {
+				child = null;
+				break;
 			}
 			container = cast(child, DisplayObjectContainer);
 		}
-		
 		return child;
 	}
 }
