@@ -41,7 +41,8 @@ class BaseController implements IBaseController implements IDestroyable {
 	public var container(default, null):DisplayObjectContainer;
 	public var data(default, null):Data;
 	
-	/**virtual*/ public function initialize() { }
+	public function initialize() { }
+	
 	public function destroy() {
 		container = null;
 		data = null;
@@ -66,7 +67,8 @@ class AbstractController implements IController implements IDestroyable {
 	public var baseController(default, null):IController;
 	public var data(default, null):Data;
 	
-	/**virtual*/ public function initialize() {}
+	public function initialize() { }
+	
 	public function destroy() {
 		baseController = null;
 		data = null;
