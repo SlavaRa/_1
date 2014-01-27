@@ -6,7 +6,9 @@ import slavara.haxe.core.events.models.DataBaseEvent;
 import slavara.haxe.core.models.Data.DataBaseNativeEvent;
 import slavara.haxe.core.models.Data.DataContainer;
 import slavara.haxe.core.models.flash.Data.EventContainer;
-import slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.utils.Utils.ValidateUtil;
+using Reflect;
+using Std;
 
 /**
  * @author SlavaRa
@@ -28,21 +30,20 @@ class Data extends EventDispatcher {
 		if(value == parent) {
 			return;
 		}
-		
-		if(ValidateUtil.isNotNull(parent)) {
+		if(parent.isNotNull()) {
 			_bubbleParent = parent;
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.REMOVED, true));
 		}
 		parent = value;
 		_bubbleParent = value;
-		if(ValidateUtil.isNotNull(value)) {
+		if(parent.isNotNull()) {
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.ADDED, true));
 		}
 	}
 	
 	public override function dispatchEvent(event:Event):Bool {
-		if (event.bubbles) {
-			if (Std.is(event, DataBaseEvent)) {
+		if(event.bubbles) {
+			if(event.is(DataBaseEvent)) {
 				return dispatchEventFunction(cast(event, DataBaseEvent));
 			}
 			throw "bubbling поддерживается только у событий наследованных от DataBaseEvent";
@@ -51,13 +52,12 @@ class Data extends EventDispatcher {
 	}
 	
 	@:noCompletion public override function willTrigger(type:String):Bool {
-		if (hasEventListener(type)) {
+		if(hasEventListener(type)) {
 			return true;
 		}
-		
 		var target = _bubbleParent;
-		while (ValidateUtil.isNotNull(target)) {
-			if (target.hasEventListener(type)) {
+		while(target.isNotNull()) {
+			if(target.hasEventListener(type)) {
 				return true;
 			}
 			target = target._bubbleParent;
@@ -65,26 +65,25 @@ class Data extends EventDispatcher {
 		return false;
 	}
 	
-	@:noCompletion function safeDispatchEvent(event:Event):Bool return super.dispatchEvent(event);
+	@:final @:noCompletion function safeDispatchEvent(event:Event):Bool return super.dispatchEvent(event);
 	
-	@:noCompletion function dispatchEventFunction(event:DataBaseNativeEvent):Bool {
+	@:final @:noCompletion function dispatchEventFunction(event:DataBaseNativeEvent):Bool {
 		var canceled = false;
 		if (hasEventListener(event.type)) {
 			canceled = !(super.dispatchEvent(event));
 		}
-		
-		if(!Reflect.getProperty(event, "_stopped")){
+		if(!event.getProperty("_stopped")){
 			var target = _bubbleParent;
-			while (ValidateUtil.isNotNull(target)) {
-				if (target.hasEventListener(event.type)) {
+			while(target.isNotNull()) {
+				if(target.hasEventListener(event.type)) {
 					event = cast(event.clone(), DataBaseNativeEvent);
-					Reflect.setProperty(event, "_eventPhase", EventPhase.BUBBLING_PHASE);
-					Reflect.setProperty(event, "_target", this);
-					Reflect.setProperty(event, "_canceled", canceled);
+					event.setProperty("_eventPhase", EventPhase.BUBBLING_PHASE);
+					event.setProperty("_target", this);
+					event.setProperty("_canceled", canceled);
 					eventContainer.event = event;
                     target.safeDispatchEvent(eventContainer);
-					canceled = Reflect.getProperty(event, "_canceled");
-					if (Reflect.getProperty(event, "_stopped")) {
+					canceled = event.getProperty("_canceled");
+					if (event.getProperty("_stopped")) {
 						break;
 					}
 				}

@@ -4,7 +4,7 @@ import slavara.haxe.core.controllers.BaseController.IBaseController;
 import slavara.haxe.core.controllers.BaseController.IController;
 import slavara.haxe.core.models.Data;
 import slavara.haxe.core.utils.Utils.IDestroyable;
-import slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.utils.Utils.ValidateUtil;
 
 /**
  * @author SlavaRa
@@ -28,8 +28,8 @@ class BaseController implements IBaseController implements IDestroyable {
 
 	public function new(container:DisplayObjectContainer, data:Data) {
 		#if debug
-		if(ValidateUtil.isNull(container)) throw "container is null";
-		if(ValidateUtil.isNull(data)) throw "the data argument must not be null";
+		if(container.isNull()) throw "container is null";
+		if(data.isNull()) throw "the data argument must not be null";
 		#end
 		this.container = container;
 		this.data = data;
@@ -57,7 +57,7 @@ class AbstractController implements IController implements IDestroyable {
 	
 	public function new(controller:IController) {
 		#if debug
-		if(ValidateUtil.isNull(controller)) throw "the controller argument must not be null";
+		if(controller.isNull()) throw "the controller argument must not be null";
 		#end
 		baseController = controller;
 		data = controller.data;
@@ -73,5 +73,4 @@ class AbstractController implements IController implements IDestroyable {
 		baseController = null;
 		data = null;
 	}
-	
 }

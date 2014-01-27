@@ -1,4 +1,6 @@
 package slavara.haxe.core.utils;
+using slavara.haxe.core.utils.Utils.ValidateUtil;
+using Std;
 using StringTools;
 
 /**
@@ -13,10 +15,9 @@ interface IDestroyable {
  * @author SlavaRa
  */
 extern class DestroyUtil {
-	
 	public static inline function destroy(d:Dynamic, safe:Bool = true):Dynamic {
-		if(ValidateUtil.isNotNull(d)) {
-			if(Std.is(d, IDestroyable)) {
+		if(d.isNotNull()) {
+			if(d.is(IDestroyable)) {
 				cast(d, IDestroyable).destroy();
 			}
 		}
@@ -28,10 +29,7 @@ extern class DestroyUtil {
  * @author SlavaRa
  */
 extern class StringUtil {
-	
-	public static inline function isNullOrEmpty(s:String):Bool {
-		return s == null || s.trim().length == 0;
-	}
+	public static inline function isNullOrEmpty(s:String):Bool return s.isNull() || s.trim().length == 0;
 }
 
 /**

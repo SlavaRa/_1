@@ -61,7 +61,7 @@ using Std;
 			if(names.empty()) {
 				break;
 			}
-			if(child.isNull() || !child.is(DisplayObjectContainer) {
+			if(child.isNull() || !child.is(DisplayObjectContainer)) {
 				child = null;
 				break;
 			}

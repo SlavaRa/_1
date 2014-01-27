@@ -1,7 +1,8 @@
 package slavara.haxe.core.models;
 import flash.events.Event;
-import slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.utils.Utils.ValidateUtil;
 using Lambda;
+using Std;
 
 #if (cpp || neko)
 typedef Data = slavara.haxe.core.models.native.Data;
@@ -32,18 +33,15 @@ class DataContainer extends Data {
 	
 	public function addChildAt(child:Data, index:Int):Data {
 		#if debug
-		if(ValidateUtil.isNull(child)) throw "the child argument must not be null";
+		if(child.isNull()) throw "the child argument must not be null";
 		#end
-		
-		if (child.parent == this) {
+		if(child.parent == this) {
 			setChildIndex(child, index);
 			return child;
 		}
-		
-		if (child.parent != null) {
+		if(child.parent != null) {
 			child.parent.removeChild(child);
 		}
-		
 		_list.insert(index, child);
 		child.setParent(this);
 		return child;
@@ -58,15 +56,13 @@ class DataContainer extends Data {
 	public function removeChildAt(index:Int):Data return removeChild(_list[index]);
 	
 	public function removeChildren(beginIndex:Int = 0, ?endIndex:Int = -1) {
-		if(_list.length == 0) {
+		if(_list.empty()) {
 			return;
 		}
-		
 		if(endIndex == -1 || endIndex > _list.length) {
 			endIndex = _list.length;
 		}
-		
-		for (child in _list.splice(beginIndex, endIndex - beginIndex)) {
+		for(child in _list.splice(beginIndex, endIndex - beginIndex)) {
 			child.setParent(null);
 		}
 	}
@@ -95,7 +91,6 @@ class DataContainer extends Data {
 	public function swapChildren(child1:Data, child2:Data) {
 		var index1 = _list.indexOf(child1);
 		var index2 = _list.indexOf(child2);
-		
 		_list.remove(child1);
 		_list.remove(child2);
 		_list.insert(index1, child2);
@@ -105,7 +100,6 @@ class DataContainer extends Data {
 	public function swapChildrenAt(index1:Int, index2:Int) {
 		var child1 = _list[index1];
 		var child2 = _list[index2];
-		
 		_list.remove(child1);
 		_list.remove(child2);
 		_list.insert(index1, child2);
@@ -124,15 +118,16 @@ class DataContainer extends Data {
 	
 	public function sort(f : Data -> Data -> Int) _list.sort(f);
 	
-	@:noCompletion function getChildByPath(container:DataContainer, path:String):Data {
+	@:noCompletion @:final inline function getChildByPath(container:DataContainer, path:String):Data {
 		var names = path.split(".");
 		var child = container.getChildByName(names.shift());
-		if(ValidateUtil.isNotNull(child) && names.empty()) {
+		if(child.isNotNull() && names.empty()) {
 			return child;
-		} else if(!Std.is(child, DataContainer)) {
+		} else if(!child.is(DataContainer)) {
 			return null;
+		} else {
+			return getChildByPath(cast(child, DataContainer), names.join("."));
 		}
-		return getChildByPath(cast(child, DataContainer), names.join("."));
 	}
 }
 
