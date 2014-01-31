@@ -1,4 +1,4 @@
-package slavara.haxe.core.models;
+package slavara.haxe.core;
 import flash.events.Event;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
 using Lambda;

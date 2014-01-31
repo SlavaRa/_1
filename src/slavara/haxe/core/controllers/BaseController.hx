@@ -2,7 +2,7 @@ package slavara.haxe.core.controllers;
 import flash.display.DisplayObjectContainer;
 import slavara.haxe.core.controllers.BaseController.IBaseController;
 import slavara.haxe.core.controllers.BaseController.IController;
-import slavara.haxe.core.models.Data;
+import slavara.haxe.core.Models.Data;
 import slavara.haxe.core.utils.Utils.IDestroyable;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
 

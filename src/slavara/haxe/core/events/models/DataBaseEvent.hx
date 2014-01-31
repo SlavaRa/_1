@@ -1,6 +1,6 @@
 package slavara.haxe.core.events.models;
 import flash.events.Event;
-import slavara.haxe.core.models.Data.DataBaseNativeEvent;
+import slavara.haxe.core.Models.DataBaseNativeEvent;
 
 /**
  * @author SlavaRa
