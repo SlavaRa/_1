@@ -101,23 +101,9 @@ class DataContainer extends Data {
 		_list.insert(index, child);
 	}
 	
-	public function swapChildren(child1:Data, child2:Data) {
-		var index1 = _list.indexOf(child1);
-		var index2 = _list.indexOf(child2);
-		_list.remove(child1);
-		_list.remove(child2);
-		_list.insert(index1, child2);
-		_list.insert(index2, child1);
-	}
+	public function swapChildren(child1:Data, child2:Data) swap(child1, child2, _list.indexOf(child1), _list.indexOf(child2));
 	
-	public function swapChildrenAt(index1:Int, index2:Int) {
-		var child1 = _list[index1];
-		var child2 = _list[index2];
-		_list.remove(child1);
-		_list.remove(child2);
-		_list.insert(index1, child2);
-		_list.insert(index2, child1);
-	}
+	public function swapChildrenAt(index1:Int, index2:Int) swap(_list[index1], _list[index2], index1, index2);
 	
 	public function contains(child:Data):Bool {
 		do {
@@ -141,6 +127,13 @@ class DataContainer extends Data {
 		} else {
 			return getChildByPath(cast(child, DataContainer), names.join("."));
 		}
+	}
+	
+	@:final @:noCompletion inline function swap(child1:Data, child2:Data, index1:Int, index2:Int) {
+		_list.remove(child1);
+		_list.remove(child2);
+		_list.insert(index1, child2);
+		_list.insert(index2, child1);
 	}
 }
 
