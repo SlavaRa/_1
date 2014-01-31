@@ -1,5 +1,7 @@
 package slavara.haxe.core;
 import flash.events.Event;
+import slavara.haxe.core.Interfaces.IExternalizableObject;
+import slavara.haxe.core.Models.DataContainer;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
 using Lambda;
 using Std;
@@ -11,6 +13,20 @@ typedef Data = slavara.haxe.core.models.html5.Data;
 #elseif flash
 typedef Data = slavara.haxe.core.models.flash.Data;
 #end
+
+/**
+ * @author SlavaRa
+ */
+class DataValueObjectContainer extends DataContainer implements IExternalizableObject {
+	
+	function new() super();
+	
+	@:final public function readExternal(input:Dynamic) deserialize(input);
+	@:final public function writeExternal(output:Dynamic) serialize(openfl);
+	
+	function deserialize(input:Dynamic) { }
+	function serialize(output:Dynamic) { }
+}
 
 /**
  * @author SlavaRa
@@ -70,15 +86,12 @@ class DataContainer extends Data {
 	public function getChildAt(index:Int):Data return _list[index];
 	
 	public function getChildByName(name:String):Data {
-		for (child in _list) {
-			if (child.name == name) {
+		for(child in _list) {
+			if(child.name == name) {
 				return child;
 			}
 		}
-		if(name.indexOf(".") != -1) {
-			return getChildByPath(this, name);
-		}
-		return null;
+		return name.indexOf(".") != -1 ? getChildByPath(this, name) : null;
 	}
 	
 	public function getChildIndex(child:Data):Int return _list.indexOf(child);
@@ -108,11 +121,11 @@ class DataContainer extends Data {
 	
 	public function contains(child:Data):Bool {
 		do {
-			if (child == this) {
+			if(child == this) {
 				return true;
 			}
 			child = child.parent;
-		} while (child != null);
+		} while(child != null);
 		return false;
 	}
 	
@@ -132,6 +145,7 @@ class DataContainer extends Data {
 }
 
 #if flash
+//XXX: move to events
 //TODO: доступ к полям должен быть через неймспейс
 extern class DataBaseNativeEvent extends Event {
 	function new(type:String, ?bubbles:Bool, ?cancelable:Bool);
