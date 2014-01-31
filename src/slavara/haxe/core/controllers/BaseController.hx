@@ -1,5 +1,6 @@
 package slavara.haxe.core.controllers;
 import flash.display.DisplayObjectContainer;
+import flash.events.EventDispatcher;
 import slavara.haxe.core.controllers.BaseController.IBaseController;
 import slavara.haxe.core.controllers.BaseController.IController;
 import slavara.haxe.core.Models.Data;
@@ -53,9 +54,10 @@ class BaseController implements IBaseController implements IDestroyable {
 /**
  * @author SlavaRa
  */
-class AbstractController implements IController implements IDestroyable {
+class AbstractController extends EventDispatcher implements IController implements IDestroyable {
 	
 	public function new(controller:IController) {
+		super();
 		#if debug
 		if(controller.isNull()) throw "the controller argument must not be null";
 		#end
