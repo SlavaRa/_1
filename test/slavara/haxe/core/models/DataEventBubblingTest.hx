@@ -2,7 +2,8 @@ package slavara.haxe.core.models;
 import massive.munit.Assert;
 import massive.munit.async.AsyncFactory;
 import slavara.haxe.core.events.models.DataBaseEvent;
-import slavara.haxe.core.models.Data.DataContainer;
+import slavara.haxe.core.Models.Data;
+import slavara.haxe.core.Models.DataContainer;
 
 /**
  * @author SlavaRa

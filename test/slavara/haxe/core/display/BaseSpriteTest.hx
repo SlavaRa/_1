@@ -1,6 +1,6 @@
 package slavara.haxe.core.display;
 import massive.munit.Assert;
-import slavara.haxe.core.display.DisplayObject.BaseSprite;
+import slavara.haxe.core.TypeDefs.BaseSprite;
 
 /**
  * @author SlavaRa

@@ -1,6 +1,7 @@
 package slavara.haxe.core.models;
 import massive.munit.Assert;
-import slavara.haxe.core.models.Data;
+import slavara.haxe.core.Models.Data;
+import slavara.haxe.core.Models.DataContainer;
 
 /**
  * @author SlavaRa

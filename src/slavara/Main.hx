@@ -1,6 +1,6 @@
 package slavara;
 import flash.Lib;
-import slavara.haxe.core.display.DisplayObject.BaseSprite;
+import slavara.haxe.core.TypeDefs.BaseSprite;
 
 /**
  * @author SlavaRa

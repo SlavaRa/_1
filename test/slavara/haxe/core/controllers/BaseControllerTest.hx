@@ -2,7 +2,7 @@ package slavara.haxe.core.controllers;
 import flash.display.Sprite;
 import massive.munit.Assert;
 import slavara.haxe.core.controllers.BaseController;
-import slavara.haxe.core.models.Data;
+import slavara.haxe.core.Models.Data;
 import slavara.haxe.core.utils.Utils.DestroyUtil;
 
 /**
