@@ -1,4 +1,7 @@
 package slavara.haxe.core.utils;
+import massive.munit.Assert;
+import slavara.haxe.core.TypeDefs.BaseSprite;
+import slavara.haxe.core.utils.Utils.DestroyUtil;
 
 /**
  * @author SlavaRa
@@ -7,5 +10,13 @@ class DestroyableTest {
 
 	public function new() { }
 	
-	//TODO: implement me
+	@Test
+	public function destroyTest() {
+		var array:Array<BaseSprite> = [];
+		array.push(new BaseSprite());
+		array.push(new BaseSprite());
+		
+		DestroyUtil.destroy(array);
+		Assert.areEqual(array.length, 0);
+	}
 }

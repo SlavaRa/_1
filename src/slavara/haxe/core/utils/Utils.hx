@@ -1,5 +1,6 @@
 package slavara.haxe.core.utils;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
+using Reflect;
 using Std;
 using StringTools;
 
@@ -19,6 +20,14 @@ extern class DestroyUtil {
 		if(d.isNotNull()) {
 			if(d.is(IDestroyable)) {
 				cast(d, IDestroyable).destroy();
+			} else if(d.hasField("iterator")) {
+				var iterator:Iterator<Dynamic> = d.getProperty("iterator");
+				for(it in iterator) {
+					if(d.hasField("remove")) {
+						d.callMethod("remove", [it]);
+					}
+					destroy(it);
+				}
 			}
 		}
 		return null;
