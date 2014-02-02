@@ -31,7 +31,6 @@ class DataValueObjectContainer extends DataContainer implements IExternalizableO
 
 /**
  * @author SlavaRa
- * TODO: добавить валидацию параметров паблик методов
  */
 class DataContainer extends Data {
 
