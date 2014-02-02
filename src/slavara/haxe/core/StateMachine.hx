@@ -1,5 +1,4 @@
 package slavara.haxe.core;
-import flash.errors.ArgumentError;
 import msignal.Signal.Signal0;
 import slavara.haxe.core.Errors.NullArgumentError;
 using Lambda;
