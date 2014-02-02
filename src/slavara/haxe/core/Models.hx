@@ -59,6 +59,7 @@ class DataContainer extends Data {
 			child.parent.removeChild(child);
 		}
 		_list.insert(index, child);
+		addChildBefore(child);
 		child.setParent(this);
 		return child;
 	}
@@ -68,6 +69,7 @@ class DataContainer extends Data {
 		if(child.isNull()) throw new NullArgumentError("child");
 		#end
 		_list.remove(child);
+		removeChildBefore(child);
 		child.setParent(null);
 		return child;
 	}
@@ -82,6 +84,7 @@ class DataContainer extends Data {
 			endIndex = _list.length;
 		}
 		for(child in _list.splice(beginIndex, endIndex - beginIndex)) {
+			removeChildBefore(child);
 			child.setParent(null);
 		}
 	}
@@ -155,6 +158,10 @@ class DataContainer extends Data {
 		_list.insert(index1, child2);
 		_list.insert(index2, child1);
 	}
+	
+	function addChildBefore(child:Data) { }
+	
+	function removeChildBefore(child:Data) { }
 }
 
 #if flash
