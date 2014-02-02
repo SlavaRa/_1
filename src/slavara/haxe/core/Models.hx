@@ -1,5 +1,6 @@
 package slavara.haxe.core;
 import flash.events.Event;
+import slavara.haxe.core.Errors.NullArgumentError;
 import slavara.haxe.core.Interfaces.IExternalizableObject;
 import slavara.haxe.core.Models.DataContainer;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
@@ -49,7 +50,7 @@ class DataContainer extends Data {
 	
 	public function addChildAt(child:Data, index:Int):Data {
 		#if debug
-		if(child.isNull()) throw "the child argument must not be null";
+		if(child.isNull()) throw new NullArgumentError("child");
 		#end
 		if(child.parent == this) {
 			setChildIndex(child, index);
@@ -64,6 +65,9 @@ class DataContainer extends Data {
 	}
 	
 	public function removeChild(child:Data):Data {
+		#if debug
+		if(child.isNull()) throw new NullArgumentError("child");
+		#end
 		_list.remove(child);
 		child.setParent(null);
 		return child;
@@ -94,18 +98,35 @@ class DataContainer extends Data {
 		return name.indexOf(".") != -1 ? getChildByPath(this, name) : null;
 	}
 	
-	public function getChildIndex(child:Data):Int return _list.indexOf(child);
+	public function getChildIndex(child:Data):Int {
+		#if debug
+		if(child.isNull()) throw new NullArgumentError("child");
+		#end
+		return _list.indexOf(child);
+	}
 	
 	public function setChildIndex(child:Data, index:Int) {
+		#if debug
+		if(child.isNull()) throw new NullArgumentError("child");
+		#end
 		_list.remove(child);
 		_list.insert(index, child);
 	}
 	
-	public function swapChildren(child1:Data, child2:Data) swap(child1, child2, _list.indexOf(child1), _list.indexOf(child2));
+	public function swapChildren(child1:Data, child2:Data) {
+		#if debug
+		if(child1.isNull()) throw new NullArgumentError("child1");
+		if(child2.isNull()) throw new NullArgumentError("child2");
+		#end
+		swap(child1, child2, _list.indexOf(child1), _list.indexOf(child2));
+	}
 	
 	public function swapChildrenAt(index1:Int, index2:Int) swap(_list[index1], _list[index2], index1, index2);
 	
 	public function contains(child:Data):Bool {
+		#if debug
+		if(child.isNull()) throw new NullArgumentError("child");
+		#end
 		do {
 			if(child == this) {
 				return true;
