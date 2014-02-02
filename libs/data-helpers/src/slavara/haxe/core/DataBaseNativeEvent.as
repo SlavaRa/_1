@@ -1,4 +1,4 @@
-package slavara.haxe.core.models {
+package slavara.haxe.core {
 	import flash.events.Event;
 	import flash.events.EventPhase;
 	
