@@ -10,11 +10,8 @@ using slavara.haxe.core.utils.Utils.ValidateUtil;
 class StateMachine {
 
 	public function new() {
-		currentState = null;
-		previousState = null;
 		onChange = new Signal0();
-		_transitions = new EnumValueHash<EnumValue, EnumValueHash<EnumValue, StateTransition>>();
-		_transitionListeners = new EnumValueHash<EnumValue, EnumValueHash<EnumValue, Array<Void -> Void>>>();
+		reset();
 	}
 	
 	public var currentState(default, null):EnumValue;
@@ -27,7 +24,7 @@ class StateMachine {
 	var _transitionListeners:EnumValueHash<EnumValue, EnumValueHash<EnumValue, Array<Void -> Void>>>;
 	var _inTransition:Bool;
 	
-	public function clear():StateMachine {
+	public function reset():StateMachine {
 		onChange.removeAll();
 		currentState = null;
 		previousState = null;
