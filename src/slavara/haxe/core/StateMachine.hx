@@ -21,7 +21,13 @@ class StateMachine {
 	public var previousState(default, null):EnumValue;
 	public var onChange(default, null):Signal0;
 	
-	public function clear() {
+	var _transitions:EnumValueHash<EnumValue, EnumValueHash<EnumValue, StateTransition>>;
+	var _queuedState:EnumValue;
+	var _statesQueue:Array<EnumValue>;
+	var _transitionListeners:EnumValueHash<EnumValue, EnumValueHash<EnumValue, Array<Void -> Void>>>;
+	var _inTransition:Bool;
+	
+	public function clear():StateMachine {
 		onChange.removeAll();
 		currentState = null;
 		previousState = null;
@@ -30,15 +36,16 @@ class StateMachine {
 		_statesQueue = null;
 		_transitionListeners = new EnumValueHash<EnumValue, EnumValueHash<EnumValue, Array<Void -> Void>>>();
 		_inTransition = false;
+		return this;
 	}
 	
-	public function add(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>) {
+	public function add(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>):StateMachine {
 		#if debug
 		if(from.isNull()) throw new NullArgumentError("from");
 		if(to.isNull()) throw new NullArgumentError("to");
 		#end
 		if(from == to) {
-			return;
+			return this;
 		}
 		if(!_transitions.exists(from)) {
 			_transitions.set(from, new EnumValueHash<EnumValue, StateTransition>());
@@ -47,9 +54,10 @@ class StateMachine {
 			_transitions.set(to, new EnumValueHash<EnumValue, StateTransition>());
 		}
 		_transitions.get(from).set(to, new StateTransition(from, to, via));
+		return this;
 	}
 	
-	public function addToMany(from:EnumValue, to:Array<EnumValue>, ?via:Array<EnumValue>) {
+	public function addToMany(from:EnumValue, to:Array<EnumValue>, ?via:Array<EnumValue>):StateMachine {
 		#if debug
 		if(from.isNull()) throw new NullArgumentError("from");
 		if(to.isNull()) throw new NullArgumentError("to");
@@ -57,9 +65,10 @@ class StateMachine {
 		for(toState in to) {
 			add(from, toState);
 		}
+		return this;
 	}
 	
-	public function addAllToAll(all:Array<EnumValue>, ?via:Array<EnumValue>) {
+	public function addAllToAll(all:Array<EnumValue>, ?via:Array<EnumValue>):StateMachine {
 		#if debug
 		if(all.isNull()) throw new NullArgumentError("all");
 		#end
@@ -68,18 +77,20 @@ class StateMachine {
 				addTwoWay(from, to, via);
 			}
 		}
+		return this;
 	}
 	
-	public function addTwoWay(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>) {
+	public function addTwoWay(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>):StateMachine {
 		#if debug
 		if(from.isNull()) throw new NullArgumentError("from");
 		if(to.isNull()) throw new NullArgumentError("to");
 		#end
 		add(from, to, via);
 		add(to, from, via);
+		return this;
 	}
 	
-	public function setState(state:EnumValue) {
+	public function setState(state:EnumValue):StateMachine {
 		#if debug
 		if(state.isNull()) throw new NullArgumentError("state");
 		#end
@@ -88,21 +99,20 @@ class StateMachine {
 			broadcastStateChange(null, currentState);
 		}
 		if(state == currentState) {
-			return;
+			return this;
 		}
 		if(_inTransition) {
 			_queuedState = state;
-			return;
+			return this;
 		} else {
 			_queuedState = null;
 		}
 		if(!_transitions.exists(currentState)) {
-			return;
+			return this;
 		}
-		var state2Transition = _transitions.get(currentState);
-		var transition = state2Transition.get(state);
+		var transition = _transitions.get(currentState).get(state);
 		if(transition.isNull()) {
-			return;
+			return this;
 		}
 		previousState = currentState;
 		if(transition.simple) {
@@ -113,11 +123,15 @@ class StateMachine {
 			_statesQueue = transition.queue;
 			setNextQueuedState();
 		}
+		return this;
 	}
 	
-	public function release() setNextQueuedState();
+	public function release():StateMachine {
+		setNextQueuedState();
+		return this;
+	}
 	
-	public function addTransitionListener(from:EnumValue, to:EnumValue, listener:Void -> Void) {
+	public function addTransitionListener(from:EnumValue, to:EnumValue, listener:Void -> Void):StateMachine {
 		#if debug
 		if(from.isNull()) throw new NullArgumentError("from");
 		if(to.isNull()) throw new NullArgumentError("to");
@@ -126,47 +140,42 @@ class StateMachine {
 		if(!_transitionListeners.exists(from)) {
 			_transitionListeners.set(from, new EnumValueHash<EnumValue, Array<Void -> Void>>());
 		}
-		var to2Listeners = _transitionListeners.get(from);
-		if(!to2Listeners.exists(to)) {
-			to2Listeners.set(to, []);
+		var to2listeners = _transitionListeners.get(from);
+		if(!to2listeners.exists(to)) {
+			to2listeners.set(to, []);
 		}
-		var listeners = to2Listeners.get(to);
-		if(listeners.has(listener)) {
-			return;
+		var listeners = to2listeners.get(to);
+		if(!listeners.has(listener)) {
+			listeners.push(listener);
 		}
-		listeners.push(listener);
+		return this;
 	}
 	
-	public function removeTransitionListener(from:EnumValue, to:EnumValue, listener:Void -> Void) {
+	public function removeTransitionListener(from:EnumValue, to:EnumValue, listener:Void -> Void):StateMachine {
 		#if debug
 		if(from.isNull()) throw new NullArgumentError("from");
 		if(to.isNull()) throw new NullArgumentError("to");
 		if(listener.isNull()) throw new NullArgumentError("listener");
 		#end
 		if(!_transitionListeners.exists(from)) {
-			return;
+			return this;
 		}
-		var to2Listeners = _transitionListeners.get(from);
-		if(!to2Listeners.exists(to)) {
-			return;
+		var to2listeners = _transitionListeners.get(from);
+		if(!to2listeners.exists(to)) {
+			return this;
 		}
-		var listerens = to2Listeners.get(to);
+		var listerens = to2listeners.get(to);
 		listerens.remove(listener);
 		if(listerens.length == 0) {
-			to2Listeners.remove(to);
+			to2listeners.remove(to);
 		}
-		if(to2Listeners.isEmpty()) {
+		if(to2listeners.isEmpty()) {
 			_transitionListeners.remove(from);
 		}
+		return this;
 	}
 	
-	var _transitions:EnumValueHash<EnumValue, EnumValueHash<EnumValue, StateTransition>>;
-	var _queuedState:EnumValue;
-	var _statesQueue:Array<EnumValue>;
-	var _transitionListeners:EnumValueHash<EnumValue, EnumValueHash<EnumValue, Array<Void -> Void>>>;
-	var _inTransition:Bool;
-	
-	inline function setNextQueuedState() {
+	@:final @:noCompletion inline function setNextQueuedState() {
 		previousState = currentState;
 		currentState = _statesQueue[0];
 		_statesQueue.remove(currentState);
@@ -187,7 +196,7 @@ class StateMachine {
 		}
 	}
 	
-	inline function broadcastStateChange(from:EnumValue, to:EnumValue) {
+	@:final @:noCompletion inline function broadcastStateChange(from:EnumValue, to:EnumValue) {
 		onChange.dispatch();
 		if(_transitionListeners.exists(from)) {
 			var to2Listeners = _transitionListeners.get(from);
