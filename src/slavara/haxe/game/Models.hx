@@ -1,5 +1,5 @@
 package slavara.haxe.game;
-import slavara.haxe.core.Errors.NullArgumentError;
+import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.core.events.models.DataBaseEvent;
 import slavara.haxe.core.Models.DataValueObjectContainer;
 import slavara.haxe.core.StateMachine;
@@ -45,7 +45,7 @@ class UnknownData extends DataValueObjectContainer implements IUnknown {
 
 	function new(proto:UnknownProto) {
 		#if debug
-		if(proto.isNull()) throw new NullArgumentError("proto");
+		if(proto.isNull()) throw new ArgumentNullError("proto");
 		#end
 		super();
 		_proto = proto;

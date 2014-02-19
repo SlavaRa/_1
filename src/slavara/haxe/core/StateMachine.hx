@@ -1,6 +1,6 @@
 package slavara.haxe.core;
 import msignal.Signal.Signal0;
-import slavara.haxe.core.Errors.NullArgumentError;
+import slavara.haxe.core.Errors.ArgumentNullError;
 using Lambda;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
 
@@ -38,8 +38,8 @@ class StateMachine {
 	
 	public function add(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>):StateMachine {
 		#if debug
-		if(from.isNull()) throw new NullArgumentError("from");
-		if(to.isNull()) throw new NullArgumentError("to");
+		if(from.isNull()) throw new ArgumentNullError("from");
+		if(to.isNull()) throw new ArgumentNullError("to");
 		#end
 		if(from == to) {
 			return this;
@@ -56,8 +56,8 @@ class StateMachine {
 	
 	public function addToMany(from:EnumValue, to:Array<EnumValue>, ?via:Array<EnumValue>):StateMachine {
 		#if debug
-		if(from.isNull()) throw new NullArgumentError("from");
-		if(to.isNull()) throw new NullArgumentError("to");
+		if(from.isNull()) throw new ArgumentNullError("from");
+		if(to.isNull()) throw new ArgumentNullError("to");
 		#end
 		for(toState in to) {
 			add(from, toState);
@@ -67,7 +67,7 @@ class StateMachine {
 	
 	public function addAllToAll(all:Array<EnumValue>, ?via:Array<EnumValue>):StateMachine {
 		#if debug
-		if(all.isNull()) throw new NullArgumentError("all");
+		if(all.isNull()) throw new ArgumentNullError("all");
 		#end
 		for(from in all) {
 			for(to in all) {
@@ -79,8 +79,8 @@ class StateMachine {
 	
 	public function addTwoWay(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>):StateMachine {
 		#if debug
-		if(from.isNull()) throw new NullArgumentError("from");
-		if(to.isNull()) throw new NullArgumentError("to");
+		if(from.isNull()) throw new ArgumentNullError("from");
+		if(to.isNull()) throw new ArgumentNullError("to");
 		#end
 		add(from, to, via);
 		add(to, from, via);
@@ -89,7 +89,7 @@ class StateMachine {
 	
 	public function setState(state:EnumValue):StateMachine {
 		#if debug
-		if(state.isNull()) throw new NullArgumentError("state");
+		if(state.isNull()) throw new ArgumentNullError("state");
 		#end
 		if(currentState.isNull()) {
 			currentState = state;
@@ -130,9 +130,9 @@ class StateMachine {
 	
 	public function addTransitionListener(from:EnumValue, to:EnumValue, listener:Void -> Void):StateMachine {
 		#if debug
-		if(from.isNull()) throw new NullArgumentError("from");
-		if(to.isNull()) throw new NullArgumentError("to");
-		if(listener.isNull()) throw new NullArgumentError("listener");
+		if(from.isNull()) throw new ArgumentNullError("from");
+		if(to.isNull()) throw new ArgumentNullError("to");
+		if(listener.isNull()) throw new ArgumentNullError("listener");
 		#end
 		if(!_transitionListeners.exists(from)) {
 			_transitionListeners.set(from, new EnumValueHash<EnumValue, Array<Void -> Void>>());
@@ -150,9 +150,9 @@ class StateMachine {
 	
 	public function removeTransitionListener(from:EnumValue, to:EnumValue, listener:Void -> Void):StateMachine {
 		#if debug
-		if(from.isNull()) throw new NullArgumentError("from");
-		if(to.isNull()) throw new NullArgumentError("to");
-		if(listener.isNull()) throw new NullArgumentError("listener");
+		if(from.isNull()) throw new ArgumentNullError("from");
+		if(to.isNull()) throw new ArgumentNullError("to");
+		if(listener.isNull()) throw new ArgumentNullError("listener");
 		#end
 		if(!_transitionListeners.exists(from)) {
 			return this;
