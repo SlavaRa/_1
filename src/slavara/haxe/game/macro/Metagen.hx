@@ -33,8 +33,6 @@ enum Lang {
  */
 class Metagen {
 	
-	static inline var STRUCT = "struct";
-	
 	macro public static function init(settings:Settings):Array<Field> {
 		var files = Directory.getFiles(settings.metaPath, settings.metaExt, SearchOption.AllDirectories);
 		for(file in files) {
@@ -50,15 +48,16 @@ class Metagen {
 	static inline function removeCommentLines(v:String):String return ~/\/\/.*/gm.replace(v, "");
 	
 	static inline function getStructs(content:String, settings:Settings, filePos:Position):Array<TypeDefinition> {
+		var struct = "struct";
 		var result:Array<TypeDefinition> = [];
 		var startIndex = 0;
 		var endIndex = 0;
 		while(content.length > 0) {
-			startIndex = content.indexOf(STRUCT);
+			startIndex = content.indexOf(struct);
 			if(startIndex == -1) {
 				break;
 			}
-			endIndex = content.indexOf(STRUCT, startIndex + STRUCT.length);
+			endIndex = content.indexOf(struct, startIndex + struct.length);
 			if(endIndex == -1) {
 				endIndex = content.length;
 			}
@@ -108,7 +107,6 @@ class Metagen {
 			.map(function(v) return v.replace(" ", ""));
 		return [for(it in list) new LineModel(it)];
 	}
-	
 }
 
 /**
