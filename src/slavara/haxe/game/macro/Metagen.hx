@@ -1,5 +1,4 @@
 package slavara.haxe.game.macro;
-import haxe.Log;
 import haxe.macro.Context;
 import haxe.macro.Expr.Access;
 import haxe.macro.Expr.ComplexType;
@@ -22,6 +21,11 @@ typedef Settings = {
 	assetsPath:String,
 	assetExt:String,
 	pack:Array<String>
+}
+
+enum Lang {
+	AS3;
+	Haxe;
 }
 
 /**
@@ -58,7 +62,7 @@ class Metagen {
 			if(endIndex == -1) {
 				endIndex = content.length;
 			}
-			result.push(StructParser.parse(content.substring(startIndex, endIndex), settings, filePos));
+			result.push(StructParser.getTypeDefinition(content.substring(startIndex, endIndex), settings, filePos));
 			content = content.substring(endIndex);
 		}
 		return result;
@@ -71,44 +75,29 @@ class Metagen {
  */
 @:noCompletion extern class StructParser {
 	
-	public static inline function parse(v:String, settings:Settings, filePos:Position):TypeDefinition {
-		var header = v.getHeader();
-		var body = v.getBody();
-		var s = "struct";
-		var e = "extends";
-		var i = header.indexOf(s);
-		s = header.substring(i + s.length);
-		i = s.indexOf(e);
-		
-		var sName:String;
-		var sType:TypePath;
-		if(i == -1) {
-			sName = s.trim();
-			sType = null;
-		} else {
-			sName = s.substring(0, i).trim();
-			var superClassName = s.substring(i + e.length).trim();
-			var superClassPack:Array<String> = switch(superClassName) {
-				case "UnknownProto": "slavara/haxe/game/Models".split("/");
-				case _: settings.pack;
-			}
-			sType = { name:superClassName, pack:superClassPack, params:[] };
-		}
+	public static inline function getTypeDefinition(v:String, settings:Settings, filePos:Position):TypeDefinition {
+		var header = v.getHeader(settings.pack);
 		return {
 			pack : settings.pack,
-			name : sName,
+			name : header.name,
 			pos : filePos,
 			meta : [],
 			params : [],
 			isExtern : false,
-			kind : TypeDefKind.TDClass(sType, null, false),
-			fields : [for(it in body) it.field]
+			kind : TypeDefKind.TDClass(header.superClass, null, false),
+			fields : [for(it in v.getBody()) it.field]
 		};
 	}
 	
-	static inline function removeCommentDocs(v:String):String return v;//TODO: IMPLEMENT ME
+	public static inline function getStringDefinition(v:String, settings:Settings):String {
+		var header = v.getHeader(settings.pack);
+		var body = v.getBody();
+		return "";
+	}
 	
-	static inline function getHeader(v:String):String return v.substring(0, v.indexOf("{"));
+	static inline function getHeader(v:String, pack:Array<String>):HeaderModel {
+		return new HeaderModel(v.substring(0, v.indexOf("{")), pack);
+	}
 	
 	static inline function getBody(v:String):Array<LineModel> {
 		var list = v.substring(v.indexOf("{") + 1, v.lastIndexOf("}"))
@@ -126,8 +115,43 @@ class Metagen {
  * @author SlavaRa
  * @private
  */
-private class LineModel {
+private class HeaderModel {
+	public function new(text:String, pack:Array<String>) {
+		this.text = text;
+		this.pack = pack;
+		
+		var s = "struct";
+		var e = "extends";
+		var i = text.indexOf(s);
+		s = text.substring(i + s.length);
+		i = s.indexOf(e);
+		if(i == -1) {
+			name = s.trim();
+		} else {
+			name = s.substring(0, i).trim();
+			var superClassName = s.substring(i + e.length).trim();
+			superClass = {
+				name:superClassName,
+				pack:switch(superClassName) {
+					case "UnknownProto", "UnknownData": "slavara/haxe/game/Models".split("/");
+					case _: pack;
+				},
+				params:[]
+			};
+		}
+	}
 	
+	public var text(default, null):String;
+	public var pack(default, null):Array<String>;
+	public var name(default, null):String;
+	public var superClass(default, null):TypePath;
+}
+
+/**
+ * @author SlavaRa
+ * @private
+ */
+private class LineModel {
 	public function new(text:String) {
 		this.text = text;
 		

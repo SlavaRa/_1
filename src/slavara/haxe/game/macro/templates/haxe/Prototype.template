@@ -1,0 +1,9 @@
+package $(Package);
+$(Imports);
+
+class $(FileName) $(Extends) {
+	public function new() {
+		$(Super);
+	}
+	$(Properties);
+}
