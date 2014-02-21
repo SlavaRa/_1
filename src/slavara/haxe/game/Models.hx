@@ -1,6 +1,7 @@
 package slavara.haxe.game;
 import flash.errors.ArgumentError;
 import slavara.haxe.core.Errors.ArgumentNullError;
+import slavara.haxe.core.Interfaces.IStateMachineHolder;
 import slavara.haxe.core.Models.Data;
 import slavara.haxe.core.Models.DataValueObjectContainer;
 import slavara.haxe.core.StateMachine;
@@ -44,7 +45,7 @@ class UnknownProto extends DataValueObjectContainer implements IUnknown {
 /**
  * @author SlavaRa
  */
-class UnknownData extends DataValueObjectContainer implements IUnknown {
+class UnknownData extends DataValueObjectContainer implements IUnknown implements IStateMachineHolder {
 
 	function new(proto:UnknownProto) {
 		#if debug
