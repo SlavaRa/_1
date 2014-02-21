@@ -52,17 +52,17 @@ class UnknownData extends DataValueObjectContainer implements IUnknown implement
 		if(proto.isNull()) throw new ArgumentNullError("proto");
 		#end
 		super();
-		_proto = proto;
+		this.proto = proto;
 		initialize();
 	}
 	
+	public var proto(default, null):UnknownProto;
 	public var stateMachine(default, null):StateMachine;
 	public var id(get, null):Int;
 	public var desc(get, null):String;
 	
 	var _id:Int;
 	var _desc:String;
-	var _proto:UnknownProto;
 	
 	@:noCompletion inline function get_id():Int return _id;
 	@:noCompletion inline function get_desc():String return _desc;
