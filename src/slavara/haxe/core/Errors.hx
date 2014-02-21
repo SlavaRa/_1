@@ -6,11 +6,11 @@ import flash.errors.Error;
 /**
  * @author SlavaRa
  */
-extern class ArgumentNullError extends ArgumentError {
-	public function new(?argName:String) super("the " + argName + " argument must not be null");
+class ArgumentNullError extends ArgumentError {
+	public function new(?argName:String) super("the " + argName + " argument must not be null", 1009);
 }
 
-extern class NotImplementedError extends flash.errors.Error {
+class NotImplementedError extends flash.errors.Error {
 	public function new() super();
 }
 
