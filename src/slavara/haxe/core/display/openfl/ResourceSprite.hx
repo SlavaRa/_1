@@ -6,5 +6,4 @@ package slavara.haxe.core.display.openfl;
 class ResourceSprite extends BaseSprite {
 
 	public function new() super();
-	
 }

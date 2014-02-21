@@ -41,10 +41,6 @@ using Std;
         onRemovedFromStage();
 	}
 	
-	function onAddedToStage() { }
-	
-	function onRemovedFromStage() { }
-	
 	public override function getChildByName(name:String):DisplayObject {
 		var child = super.getChildByName(name);
 		if(child.isNull() && name.indexOf(".") != -1) {
@@ -69,4 +65,17 @@ using Std;
 		}
 		return child;
 	}
+	
+	@:final @:noCompletion function onAddedToStage() render();
+	
+	@:final @:noCompletion function onRemovedFromStage() clear();
+	
+	function render():Bool {
+		update();
+		return true;
+	}
+	
+	function clear() { }
+	
+	function update() { }
 }
