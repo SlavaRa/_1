@@ -129,6 +129,8 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 	
 	public function get(id:Int):T return _id2t.exists(id) ? _id2t.get(id) : null;
 	
+	public function getItems():Iterator<T> return _id2t.iterator();
+	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
 		
