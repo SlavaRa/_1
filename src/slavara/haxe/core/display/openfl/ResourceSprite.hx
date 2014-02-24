@@ -2,6 +2,7 @@ package slavara.haxe.core.display.openfl;
 import format.SWF;
 import openfl.Assets;
 import slavara.haxe.core.Errors.ArgumentNullError;
+import slavara.haxe.core.TypeDefs.DisplayObject;
 import slavara.haxe.core.TypeDefs.DisplayObjectContainer;
 import slavara.haxe.core.utils.Utils.DestroyUtil;
 import slavara.haxe.game.Resource.ResRef;
@@ -15,13 +16,16 @@ using StringTools;
  */
 class ResourceSprite extends BaseSprite {
 
-	public function new() super();
+	public function new(?asset:DisplayObjectContainer) {
+		super();
+		this.asset = asset;
+	}
 	
-	public var asset(default, null):DisplayObjectContainer;
+	var asset(default, null):DisplayObjectContainer;
 	
 	public override function destroy() {
 		super.destroy();
-		asset = DestroyUtil.destroy(asset);
+		while(numChildren != 0) DestroyUtil.destroy(removeChildAt(0));
 	}
 	
 	public function hasResource(resRef:ResRef):Bool {
@@ -46,13 +50,28 @@ class ResourceSprite extends BaseSprite {
 		if(resRef.isNull()) throw new ArgumentNullError("resRef");
 		#end
 		
+		var index = 0;
+		if(asset.isNotNull() && asset.parent.isNotNull()) {
+			index = getChildIndex(asset);
+			removeChild(asset);
+		}
 		DestroyUtil.destroy(asset, false);
-		addChild(asset = cast(new SWF(Assets.getBytes(resRef.swf)).createMovieClip(resRef.link), DisplayObjectContainer));
+		asset = cast(new SWF(Assets.getBytes(resRef.swf)).createMovieClip(resRef.link), DisplayObjectContainer);
+		addChildAt(asset, index);
 	}
 	
 	public function getContainer(name:String):DisplayObjectContainer {
 		if(asset.isNull()) return null;
 		var child = _getChildByName(asset, name);
 		return child.isNotNull() && child.is(DisplayObjectContainer) ? cast(child, DisplayObjectContainer) : null;
+	}
+	
+	public function addChildWithContainer(child:DisplayObject, container:DisplayObject) {
+		var index = asset.getChildIndex(container);
+		if(index >= numChildren) index = numChildren - 1;
+		
+		child.x = container.x;
+		child.y = container.y;
+		addChildAt(child, index);
 	}
 }
