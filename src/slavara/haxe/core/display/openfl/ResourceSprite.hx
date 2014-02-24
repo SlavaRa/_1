@@ -7,6 +7,7 @@ import slavara.haxe.core.TypeDefs.DisplayObjectContainer;
 import slavara.haxe.core.Utils.DestroyUtil;
 import slavara.haxe.game.Resource.ResRef;
 import slavara.haxe.game.Resource.SWFResRef;
+using slavara.haxe.core.Utils.DisplayUtils;
 using slavara.haxe.core.Utils.ValidateUtil;
 using Std;
 using StringTools;
@@ -70,8 +71,6 @@ class ResourceSprite extends BaseSprite {
 		var index = asset.getChildIndex(container);
 		if(index >= numChildren) index = numChildren - 1;
 		
-		child.x = container.x;
-		child.y = container.y;
-		addChildAt(child, index);
+		addChildAt(child.setXY(container.x, container.y), index);
 	}
 }

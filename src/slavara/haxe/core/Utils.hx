@@ -1,5 +1,6 @@
 package slavara.haxe.core;
 import slavara.haxe.core.Interfaces.IDestroyable;
+import slavara.haxe.core.TypeDefs.DisplayObject;
 using slavara.haxe.core.Utils.ValidateUtil;
 using Reflect;
 using Std;
@@ -41,4 +42,15 @@ extern class ValidateUtil {
 	public static inline function isNull(d:Dynamic):Bool return d == null;
 	
 	public static inline function isNotNull(d:Dynamic):Bool return d != null;
+}
+
+/**
+ * @author SlavaRa
+ */
+extern class DisplayUtils {
+	public static inline function setXY(display:DisplayObject, x:Float, y:Float):DisplayObject {
+		display.x = x;
+		display.y = y;
+		return display;
+	}
 }
