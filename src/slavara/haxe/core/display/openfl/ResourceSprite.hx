@@ -29,7 +29,7 @@ class ResourceSprite extends BaseSprite {
 		if(resRef.isNull()) throw new ArgumentNullError("resRef");
 		#end
 		
-		if(resRef.is(SWFResRef)) return hasSWF((resRef, SWFResRef).swf);
+		if(resRef.is(SWFResRef)) return hasSWF(cast(resRef, SWFResRef));
 		return Assets.exists(resRef.link);
 	}
 	
