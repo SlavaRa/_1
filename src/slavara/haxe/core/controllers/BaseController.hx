@@ -4,8 +4,8 @@ import flash.events.EventDispatcher;
 import slavara.haxe.core.controllers.BaseController.IBaseController;
 import slavara.haxe.core.controllers.BaseController.IController;
 import slavara.haxe.core.Errors.ArgumentNullError;
+import slavara.haxe.core.Interfaces.IDestroyable;
 import slavara.haxe.core.Models.Data;
-import slavara.haxe.core.utils.Utils.IDestroyable;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
 
 /**

@@ -1,16 +1,9 @@
 package slavara.haxe.core.utils;
+import slavara.haxe.core.Interfaces.IDestroyable;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
 using Reflect;
 using Std;
 using StringTools;
-
-/**
- * @author SlavaRa
- */
-interface IDestroyable {
-	function initialize():Void;
-	function destroy():Void;
-}
 
 /**
  * @author SlavaRa

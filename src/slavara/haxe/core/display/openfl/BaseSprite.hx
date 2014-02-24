@@ -3,7 +3,7 @@ import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Sprite;
 import flash.events.Event;
-import slavara.haxe.core.utils.Utils.IDestroyable;
+import slavara.haxe.core.Interfaces.IDestroyable;
 using slavara.haxe.core.utils.Utils.ValidateUtil;
 using Lambda;
 using Std;
