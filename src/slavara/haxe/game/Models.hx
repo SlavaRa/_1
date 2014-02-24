@@ -32,13 +32,8 @@ class UnknownProto extends DataValueObjectContainer implements IUnknown {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		
-		if(input.hasField("id")) {
-			_id = input.getProperty("id");
-		}
-		if(input.hasField("desc")) {
-			_desc = input.getProperty("desc");
-		}
+		if(input.hasField("id")) _id = input.getProperty("id");
+		if(input.hasField("desc")) _desc = input.getProperty("desc");
 	}
 }
 
@@ -71,13 +66,8 @@ class UnknownData extends DataValueObjectContainer implements IUnknown implement
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		
-		if(input.hasField("id")) {
-			_id = input.getProperty("id");
-		}
-		if(input.hasField("desc")) {
-			_desc = input.getProperty("desc");
-		}
+		if(input.hasField("id")) _id = input.getProperty("id");
+		if(input.hasField("desc")) _desc = input.getProperty("desc");
 	}
 }
 

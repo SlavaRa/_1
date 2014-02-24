@@ -23,6 +23,7 @@ using Std;
 	}
 	
 	public function initialize() { }
+	
 	public function destroy() { }
 	
 	@:noCompletion var _addedToStage:Bool;
@@ -32,13 +33,13 @@ using Std;
 			event.stopImmediatePropagation();
 		} else {
 			_addedToStage = true;
-			onAddedToStage();
+			render();
 		}
 	}
 	
 	@:final @:noCompletion function onRemovedFromStageHandler(?_) {
 		_addedToStage = false;
-        onRemovedFromStage();
+        clear();
 	}
 	
 	public override function getChildByName(name:String):DisplayObject {
@@ -49,7 +50,7 @@ using Std;
 		return child;
 	}
 	
-	@:final @:noCompletion inline function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
+	@:noCompletion inline function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
 		var child:DisplayObject = null;
 		var names = path.split(".");
 		while(!names.empty()) {
@@ -66,16 +67,12 @@ using Std;
 		return child;
 	}
 	
-	@:final @:noCompletion function onAddedToStage() render();
-	
-	@:final @:noCompletion function onRemovedFromStage() clear();
-	
 	function render():Bool {
 		update();
 		return true;
 	}
 	
-	function clear() { }
-	
 	function update() { }
+	
+	function clear() { }
 }
