@@ -70,7 +70,6 @@ class ResourceSprite extends BaseSprite {
 	public function addChildWithContainer(child:DisplayObject, container:DisplayObject) {
 		var index = asset.getChildIndex(container);
 		if(index >= numChildren) index = numChildren - 1;
-		
 		addChildAt(child.setXY(container.x, container.y), index);
 	}
 }
