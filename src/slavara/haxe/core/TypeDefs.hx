@@ -3,6 +3,7 @@ package slavara.haxe.core;
 #if !(flash11 && starling)
 typedef DisplayObject = flash.display.DisplayObject;
 typedef DisplayObjectContainer = flash.display.DisplayObjectContainer;
+typedef Sprite = flash.display.Sprite;
 typedef BaseSprite = slavara.haxe.core.display.openfl.BaseSprite;
 typedef ResourceSprite = slavara.haxe.core.display.openfl.ResourceSprite;
 #else
