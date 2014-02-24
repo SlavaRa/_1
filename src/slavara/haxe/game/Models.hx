@@ -7,8 +7,8 @@ import slavara.haxe.core.Models.DataValueObjectContainer;
 import slavara.haxe.core.StateMachine;
 import slavara.haxe.game.Interfaces.IPrototypesCollection;
 import slavara.haxe.game.Interfaces.IUnknown;
-using slavara.haxe.core.utils.Utils.ValidateUtil;
-using slavara.haxe.core.utils.Utils.StringUtil;
+using slavara.haxe.core.Utils.ValidateUtil;
+using slavara.haxe.core.Utils.StringUtil;
 using Reflect;
 using Std;
 

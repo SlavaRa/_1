@@ -10,7 +10,7 @@ import haxe.macro.Expr.TypeDefKind;
 import haxe.macro.Expr.TypePath;
 import slavara.haxe.core.sys.io.Directory;
 import slavara.haxe.core.sys.io.SearchOption;
-using slavara.haxe.core.utils.Utils.StringUtil;
+using slavara.haxe.core.Utils.StringUtil;
 using slavara.haxe.game.macro.Metagen.StructParser;
 using sys.io.File;
 using StringTools;

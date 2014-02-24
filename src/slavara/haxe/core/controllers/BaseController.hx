@@ -6,7 +6,7 @@ import slavara.haxe.core.controllers.BaseController.IController;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.core.Interfaces.IDestroyable;
 import slavara.haxe.core.Models.Data;
-using slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.Utils.ValidateUtil;
 
 /**
  * @author SlavaRa

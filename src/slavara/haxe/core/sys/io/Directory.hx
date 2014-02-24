@@ -1,6 +1,6 @@
 package slavara.haxe.core.sys.io;
 import slavara.haxe.core.sys.io.SearchOption;
-using slavara.haxe.core.utils.Utils.StringUtil;
+using slavara.haxe.core.Utils.StringUtil;
 using haxe.io.Path;
 using sys.FileSystem;
 using Lambda;

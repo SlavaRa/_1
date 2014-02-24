@@ -1,7 +1,7 @@
 package slavara.haxe.core.utils;
 import massive.munit.Assert;
 import slavara.haxe.core.TypeDefs.BaseSprite;
-import slavara.haxe.core.utils.Utils.DestroyUtil;
+import slavara.haxe.core.Utils.DestroyUtil;
 
 /**
  * @author SlavaRa

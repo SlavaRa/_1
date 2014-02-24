@@ -4,10 +4,10 @@ import openfl.Assets;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.core.TypeDefs.DisplayObject;
 import slavara.haxe.core.TypeDefs.DisplayObjectContainer;
-import slavara.haxe.core.utils.Utils.DestroyUtil;
+import slavara.haxe.core.Utils.DestroyUtil;
 import slavara.haxe.game.Resource.ResRef;
 import slavara.haxe.game.Resource.SWFResRef;
-using slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.Utils.ValidateUtil;
 using Std;
 using StringTools;
 

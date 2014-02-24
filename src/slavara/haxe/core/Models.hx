@@ -3,7 +3,7 @@ import flash.events.Event;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.core.Interfaces.IExternalizableObject;
 import slavara.haxe.core.Models.DataContainer;
-using slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.Utils.ValidateUtil;
 using Lambda;
 using Std;
 

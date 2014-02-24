@@ -4,7 +4,7 @@ import flash.events.EventDispatcher;
 import slavara.haxe.core.events.models.DataBaseEvent;
 import slavara.haxe.core.Models.DataBaseNativeEvent;
 import slavara.haxe.core.Models.DataContainer;
-using slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.Utils.ValidateUtil;
 using Reflect;
 using Std;
 

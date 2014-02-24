@@ -1,6 +1,6 @@
-package slavara.haxe.core.utils;
+package slavara.haxe.core;
 import slavara.haxe.core.Interfaces.IDestroyable;
-using slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.Utils.ValidateUtil;
 using Reflect;
 using Std;
 using StringTools;

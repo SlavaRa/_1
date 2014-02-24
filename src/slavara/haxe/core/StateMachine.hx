@@ -2,7 +2,7 @@ package slavara.haxe.core;
 import msignal.Signal.Signal0;
 import slavara.haxe.core.Errors.ArgumentNullError;
 using Lambda;
-using slavara.haxe.core.utils.Utils.ValidateUtil;
+using slavara.haxe.core.Utils.ValidateUtil;
 
 /**
  * @author SlavaRa

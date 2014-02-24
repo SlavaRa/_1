@@ -3,7 +3,7 @@ import flash.display.Sprite;
 import massive.munit.Assert;
 import slavara.haxe.core.controllers.BaseController;
 import slavara.haxe.core.Models.Data;
-import slavara.haxe.core.utils.Utils.DestroyUtil;
+import slavara.haxe.core.Utils.DestroyUtil;
 
 /**
  * @author SlavaRa
