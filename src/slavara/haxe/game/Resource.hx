@@ -13,10 +13,7 @@ class ResRef extends UnknownProto {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		
-		if(input.hasField("link")) {
-			link = input.getProperty("link");
-		}
+		if(input.hasField("link")) link = input.getProperty("link");
 	}
 }
 
@@ -30,9 +27,6 @@ class SWFResRef extends ResRef {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		
-		if(input.hasField("swf")) {
-			swf = input.getProperty("swf");
-		}
+		if(input.hasField("swf")) swf = input.getProperty("swf").replace("@", "swf/") + ".swf";//TODO: hardcode
 	}
 }
