@@ -42,10 +42,12 @@ using Std;
         clear();
 	}
 	
-	public override function getChildByName(name:String):DisplayObject {
-		var child = super.getChildByName(name);
+	@:final public override function getChildByName(name:String):DisplayObject return _getChildByName(this, name);
+	
+	@:final function _getChildByName(container:DisplayObjectContainer, name:String):DisplayObject {
+		var child = container.getChildByName(name);
 		if(child.isNull() && name.indexOf(".") != -1) {
-			return getChildByPath(this, name);
+			return getChildByPath(container, name);
 		}
 		return child;
 	}
