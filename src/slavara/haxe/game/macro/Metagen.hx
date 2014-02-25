@@ -70,7 +70,6 @@ class Metagen {
 
 /**
  * @author SlavaRa
- * @private
  */
 @:noCompletion extern class StructParser {
 	
