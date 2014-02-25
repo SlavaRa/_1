@@ -1,12 +1,10 @@
 package slavara.haxe.core;
-#if flash
-import flash.errors.ArgumentError;
-import flash.errors.Error;
+#if !macro
 
 /**
  * @author SlavaRa
  */
-class ArgumentNullError extends ArgumentError {
+class ArgumentNullError extends flash.errors.ArgumentError {
 	public function new(?argName:String) super("the " + argName + " argument must not be null", 1009);
 }
 
@@ -15,13 +13,12 @@ class NotImplementedError extends flash.errors.Error {
 }
 
 #else
-import haxe.macro.Expr.Error;
 import haxe.macro.Context;
 
 /**
  * @author SlavaRa
  */
-extern class ArgumentNullError extends Error {
+extern class ArgumentNullError extends haxe.macro.Expr.Error {
 	public function new(?argName:String) {
 		super("the " + argName + " argument must not be null", Context.currentPos());
 	}
