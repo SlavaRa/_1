@@ -30,35 +30,32 @@ class ResourceSprite extends BaseSprite {
 		while(numChildren != 0) DestroyUtil.destroy(removeChildAt(0));
 	}
 	
-	public function hasResource(resRef:ResRef):Bool {
+	public function hasResource(ref:ResRef):Bool {
 		#if debug
-		if(resRef.isNull()) throw new ArgumentNullError("resRef");
+		if(ref.isNull()) throw new ArgumentNullError("resRef");
 		#end
-		
-		if(resRef.is(SWFResRef)) return hasSWF(cast(resRef, SWFResRef));
-		return Assets.exists(resRef.link);
+		if(ref.is(SWFResRef)) return hasSWF(cast(ref, SWFResRef));
+		return Assets.exists(ref.link);
 	}
 	
-	public function hasSWF(resRef:SWFResRef):Bool {
+	public function hasSWF(ref:SWFResRef):Bool {
 		#if debug
-		if(resRef.isNull()) throw new ArgumentNullError("resRef");
+		if(ref.isNull()) throw new ArgumentNullError("resRef");
 		#end
-		
-		return Assets.exists(resRef.swf);
+		return Assets.exists(ref.swf);
 	}
 	
-	public function setAsset(resRef:SWFResRef) {
+	public function setAsset(ref:SWFResRef) {
 		#if debug
-		if(resRef.isNull()) throw new ArgumentNullError("resRef");
+		if(ref.isNull()) throw new ArgumentNullError("resRef");
 		#end
-		
 		var index = 0;
 		if(asset.isNotNull() && asset.parent.isNotNull()) {
 			index = getChildIndex(asset);
 			removeChild(asset);
 		}
 		DestroyUtil.destroy(asset, false);
-		asset = cast(new SWF(Assets.getBytes(resRef.swf)).createMovieClip(resRef.link), DisplayObjectContainer);
+		asset = cast(new SWF(Assets.getBytes(ref.swf)).createMovieClip(ref.link), DisplayObjectContainer);
 		addChildAt(asset, index);
 	}
 	
