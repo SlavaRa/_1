@@ -22,6 +22,7 @@ class ResourceSprite extends BaseSprite {
 		this.asset = asset;
 	}
 	
+	//TODO: данный функционал должен быть на уровень выше
 	var asset(default, null):DisplayObjectContainer;
 	
 	public override function destroy() {
