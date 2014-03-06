@@ -166,7 +166,7 @@ class StateMachine {
 		if(listerens.length == 0) {
 			to2listeners.remove(to);
 		}
-		if(to2listeners.isEmpty()) {
+		if(to2listeners.empty()) {
 			_transitionListeners.remove(from);
 		}
 		return this;
@@ -274,5 +274,5 @@ private class EnumValueHash<K, V>{
 		}
 	}
 	
-	public function isEmpty():Bool return _keys.isNotNull() || _keys.empty();
+	public function empty():Bool return _keys.isNotNull() || _keys.empty();
 }
