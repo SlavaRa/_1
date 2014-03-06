@@ -172,7 +172,7 @@ class StateMachine {
 		return this;
 	}
 	
-	@:final @:noCompletion inline function setNextQueuedState() {
+	@:noCompletion inline function setNextQueuedState() {
 		previousState = currentState;
 		currentState = _statesQueue[0];
 		_statesQueue.remove(currentState);
@@ -193,7 +193,7 @@ class StateMachine {
 		}
 	}
 	
-	@:final @:noCompletion inline function broadcastStateChange(from:EnumValue, to:EnumValue) {
+	@:noCompletion inline function broadcastStateChange(from:EnumValue, to:EnumValue) {
 		onChange.dispatch();
 		if(_transitionListeners.exists(from)) {
 			var to2Listeners = _transitionListeners.get(from);
@@ -230,9 +230,9 @@ private class StateTransition {
 	
 	var _queue:Array<EnumValue>;
 	
-	function get_queue():Array<EnumValue> return _queue.isNotNull() ? _queue.copy() : [];
+	inline function get_queue():Array<EnumValue> return _queue.isNotNull() ? _queue.copy() : [];
 	
-	function get_simple():Bool return _queue.isNull();
+	inline function get_simple():Bool return _queue.isNull();
 }
 
 /**
