@@ -54,7 +54,7 @@ class StateMachine {
 		return this;
 	}
 	
-	public function addToMany(from:EnumValue, to:Array<EnumValue>, ?via:Array<EnumValue>):StateMachine {
+	public function addOneToAll(from:EnumValue, to:Array<EnumValue>, ?via:Array<EnumValue>):StateMachine {
 		#if debug
 		if(from.isNull()) throw new ArgumentNullError("from");
 		if(to.isNull()) throw new ArgumentNullError("to");
