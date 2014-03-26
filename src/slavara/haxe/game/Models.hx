@@ -76,7 +76,6 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		
 		if(input.hasField(_addKey)) {
 			var list:Array<Dynamic> = input.getProperty(_addKey);
 			for(it in list) {
@@ -89,13 +88,10 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 	
 	override function addChildBefore(child:Data) {
 		super.addChildBefore(child);
-		
 		if(child.is(_t)) {
 			var proto:T = cast child;
 			var id = proto.id;
-			if(_id2t.exists(id)) {
-				throw new ArgumentError("A " + Type.typeof(proto) + " with id = " + id + " already exists.");
-			}
+			if(_id2t.exists(id)) throw new ArgumentError("A " + Type.typeof(proto) + " with id = " + id + " already exists.");
 			_id2t.set(id, proto);
 			return;
 		}
@@ -133,11 +129,8 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		
-		var protoIdKey = "proto_id";
-		var idKey = "id";
-		
 		if(input.hasField(_addKey)) {
+			var protoIdKey = "proto_id";
 			var list:Array<Dynamic> = input.getProperty(_addKey);
 			for(it in list) {
 				if(it.hasField(protoIdKey)) {
@@ -149,14 +142,13 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 				}
 			}
 		}
+		var idKey = "id";
 		if(input.hasField(_removeKey)) {
 			var list:Array<Dynamic> = input.getProperty(_removeKey);
 			for(it in list) {
 				if(it.hasField(idKey)) {
 					var id:Int = it.getProperty(idKey);
-					if(_id2t.exists(id)) {
-						removeChild(_id2t.get(id));
-					}
+					if(_id2t.exists(id)) removeChild(_id2t.get(id));
 				} else {
 					//TODO: throw error
 				}
@@ -167,9 +159,7 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 			for(it in list) {
 				if(it.hasField(idKey)) {
 					var id:Int = it.getProperty(idKey);
-					if(_id2t.exists(id)) {
-						_id2t.get(id).readExternal(it);
-					}
+					if(_id2t.exists(id)) _id2t.get(id).readExternal(it);
 				} else {
 					//TODO: throw error
 				}
@@ -179,26 +169,20 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 	
 	override function addChildBefore(child:Data) {
 		super.addChildBefore(child);
-		
 		if(child.is(_t)) {
 			var data:T = cast child;
 			var id = data.id;
-			if(_id2t.exists(id)) {
-				throw new ArgumentError("A " + Type.typeof(data) + " with id = " + id + " already exists.");
-			}
+			if(_id2t.exists(id)) throw new ArgumentError("A " + Type.typeof(data) + " with id = " + id + " already exists.");
 			_id2t.set(id, data);
 		}
 	}
 	
 	override function removeChildBefore(child:Data) {
 		super.removeChildBefore(child);
-		
 		if(child.is(_t)) {
 			var data:T = cast child;
 			var id = data.id;
-			if(_id2t.exists(id)) {
-				_id2t.remove(id);
-			}
+			if(_id2t.exists(id)) _id2t.remove(id);
 		}
 	}
 }

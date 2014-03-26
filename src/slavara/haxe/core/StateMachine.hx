@@ -41,15 +41,9 @@ class StateMachine {
 		if(from.isNull()) throw new ArgumentNullError("from");
 		if(to.isNull()) throw new ArgumentNullError("to");
 		#end
-		if(from == to) {
-			return this;
-		}
-		if(!_transitions.exists(from)) {
-			_transitions.set(from, new EnumValueHash<EnumValue, StateTransition>());
-		}
-		if(!_transitions.exists(to)) {
-			_transitions.set(to, new EnumValueHash<EnumValue, StateTransition>());
-		}
+		if(from == to) return this;
+		if(!_transitions.exists(from)) _transitions.set(from, new EnumValueHash<EnumValue, StateTransition>());
+		if(!_transitions.exists(to)) _transitions.set(to, new EnumValueHash<EnumValue, StateTransition>());
 		_transitions.get(from).set(to, new StateTransition(from, to, via));
 		return this;
 	}
@@ -59,9 +53,7 @@ class StateMachine {
 		if(from.isNull()) throw new ArgumentNullError("from");
 		if(to.isNull()) throw new ArgumentNullError("to");
 		#end
-		for(toState in to) {
-			add(from, toState);
-		}
+		for(toState in to) add(from, toState);
 		return this;
 	}
 	
@@ -69,11 +61,7 @@ class StateMachine {
 		#if debug
 		if(all.isNull()) throw new ArgumentNullError("all");
 		#end
-		for(from in all) {
-			for(to in all) {
-				addTwoWay(from, to, via);
-			}
-		}
+		for(from in all) for(to in all) addTwoWay(from, to, via);
 		return this;
 	}
 	
@@ -95,22 +83,15 @@ class StateMachine {
 			currentState = state;
 			broadcastStateChange(null, currentState);
 		}
-		if(state == currentState) {
-			return this;
-		}
+		if(state == currentState) return this;
 		if(_inTransition) {
 			_queuedState = state;
 			return this;
-		} else {
-			_queuedState = null;
 		}
-		if(!_transitions.exists(currentState)) {
-			return this;
-		}
+		_queuedState = null;
+		if(!_transitions.exists(currentState)) return this;
 		var transition = _transitions.get(currentState).get(state);
-		if(transition.isNull()) {
-			return this;
-		}
+		if(transition.isNull()) return this;
 		previousState = currentState;
 		if(transition.simple) {
 			currentState = transition.to;
@@ -134,17 +115,11 @@ class StateMachine {
 		if(to.isNull()) throw new ArgumentNullError("to");
 		if(listener.isNull()) throw new ArgumentNullError("listener");
 		#end
-		if(!_transitionListeners.exists(from)) {
-			_transitionListeners.set(from, new EnumValueHash<EnumValue, Array<Void -> Void>>());
-		}
+		if(!_transitionListeners.exists(from)) _transitionListeners.set(from, new EnumValueHash<EnumValue, Array<Void -> Void>>());
 		var to2listeners = _transitionListeners.get(from);
-		if(!to2listeners.exists(to)) {
-			to2listeners.set(to, []);
-		}
+		if(!to2listeners.exists(to)) to2listeners.set(to, []);
 		var listeners = to2listeners.get(to);
-		if(!listeners.has(listener)) {
-			listeners.push(listener);
-		}
+		if(!listeners.has(listener)) listeners.push(listener);
 		return this;
 	}
 	
@@ -154,21 +129,13 @@ class StateMachine {
 		if(to.isNull()) throw new ArgumentNullError("to");
 		if(listener.isNull()) throw new ArgumentNullError("listener");
 		#end
-		if(!_transitionListeners.exists(from)) {
-			return this;
-		}
+		if(!_transitionListeners.exists(from)) return this;
 		var to2listeners = _transitionListeners.get(from);
-		if(!to2listeners.exists(to)) {
-			return this;
-		}
+		if(!to2listeners.exists(to)) return this;
 		var listerens = to2listeners.get(to);
 		listerens.remove(listener);
-		if(listerens.length == 0) {
-			to2listeners.remove(to);
-		}
-		if(to2listeners.empty()) {
-			_transitionListeners.remove(from);
-		}
+		if(listerens.empty()) to2listeners.remove(to);
+		if(to2listeners.empty()) _transitionListeners.remove(from);
 		return this;
 	}
 	
@@ -177,7 +144,7 @@ class StateMachine {
 		currentState = _statesQueue[0];
 		_statesQueue.remove(currentState);
 		broadcastStateChange(previousState, currentState);
-		_inTransition = _statesQueue.length > 0;
+		_inTransition = !_statesQueue.empty();
 		var state2transition = _transitions.get(currentState);
 		if(state2transition.isNotNull() && _inTransition) {
 			if(_queuedState.isNotNull()) {
@@ -196,12 +163,8 @@ class StateMachine {
 	@:noCompletion inline function broadcastStateChange(from:EnumValue, to:EnumValue) {
 		onChange.dispatch();
 		if(_transitionListeners.exists(from)) {
-			var to2Listeners = _transitionListeners.get(from);
-			if(to2Listeners.exists(to)) {
-				for(handler in to2Listeners.get(to)) {
-					handler();
-				}
-			}
+			var listeners = _transitionListeners.get(from);
+			if(listeners.exists(to)) for(it in listeners.get(to)) it();
 		}
 	}
 }
@@ -215,10 +178,7 @@ private class StateTransition {
 		this.from = from;
 		this.to = to;
 		if(via.isNotNull()) {
-			_queue = [];
-			for(state in via) {
-				_queue.push(state);
-			}
+			_queue = via.copy();
 			_queue.push(to);
 		}
 	}
@@ -238,7 +198,7 @@ private class StateTransition {
 /**
  * @author SlavaRa
  */
-private class EnumValueHash<K, V>{
+private class EnumValueHash<K, V> {
 	
 	public function new() {
 		_keys = [];
@@ -266,12 +226,9 @@ private class EnumValueHash<K, V>{
 	
 	public function remove(k:K):Bool {
 		var index = _keys.indexOf(k);
-		if(index == -1) {
-			return false;
-		} else {
-			_values.remove(_values[index]);
-			return _keys.remove(k);
-		}
+		if(index == -1) return false;
+		_values.remove(_values[index]);
+		return _keys.remove(k);
 	}
 	
 	public function empty():Bool return _keys.isNotNull() || _keys.empty();
