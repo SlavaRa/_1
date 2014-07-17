@@ -1,8 +1,8 @@
 package slavara.haxe.core.display.openfl;
-import flash.display.DisplayObject;
-import flash.display.DisplayObjectContainer;
-import flash.display.Sprite;
-import flash.events.Event;
+import openfl.display.DisplayObject;
+import openfl.display.DisplayObjectContainer;
+import openfl.display.Sprite;
+import openfl.events.Event;
 import slavara.haxe.core.Interfaces.IDestroyable;
 using slavara.haxe.core.Utils.ValidateUtil;
 using Lambda;
