@@ -29,18 +29,6 @@
 #-neko bin/test/neko_test.n
 #--next
 
-## JavaScript
-#-main TestMain
-#-lib munit
-#-lib hamcrest
-#-lib openfl
-#-lib msignal
-#-lib swf
-#-cp src
-#-cp test
-#-js bin/test/js_test.js
-#--next
-
 ## CPP
 -main TestMain
 -lib munit
