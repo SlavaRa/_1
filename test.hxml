@@ -5,14 +5,27 @@
 -lib hamcrest
 -lib msignal
 -lib swf
--D web
 --macro openfl.Lib.includeBackend('flash')
+--remap flash:flash
 -cp src
 -cp test
 -swf-version 11.8
 -swf-lib libs/datahelpers.swf
 -swf bin/test/as3_test.swf
--cmd haxelib run lime build html5
+--next
+
+## Neko
+-main TestMain
+-lib munit
+-lib hamcrest
+-lib openfl
+-lib msignal
+-lib swf
+--macro openfl.Lib.includeBackend('flash')
+--remap flash:flash
+-cp src
+-cp test
+-neko bin/test/neko_test.n
 --next
 
 ## JavaScript
@@ -25,18 +38,6 @@
 -cp src
 -cp test
 -js bin/test/js_test.js
---next
-
-## Neko
--main TestMain
--lib munit
--lib hamcrest
--lib openfl
--lib msignal
--lib swf
--cp src
--cp test
--neko bin/test/neko_test.n
 --next
 
 ## CPP
