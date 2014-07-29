@@ -4,7 +4,6 @@ import openfl.Assets;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.game.Resource.ResRef;
 import slavara.haxe.game.Resource.SWFResRef;
-using slavara.haxe.core.Utils.ValidateUtil;
 using Std;
 using StringTools;
 
@@ -17,7 +16,7 @@ class ResourceSprite extends BaseSprite {
 	
 	public function hasResource(ref:ResRef):Bool {
 		#if debug
-		if(ref.isNull()) throw new ArgumentNullError("ref");
+		if(ref == null) throw new ArgumentNullError("ref");
 		#end
 		if(ref.is(SWFResRef)) return hasSWF(cast(ref, SWFResRef));
 		return Assets.exists(ref.link);
@@ -25,7 +24,7 @@ class ResourceSprite extends BaseSprite {
 	
 	public function hasSWF(ref:SWFResRef):Bool {
 		#if debug
-		if(ref.isNull()) throw new ArgumentNullError("ref");
+		if(ref == null) throw new ArgumentNullError("ref");
 		#end
 		return Assets.exists(ref.swf);
 	}

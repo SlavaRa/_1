@@ -1,13 +1,16 @@
 ## Flash 9+
 -main TestMain
+-lib openfl
 -lib munit
 -lib hamcrest
+-lib msignal
+-lib swf
 -cp src
 -cp test
 -swf-version 11.8
 -swf-lib libs/datahelpers.swf
 -swf bin/test/as3_test.swf
-
+--remap flash:openfl
 --next
 
 ## JavaScript
@@ -15,13 +18,11 @@
 -lib munit
 -lib hamcrest
 -lib openfl
--lib openfl-html5
---remap flash:flash
-
+-lib msignal
+-lib swf
 -cp src
 -cp test
 -js bin/test/js_test.js
-
 --next
 
 ## Neko
@@ -29,13 +30,11 @@
 -lib munit
 -lib hamcrest
 -lib openfl
--lib openfl-native
---remap flash:flash
-
+-lib msignal
+-lib swf
 -cp src
 -cp test
 -neko bin/test/neko_test.n
-
 --next
 
 ## CPP
@@ -44,6 +43,8 @@
 #-lib hamcrest
 #-lib openfl
 #-lib openfl-native
+#-lib msignal
+#-lib swf
 #--remap flash:flash
 #
 #-cp src

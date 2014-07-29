@@ -1,12 +1,11 @@
 package slavara.haxe.core.controllers;
-import flash.display.DisplayObjectContainer;
-import flash.events.EventDispatcher;
+import openfl.display.DisplayObjectContainer;
+import openfl.events.EventDispatcher;
 import slavara.haxe.core.controllers.BaseController.IBaseController;
 import slavara.haxe.core.controllers.BaseController.IController;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.core.Interfaces.IDestroyable;
 import slavara.haxe.core.Models.Data;
-using slavara.haxe.core.Utils.ValidateUtil;
 
 /**
  * @author SlavaRa
@@ -30,8 +29,8 @@ class BaseController implements IBaseController implements IDestroyable {
 
 	public function new(container:DisplayObjectContainer, data:Data) {
 		#if debug
-		if(container.isNull()) throw new ArgumentNullError("container");
-		if(data.isNull()) throw new ArgumentNullError("data");
+		if(container == null) throw new ArgumentNullError("container");
+		if(data == null) throw new ArgumentNullError("data");
 		#end
 		this.container = container;
 		this.data = data;
@@ -60,7 +59,7 @@ class AbstractController extends EventDispatcher implements IController implemen
 	public function new(controller:IController) {
 		super();
 		#if debug
-		if(controller.isNull()) throw new ArgumentNullError("controller");
+		if(controller == null) throw new ArgumentNullError("controller");
 		#end
 		baseController = controller;
 		data = controller.data;

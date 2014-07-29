@@ -1,10 +1,9 @@
 package slavara.haxe.core.display.openfl;
-import openfl.display.DisplayObject;
-import openfl.display.DisplayObjectContainer;
-import openfl.display.Sprite;
-import openfl.events.Event;
+import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
+import flash.display.Sprite;
+import flash.events.Event;
 import slavara.haxe.core.Interfaces.IDestroyable;
-using slavara.haxe.core.Utils.ValidateUtil;
 using Lambda;
 using Std;
 
@@ -46,7 +45,7 @@ using Std;
 	
 	@:final function _getChildByName(container:DisplayObjectContainer, name:String):DisplayObject {
 		var child = container.getChildByName(name);
-		if(child.isNull() && name.indexOf(".") != -1) {
+		if(child == null && name.indexOf(".") != -1) {
 			return getChildByPath(container, name);
 		}
 		return child;
@@ -60,7 +59,7 @@ using Std;
 			if(names.empty()) {
 				break;
 			}
-			if(child.isNull() || !child.is(DisplayObjectContainer)) {
+			if(child == null || !child.is(DisplayObjectContainer)) {
 				child = null;
 				break;
 			}

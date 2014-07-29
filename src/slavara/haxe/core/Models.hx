@@ -1,9 +1,8 @@
 package slavara.haxe.core;
-import flash.events.Event;
+import openfl.events.Event;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.core.Interfaces.IExternalizableObject;
 import slavara.haxe.core.Models.DataContainer;
-using slavara.haxe.core.Utils.ValidateUtil;
 using Lambda;
 using Std;
 
@@ -49,7 +48,7 @@ class DataContainer extends Data {
 	
 	public function addChildAt(child:Data, index:Int):Data {
 		#if debug
-		if(child.isNull()) throw new ArgumentNullError("child");
+		if(child == null) throw new ArgumentNullError("child");
 		#end
 		if(child.parent == this) {
 			setChildIndex(child, index);
@@ -66,7 +65,7 @@ class DataContainer extends Data {
 	
 	public function removeChild(child:Data):Data {
 		#if debug
-		if(child.isNull()) throw new ArgumentNullError("child");
+		if(child == null) throw new ArgumentNullError("child");
 		#end
 		_list.remove(child);
 		removeChildBefore(child);
@@ -102,14 +101,14 @@ class DataContainer extends Data {
 	
 	public function getChildIndex(child:Data):Int {
 		#if debug
-		if(child.isNull()) throw new ArgumentNullError("child");
+		if(child == null) throw new ArgumentNullError("child");
 		#end
 		return _list.indexOf(child);
 	}
 	
 	public function setChildIndex(child:Data, index:Int) {
 		#if debug
-		if(child.isNull()) throw new ArgumentNullError("child");
+		if(child == null) throw new ArgumentNullError("child");
 		#end
 		_list.remove(child);
 		_list.insert(index, child);
@@ -117,8 +116,8 @@ class DataContainer extends Data {
 	
 	public function swapChildren(child1:Data, child2:Data) {
 		#if debug
-		if(child1.isNull()) throw new ArgumentNullError("child1");
-		if(child2.isNull()) throw new ArgumentNullError("child2");
+		if(child1 == null) throw new ArgumentNullError("child1");
+		if(child2 == null) throw new ArgumentNullError("child2");
 		#end
 		swap(child1, child2, _list.indexOf(child1), _list.indexOf(child2));
 	}
@@ -127,7 +126,7 @@ class DataContainer extends Data {
 	
 	public function contains(child:Data):Bool {
 		#if debug
-		if(child.isNull()) throw new ArgumentNullError("child");
+		if(child == null) throw new ArgumentNullError("child");
 		#end
 		do {
 			if(child == this) {
@@ -143,7 +142,7 @@ class DataContainer extends Data {
 	@:final @:noCompletion inline function getChildByPath(container:DataContainer, path:String):Data {
 		var names = path.split(".");
 		var child = container.getChildByName(names.shift());
-		if(child.isNotNull() && names.empty()) {
+		if(child != null && names.empty()) {
 			return child;
 		} else if(!child.is(DataContainer)) {
 			return null;

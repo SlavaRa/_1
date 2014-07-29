@@ -1,7 +1,6 @@
 package slavara.haxe.core;
 import slavara.haxe.core.Interfaces.IDestroyable;
 import slavara.haxe.core.TypeDefs.DisplayObject;
-using slavara.haxe.core.Utils.ValidateUtil;
 using Reflect;
 using Std;
 using StringTools;
@@ -33,15 +32,6 @@ extern class DestroyUtil {
  */
 extern class StringUtil {
 	public static inline function isNullOrEmpty(s:String):Bool return s.isNull() || s.trim().length == 0;
-}
-
-/**
- * @author SlavaRa
- */
-extern class ValidateUtil {
-	public static inline function isNull(d:Dynamic):Bool return d == null;
-	
-	public static inline function isNotNull(d:Dynamic):Bool return d != null;
 }
 
 /**
