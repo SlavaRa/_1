@@ -44,10 +44,9 @@ using Std;
 	@:final public override function getChildByName(name:String):DisplayObject return _getChildByName(this, name);
 	
 	@:final function _getChildByName(container:DisplayObjectContainer, name:String):DisplayObject {
-		var child = container.getChildByName(name);
-		if(child == null && name.indexOf(".") != -1) {
-			return getChildByPath(container, name);
-		}
+		var child = super.getChildByName(name);
+		if (child == null) child = getChildByPath(this, name);
+		if (child == null && container != this) child = getChildByPath(container, name);
 		return child;
 	}
 	
