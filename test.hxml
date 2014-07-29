@@ -5,12 +5,14 @@
 -lib hamcrest
 -lib msignal
 -lib swf
+-D web
+--macro openfl.Lib.includeBackend('flash')
 -cp src
 -cp test
 -swf-version 11.8
 -swf-lib libs/datahelpers.swf
 -swf bin/test/as3_test.swf
---remap flash:openfl
+-cmd haxelib run lime build html5
 --next
 
 ## JavaScript
