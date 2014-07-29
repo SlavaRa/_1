@@ -1,4 +1,4 @@
-package slavara.haxe.core.display.openfl;
+package slavara.haxe.core.display.openfl ;
 import format.SWF;
 import openfl.Assets;
 import slavara.haxe.core.Errors.ArgumentNullError;

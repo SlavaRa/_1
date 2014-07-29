@@ -4,7 +4,7 @@ import openfl.events.EventDispatcher;
 import slavara.haxe.core.controllers.BaseController.IBaseController;
 import slavara.haxe.core.controllers.BaseController.IController;
 import slavara.haxe.core.Errors.ArgumentNullError;
-import slavara.haxe.core.Interfaces.IDestroyable;
+import slavara.haxe.core.Interfaces.IDisposable;
 import slavara.haxe.core.Models.Data;
 
 /**
@@ -25,7 +25,7 @@ interface IBaseController extends IController {
 /**
  * @author SlavaRa
  */
-class BaseController implements IBaseController implements IDestroyable {
+class BaseController implements IBaseController implements IDisposable {
 
 	public function new(container:DisplayObjectContainer, data:Data) {
 		#if debug
@@ -44,7 +44,7 @@ class BaseController implements IBaseController implements IDestroyable {
 	
 	public function initialize() { }
 	
-	public function destroy() {
+	public function dispose() {
 		container = null;
 		data = null;
 		baseController = null;
@@ -54,7 +54,7 @@ class BaseController implements IBaseController implements IDestroyable {
 /**
  * @author SlavaRa
  */
-class AbstractController extends EventDispatcher implements IController implements IDestroyable {
+class AbstractController extends EventDispatcher implements IController implements IDisposable {
 	
 	public function new(controller:IController) {
 		super();
@@ -71,7 +71,7 @@ class AbstractController extends EventDispatcher implements IController implemen
 	
 	public function initialize() { }
 	
-	public function destroy() {
+	public function dispose() {
 		baseController = null;
 		data = null;
 	}

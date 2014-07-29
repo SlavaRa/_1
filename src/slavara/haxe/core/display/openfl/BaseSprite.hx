@@ -1,16 +1,16 @@
-package slavara.haxe.core.display.openfl;
-import flash.display.DisplayObject;
-import flash.display.DisplayObjectContainer;
-import flash.display.Sprite;
-import flash.events.Event;
-import slavara.haxe.core.Interfaces.IDestroyable;
+package slavara.haxe.core.display.openfl ;
+import openfl.display.DisplayObject;
+import openfl.display.DisplayObjectContainer;
+import openfl.display.Sprite;
+import openfl.events.Event;
+import slavara.haxe.core.Interfaces.IDisposable;
 using Lambda;
 using Std;
 
 /**
  * @author SlavaRa
  */
-@:noCompletion class BaseSprite extends Sprite implements IDestroyable {
+@:noCompletion class BaseSprite extends Sprite implements IDisposable {
 
 	public function new() {
 		super();
@@ -23,7 +23,7 @@ using Std;
 	
 	public function initialize() { }
 	
-	public function destroy() { }
+	public function dispose() { }
 	
 	@:noCompletion var _addedToStage:Bool;
 	
@@ -41,16 +41,17 @@ using Std;
         clear();
 	}
 	
+	#if !cpp
 	@:final public override function getChildByName(name:String):DisplayObject return _getChildByName(this, name);
 	
-	@:final function _getChildByName(container:DisplayObjectContainer, name:String):DisplayObject {
+	@:final @:noCompletion function _getChildByName(container:DisplayObjectContainer, name:String):DisplayObject {
 		var child = super.getChildByName(name);
 		if (child == null) child = getChildByPath(this, name);
 		if (child == null && container != this) child = getChildByPath(container, name);
 		return child;
 	}
 	
-	@:noCompletion inline function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
+	@:final @:noCompletion function getChildByPath(container:DisplayObjectContainer, path:String):DisplayObject {
 		var child:DisplayObject = null;
 		var names = path.split(".");
 		while(!names.empty()) {
@@ -66,6 +67,7 @@ using Std;
 		}
 		return child;
 	}
+	#end
 	
 	function render():Bool {
 		update();

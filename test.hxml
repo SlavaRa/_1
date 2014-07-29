@@ -15,32 +15,6 @@
 --next
 
 ## Neko
--main TestMain
--lib munit
--lib hamcrest
--lib openfl
--lib msignal
--lib swf
---macro openfl.Lib.includeBackend('flash')
---remap flash:flash
--cp src
--cp test
--neko bin/test/neko_test.n
---next
-
-## JavaScript
--main TestMain
--lib munit
--lib hamcrest
--lib openfl
--lib msignal
--lib swf
--cp src
--cp test
--js bin/test/js_test.js
---next
-
-## CPP
 #-main TestMain
 #-lib munit
 #-lib hamcrest
@@ -48,12 +22,38 @@
 #-lib openfl-native
 #-lib msignal
 #-lib swf
-#--remap flash:flash
-#
 #-cp src
 #-cp test
-#-D HXCPP_CHECK_POINTER
-#-D DHXCPP_STACK_TRACE
-#-D HXCPP_STACK_LINE
-#-D HXCPP_DEBUG_LINK
-#-cpp bin/test/cpp_test
+#--macro openfl.Lib.includeBackend('native')
+#--remap flash:openfl
+#-neko bin/test/neko_test.n
+#--next
+
+## JavaScript
+#-main TestMain
+#-lib munit
+#-lib hamcrest
+#-lib openfl
+#-lib msignal
+#-lib swf
+#-cp src
+#-cp test
+#-js bin/test/js_test.js
+#--next
+
+## CPP
+-main TestMain
+-lib munit
+-lib hamcrest
+-lib openfl
+-lib openfl-native
+-lib msignal
+-lib swf
+-cp src
+-cp test
+-D desktop
+#-D HXCPP_M64
+#-D display
+--macro openfl.Lib.includeBackend('native')
+--remap flash:openfl
+-cpp bin/test/cpp_test
