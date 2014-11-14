@@ -14,6 +14,7 @@
 	<source path="src" />
 	<source path="test" />
 	<haxelib name="openfl" />
+	<haxelib name="openfl-native" />
 	<haxelib name="munit" />
 	
 	<haxeflag name="-swf-lib" value="libs/datahelpers.swf" if="flash" />

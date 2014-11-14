@@ -1,7 +1,6 @@
 package slavara.haxe.core;
-import slavara.haxe.core.Interfaces.IDestroyable;
-import slavara.haxe.core.TypeDefs.DisplayObject;
-using slavara.haxe.core.Utils.ValidateUtil;
+import openfl.display.DisplayObject;
+import slavara.haxe.core.Interfaces.IDisposable;
 using Reflect;
 using Std;
 using StringTools;
@@ -9,18 +8,18 @@ using StringTools;
 /**
  * @author SlavaRa
  */
-extern class DestroyUtil {
-	public static inline function destroy(d:Dynamic, safe:Bool = true):Dynamic {
-		if(d.isNotNull()) {
-			if(d.is(IDestroyable)) {
-				cast(d, IDestroyable).destroy();
+extern class DisposeUtil {
+	public static inline function dispose(d:Dynamic, safe:Bool = true):Dynamic {
+		if(d != null) {
+			if(d.is(IDisposable)) {
+				cast(d, IDisposable).dispose();
 			} else if(d.hasField("iterator")) {
 				var iterator:Iterator<Dynamic> = d.getProperty("iterator");
 				for(it in iterator) {
 					if(d.hasField("remove")) {
 						d.callMethod("remove", [it]);
 					}
-					destroy(it);
+					dispose(it);
 				}
 			}
 		}
@@ -32,16 +31,7 @@ extern class DestroyUtil {
  * @author SlavaRa
  */
 extern class StringUtil {
-	public static inline function isNullOrEmpty(s:String):Bool return s.isNull() || s.trim().length == 0;
-}
-
-/**
- * @author SlavaRa
- */
-extern class ValidateUtil {
-	public static inline function isNull(d:Dynamic):Bool return d == null;
-	
-	public static inline function isNotNull(d:Dynamic):Bool return d != null;
+	public static inline function isNullOrEmpty(s:String):Bool return s == null || s.trim().length == 0;
 }
 
 /**

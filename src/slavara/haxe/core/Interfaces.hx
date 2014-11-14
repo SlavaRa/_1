@@ -3,9 +3,9 @@ package slavara.haxe.core;
 /**
  * @author SlavaRa
  */
-interface IDestroyable {
+interface IDisposable {
 	function initialize():Void;
-	function destroy():Void;
+	function dispose():Void;
 }
 
 /**

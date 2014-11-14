@@ -1,5 +1,5 @@
 package slavara.haxe.game;
-import flash.errors.ArgumentError;
+import openfl.errors.ArgumentError;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.core.Interfaces.IStateMachineHolder;
 import slavara.haxe.core.Models.Data;
@@ -7,7 +7,6 @@ import slavara.haxe.core.Models.DataValueObjectContainer;
 import slavara.haxe.core.StateMachine;
 import slavara.haxe.game.Interfaces.IPrototypesCollection;
 import slavara.haxe.game.Interfaces.IUnknown;
-using slavara.haxe.core.Utils.ValidateUtil;
 using slavara.haxe.core.Utils.StringUtil;
 using Reflect;
 using Std;
@@ -41,7 +40,7 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 
 	function new(proto:UnknownProto) {
 		#if debug
-		if(proto.isNull()) throw new ArgumentNullError("proto");
+		if(proto == null) throw new ArgumentNullError("proto");
 		#end
 		this.proto = proto;
 		super();

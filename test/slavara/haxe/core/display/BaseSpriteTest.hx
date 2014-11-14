@@ -1,6 +1,6 @@
 package slavara.haxe.core.display;
 import massive.munit.Assert;
-import slavara.haxe.core.TypeDefs.BaseSprite;
+import slavara.haxe.core.display.openfl.BaseSprite;
 
 /**
  * @author SlavaRa
@@ -9,6 +9,7 @@ class BaseSpriteTest {
 
 	public function new() { }
 	
+	#if !cpp
 	@Test
 	public function getChildByPathTest() {
 		var sprite0 = new BaseSprite();
@@ -24,4 +25,5 @@ class BaseSpriteTest {
 		
 		Assert.areEqual(sprite2, sprite0.getChildByName("sprite1.sprite2"));
 	}
+	#end
 }

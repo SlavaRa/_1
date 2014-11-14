@@ -1,10 +1,9 @@
 package slavara.haxe.core.models.native;
-import flash.events.Event;
-import flash.events.EventDispatcher;
+import openfl.events.Event;
+import openfl.events.EventDispatcher;
 import slavara.haxe.core.events.models.DataBaseEvent;
 import slavara.haxe.core.Models.DataBaseNativeEvent;
 import slavara.haxe.core.Models.DataContainer;
-using slavara.haxe.core.Utils.ValidateUtil;
 using Reflect;
 using Std;
 
@@ -24,13 +23,13 @@ class Data extends EventDispatcher {
 		if(value == parent) {
 			return;
 		}
-		if(parent.isNotNull()) {
+		if(parent != null) {
 			_bubbleParent = parent;
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.REMOVED, true));
 		}
 		parent = value;
 		_bubbleParent = value;
-		if(parent.isNotNull()) {
+		if(parent != null) {
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.ADDED, true));
 		}
 	}
@@ -50,7 +49,7 @@ class Data extends EventDispatcher {
 			return true;
 		}
 		var target = _bubbleParent;
-		while(target.isNotNull()) {
+		while(target != null) {
 			if (target.hasEventListener(type)) {
 				return true;
 			}
@@ -68,7 +67,7 @@ class Data extends EventDispatcher {
 		}
 		if(!event.getProperty("__isCancelledNow")){
 			var target = _bubbleParent;
-			while(target.isNotNull()) {
+			while(target != null) {
 				if(target.hasEventListener(event.type)) {
 					event = cast(event.clone(), DataBaseNativeEvent);
 					event.target = this;
