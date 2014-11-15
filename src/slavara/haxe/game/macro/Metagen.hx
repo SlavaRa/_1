@@ -116,7 +116,6 @@ private class HeaderModel {
 	public function new(text:String, pack:Array<String>) {
 		this.text = text;
 		this.pack = pack;
-		
 		var s = "struct";
 		var e = "extends";
 		var i = text.indexOf(s);
@@ -151,7 +150,6 @@ private class HeaderModel {
 private class LineModel {
 	public function new(text:String) {
 		this.text = text;
-		
 		var sfield = getSField(text);
 		var meta = getMeta(text);
 		var i = sfield.indexOf(":");
