@@ -1,47 +1,40 @@
-## Flash 9+
+## Flash 11+
 -main TestMain
 -lib openfl
--lib munit
 -lib hamcrest
+-lib munit
 -lib msignal
 -lib swf
---macro openfl.Lib.includeBackend('flash')
---remap flash:flash
 -cp src
 -cp test
--swf-version 11.8
+-swf-version 12
 -swf-lib libs/datahelpers.swf
 -swf bin/test/as3_test.swf
 --next
 
 ## Neko
-#-main TestMain
-#-lib munit
-#-lib hamcrest
-#-lib openfl
-#-lib openfl-native
-#-lib msignal
-#-lib swf
-#-cp src
-#-cp test
-#--macro openfl.Lib.includeBackend('native')
-#--remap flash:openfl
-#-neko bin/test/neko_test.n
-#--next
+-main TestMain
+-lib openfl
+-lib hamcrest
+-lib munit
+-lib msignal
+-lib swf
+-cp src
+-cp test
+--remap flash:openfl
+-neko bin/test/neko_test.n
+--next
 
 ## CPP
 -main TestMain
--lib munit
--lib hamcrest
 -lib openfl
--lib openfl-native
+-lib hamcrest
+-lib munit
 -lib msignal
 -lib swf
 -cp src
 -cp test
 -D desktop
-#-D HXCPP_M64
-#-D display
---macro openfl.Lib.includeBackend('native')
+##-D HXCPP_M64
 --remap flash:openfl
 -cpp bin/test/cpp_test

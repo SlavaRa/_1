@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	<!-- NMML reference: https://gist.github.com/1763850 -->
-	
 	<meta title="Slavara-core-haxe" package="slavara.haxe.core" version="1.0.0" company="SlavaRa" />
-	
 	<app main="slavara.Main" file="Slavaracorehaxe" path="bin" />
-	<app swf-version="11.8" if="flash" />
-	
+	<app swf-version="12" if="flash" />
 	<window background="#000000" fps="60" />
 	<window width="800" height="480" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
-	
-	<source path="src" />
-	<source path="test" />
-	<haxelib name="openfl" />
-	<haxelib name="openfl-native" />
-	<haxelib name="munit" />
-	
+	<source path="src"/>
+	<source path="test"/>
+	<haxelib name="openfl"/>
+	<haxelib name="munit"/>
+	<haxelib name="msignal"/>
+	<haxelib name="swf"/>
 	<haxeflag name="-swf-lib" value="libs/datahelpers.swf" if="flash" />
 	<haxeflag name="-dce std" if="haxe3" />
 </project>

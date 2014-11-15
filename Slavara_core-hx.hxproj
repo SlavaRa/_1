@@ -2,39 +2,41 @@
 <project version="2">
   <!-- Output SWF options -->
   <output>
-    <movie outputType="Application" />
+    <movie outputType="CustomBuild" />
     <movie input="" />
     <movie path="application.xml" />
     <movie fps="60" />
     <movie width="800" />
     <movie height="480" />
-    <movie version="3" />
+    <movie version="1" />
     <movie minorVersion="0" />
-    <movie platform="NME" />
+    <movie platform="Lime" />
     <movie background="000000" />
     <movie preferredSDK=";3;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\2,0,1" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\2,1,5" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\2,0,0-beta" />
     <class path="C:\HaxeToolkit\haxe\lib\munit\2,1,0" />
     <class path="C:\HaxeToolkit\haxe\lib\mlib\2,0,2" />
-    <class path="C:\HaxeToolkit\haxe\lib\mcover\2,0,3" />
+    <class path="C:\HaxeToolkit\haxe\lib\mcover\2,1,1" />
     <class path="C:\HaxeToolkit\haxe\lib\mconsole\1,6,0" />
     <class path="C:\HaxeToolkit\haxe\lib\hamcrest\1,2,1" />
+    <class path="C:\HaxeToolkit\haxe\lib\msignal\1,2,2" />
+    <class path="C:\HaxeToolkit\haxe\lib\swf\1,6,8" />
     <class path="src" />
     <class path="test" />
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\2,0,1\backends\flash" />
     <class path="bin\flash\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="openfl=2.0.1&#xA;munit=2.1.0&#xA;mlib=2.0.2&#xA;mcover=2.0.3&#xA;mconsole=1.6.0&#xA;hamcrest=1.2.1&#xA;tools=1.5.7&#xA;openfl-flash&#xA;display&#xA;web" />
+    <option directives="openfl=2.1.5&#xA;lime=2.0.0-beta&#xA;munit=2.1.0&#xA;mlib=2.0.2&#xA;mcover=2.1.1&#xA;mconsole=1.6.0&#xA;hamcrest=1.2.1&#xA;msignal=1.2.2&#xA;swf=1.6.8&#xA;tools=2.0.0-beta&#xA;no-compilation&#xA;openfl-flash&#xA;web" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="--no-output&#xA;-swf-lib libs/datahelpers.swf&#xA;-dce std&#xA;-swf-version 11.8" />
+    <option additional="-swf-lib libs/datahelpers.swf&#xA;-dce std&#xA;-swf-version 12&#xA;-debug " />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
@@ -44,16 +46,12 @@
   <compileTargets>
     <compile path="src\slavara\Main.hx" />
   </compileTargets>
-  <!-- Assets to embed into the output SWF -->
-  <library>
-    <!-- example: <asset path="..." id="..." update="..." glyphs="..." mode="..." place="..." sharepoint="..." /> -->
-  </library>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand />
+  <preBuildCommand>"$(CompilerPath)/haxelib" run lime build "$(OutputFile)" $(TargetBuild) -$(BuildConfig) -Dfdb</preBuildCommand>
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->

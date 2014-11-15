@@ -4,11 +4,11 @@ package slavara.haxe.core;
 /**
  * @author SlavaRa
  */
-class ArgumentNullError extends flash.errors.ArgumentError {
+class ArgumentNullError extends openfl.errors.Error {
 	public function new(?argName:String) super("the " + argName + " argument must not be null", 1009);
 }
 
-class NotImplementedError extends flash.errors.Error {
+class NotImplementedError extends openfl.errors.Error {
 	public function new() super();
 }
 

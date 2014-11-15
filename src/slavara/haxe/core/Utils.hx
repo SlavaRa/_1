@@ -17,7 +17,7 @@ extern class DisposeUtil {
 				var iterator:Iterator<Dynamic> = d.getProperty("iterator");
 				for(it in iterator) {
 					if(d.hasField("remove")) {
-						d.callMethod("remove", [it]);
+						d.callMethod(d.field("remove"), [it]);
 					}
 					dispose(it);
 				}

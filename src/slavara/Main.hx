@@ -1,11 +1,10 @@
 package slavara;
-import openfl.display.Sprite;
+import slavara.haxe.core.display.openfl.BaseSprite;
 
 /**
  * @author SlavaRa
  */
-class Main extends Sprite {
+class Main extends BaseSprite {
 
 	public function new() super();
-	
 }
