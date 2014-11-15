@@ -11,14 +11,11 @@ using StringTools;
 extern class DisposeUtil {
 	public static inline function dispose(d:Dynamic, safe:Bool = true):Dynamic {
 		if(d != null) {
-			if(d.is(IDisposable)) {
-				cast(d, IDisposable).dispose();
-			} else if(d.hasField("iterator")) {
+			if(d.is(IDisposable)) cast(d, IDisposable).dispose();
+			else if(d.hasField("iterator")) {
 				var iterator:Iterator<Dynamic> = d.getProperty("iterator");
 				for(it in iterator) {
-					if(d.hasField("remove")) {
-						d.callMethod(d.field("remove"), [it]);
-					}
+					if(d.hasField("remove")) d.callMethod(d.field("remove"), [it]);
 					dispose(it);
 				}
 			}
