@@ -153,9 +153,7 @@ class StateMachine {
 					_statesQueue = null;
 					setState(_queuedState);
 				}
-			} else if(_inTransition) {
-				setNextQueuedState();
-			}
+			} else if(_inTransition) setNextQueuedState();
 		}
 	}
 	

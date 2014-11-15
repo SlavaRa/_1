@@ -54,9 +54,7 @@ class DataContainer extends Data {
 			setChildIndex(child, index);
 			return child;
 		}
-		if(child.parent != null) {
-			child.parent.removeChild(child);
-		}
+		if(child.parent != null) child.parent.removeChild(child);
 		_list.insert(index, child);
 		addChildBefore(child);
 		child.setParent(this);
@@ -76,12 +74,8 @@ class DataContainer extends Data {
 	public function removeChildAt(index:Int):Data return removeChild(_list[index]);
 	
 	public function removeChildren(beginIndex:Int = 0, ?endIndex:Int = -1) {
-		if(_list.empty()) {
-			return;
-		}
-		if(endIndex == -1 || endIndex > _list.length) {
-			endIndex = _list.length;
-		}
+		if(_list.empty()) return;
+		if(endIndex == -1 || endIndex > _list.length) endIndex = _list.length;
 		for(child in _list.splice(beginIndex, endIndex - beginIndex)) {
 			removeChildBefore(child);
 			child.setParent(null);
@@ -91,11 +85,7 @@ class DataContainer extends Data {
 	public function getChildAt(index:Int):Data return _list[index];
 	
 	public function getChildByName(name:String):Data {
-		for(child in _list) {
-			if(child.name == name) {
-				return child;
-			}
-		}
+		for(child in _list) if(child.name == name) return child;
 		return name.indexOf(".") != -1 ? getChildByPath(this, name) : null;
 	}
 	
@@ -129,9 +119,7 @@ class DataContainer extends Data {
 		if(child == null) throw new ArgumentNullError("child");
 		#end
 		do {
-			if(child == this) {
-				return true;
-			}
+			if(child == this) return true;
 			child = child.parent;
 		} while(child != null);
 		return false;
@@ -142,13 +130,9 @@ class DataContainer extends Data {
 	@:final @:noCompletion inline function getChildByPath(container:DataContainer, path:String):Data {
 		var names = path.split(".");
 		var child = container.getChildByName(names.shift());
-		if(child != null && names.empty()) {
-			return child;
-		} else if(!child.is(DataContainer)) {
-			return null;
-		} else {
-			return getChildByPath(cast(child, DataContainer), names.join("."));
-		}
+		if(child != null && names.empty()) return child;
+		else if(!child.is(DataContainer)) return null;
+		else return getChildByPath(cast(child, DataContainer), names.join("."));
 	}
 	
 	@:final @:noCompletion inline function swap(child1:Data, child2:Data, index1:Int, index2:Int) {

@@ -20,39 +20,29 @@ class Data extends EventDispatcher {
 	@:noCompletion var _bubbleParent:Data;
 	
 	@:final function setParent(value:DataContainer) {
-		if(value == parent) {
-			return;
-		}
+		if(value == parent) return;
 		if(parent != null) {
 			_bubbleParent = parent;
 			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.REMOVED, true));
 		}
 		parent = value;
 		_bubbleParent = value;
-		if(parent != null) {
-			dispatchEventFunction(new DataBaseEvent(DataBaseEvent.ADDED, true));
-		}
+		if(parent != null) dispatchEventFunction(new DataBaseEvent(DataBaseEvent.ADDED, true));
 	}
 	
 	public override function dispatchEvent(event:Event):Bool {
 		if(event.bubbles) {
-			if(event.is(DataBaseEvent)) {
-				return dispatchEventFunction(cast(event, DataBaseEvent));
-			}
+			if(event.is(DataBaseEvent)) return dispatchEventFunction(cast(event, DataBaseEvent));
 			throw "bubbling поддерживается только у событий наследованных от DataBaseEvent";
 		}
 		return super.dispatchEvent(event);
 	}
 	
 	@:noCompletion public override function willTrigger(type:String):Bool {
-		if(hasEventListener(type)) {
-			return true;
-		}
+		if(hasEventListener(type)) return true;
 		var target = _bubbleParent;
 		while(target != null) {
-			if (target.hasEventListener(type)) {
-				return true;
-			}
+			if (target.hasEventListener(type))  return true;
 			target = target._bubbleParent;
 		}
 		return false;
@@ -62,9 +52,7 @@ class Data extends EventDispatcher {
 	
 	@:final @:noCompletion function dispatchEventFunction(event:DataBaseNativeEvent):Bool {
 		var canceled = false;
-		if (hasEventListener(event.type)) {
-			canceled = !(super.dispatchEvent(event));
-		}
+		if(hasEventListener(event.type)) canceled = !(super.dispatchEvent(event));
 		if(!event.getProperty("__isCancelledNow")){
 			var target = _bubbleParent;
 			while(target != null) {
@@ -73,9 +61,7 @@ class Data extends EventDispatcher {
 					event.target = this;
 					target.safeDispatchEvent(event);
 					canceled = event.getProperty("__isCancelled");
-					if(event.getProperty("__isCancelledNow")) {
-						break;
-					}
+					if(event.getProperty("__isCancelledNow")) break;
 				}
 				target = target._bubbleParent;
 			}
