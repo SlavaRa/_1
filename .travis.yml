@@ -22,9 +22,9 @@ install:
   - haxelib install munit
   - haxelib install openfl
   - haxelib install swf
-  - haxelib run lime rebuild linux -release -64 -nocffi
-  - haxelib run lime rebuild linux -release -64 -Dlegacy -nocffi
-  - haxelib run lime rebuild tools
+  - haxelib run lime rebuild linux -release -64 -nocffi > /dev/null
+  - haxelib run lime rebuild linux -release -64 -Dlegacy -nocffi > /dev/null
+  - haxelib run lime rebuild tools > /dev/null
 
 script:
   - cd ~/build/SlavaRa/slavara-core-hx
