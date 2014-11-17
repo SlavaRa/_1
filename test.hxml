@@ -20,7 +20,7 @@
 -cmd haxelib run lime build html5
 
 ## JavaScript
--js bit/test/TestMain.js
+-js bin/test/TestMain.js
 --no-output
 --next
 
