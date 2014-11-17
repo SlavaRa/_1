@@ -18,15 +18,16 @@ install:
   - haxelib dev lime ~/lime
   - haxelib install hxcpp
   - haxelib install format
-  - haxelib install dox
+#  - haxelib install dox
   - haxelib install mcover
   - haxelib install msignal
+  - haxelib install munit
   - haxelib install openfl
   - haxelib install swf
-  - git clone https://github.com/jgranick/MassiveUnit ~/munit --depth 1
-  - haxelib dev munit ~/munit/src
-  - cd ~/munit/tool
-  - haxe build.hxml
+#  - git clone https://github.com/jgranick/MassiveUnit ~/munit --depth 1
+#  - haxelib dev munit ~/munit/src
+#  - cd ~/munit/tool
+#  - haxe build.hxml
   - haxelib run lime rebuild linux -release -64 -nocffi
   - haxelib run lime rebuild linux -release -64 -Dlegacy -nocffi
   - haxelib run lime rebuild tools
