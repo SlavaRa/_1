@@ -16,6 +16,14 @@
 -swf bin/test/as3_test.swf
 --next
 
+# Trick munit into building our app
+-cmd haxelib run lime build html5
+
+## JavaScript
+-js build/html5/bin/TestMain.js
+--no-output
+--next
+
 ## Neko
 -main TestMain
 -lib openfl
