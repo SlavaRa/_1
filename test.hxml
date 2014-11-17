@@ -20,6 +20,18 @@
 -cmd haxelib run lime build html5
 
 ## JavaScript
+-main TestMain
+-lib hamcrest
+-lib munit
+-lib msignal
+-lib swf
+-lib mlib
+-lib lime
+-lib openfl
+-cp src
+-cp test
+--remap flash:openfl
+--macro allowPackage("flash")
 -js bin/test/TestMain.js
 --no-output
 --next
