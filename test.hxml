@@ -1,10 +1,14 @@
 ## Flash 11+
 -main TestMain
--lib openfl
 -lib hamcrest
 -lib munit
 -lib msignal
 -lib swf
+-lib mlib
+-lib lime
+-lib openfl
+-D openfl-flash
+-D web
 -cp src
 -cp test
 -swf-version 12
