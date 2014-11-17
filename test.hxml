@@ -25,28 +25,28 @@
 --next
 
 ## Neko
--main TestMain
--lib openfl
--lib hamcrest
--lib munit
--lib msignal
--lib swf
--cp src
--cp test
---remap flash:openfl
--neko bin/test/neko_test.n
---next
+#-main TestMain
+#-lib openfl
+#-lib hamcrest
+#-lib munit
+#-lib msignal
+#-lib swf
+#-cp src
+#-cp test
+#--remap flash:openfl
+#-neko bin/test/neko_test.n
+#--next
 
 ## CPP
--main TestMain
--lib openfl
--lib hamcrest
--lib munit
--lib msignal
--lib swf
--cp src
--cp test
--D desktop
+#-main TestMain
+#-lib openfl
+#-lib hamcrest
+#-lib munit
+#-lib msignal
+#-lib swf
+#-cp src
+#-cp test
+#-D desktop
 ##-D HXCPP_M64
---remap flash:openfl
--cpp bin/test/cpp_test
+#--remap flash:openfl
+#-cpp bin/test/cpp_test
