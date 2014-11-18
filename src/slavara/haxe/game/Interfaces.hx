@@ -13,5 +13,4 @@ interface IPrototypesCollection {
  */
 interface IUnknown {
 	public var id(default, null):Int;
-	public var desc(default, null):String;
 }

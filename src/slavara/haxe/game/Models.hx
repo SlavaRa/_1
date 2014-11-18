@@ -14,21 +14,35 @@ using Std;
 /**
  * @author SlavaRa
  */
-class UnknownProto extends DataValueObjectContainer implements IUnknown {
-
+class Unknown extends DataValueObjectContainer implements IUnknown {
 	public function new() {
 		super();
 		initialize();
 	}
 	
 	public var id(default, null):Int;
-	public var desc(default, null):String;
 	
 	function initialize() { }
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
 		if(input.hasField("id")) id = input.getProperty("id");
+	}
+}
+
+/**
+ * @author SlavaRa
+ */
+class UnknownProto extends Unknown implements IUnknown {
+
+	public function new() {
+		super();
+	}
+	
+	public var desc(default, null):String;
+	
+	override function deserialize(input:Dynamic) {
+		super.deserialize(input);
 		if(input.hasField("desc")) desc = input.getProperty("desc");
 	}
 }
@@ -36,9 +50,9 @@ class UnknownProto extends DataValueObjectContainer implements IUnknown {
 /**
  * @author SlavaRa
  */
-class UnknownData extends UnknownProto implements IStateMachineHolder {
+class UnknownData extends Unknown implements IStateMachineHolder {
 
-	function new(proto:UnknownProto) {
+	public function new(proto:UnknownProto) {
 		#if debug
 		if(proto == null) throw new ArgumentNullError("proto");
 		#end
