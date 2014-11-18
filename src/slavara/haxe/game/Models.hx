@@ -71,14 +71,14 @@ class UnknownData extends Unknown implements IStateMachineHolder {
  */
 @:generic class PrototypesCollection<T:({public function new():Void;},UnknownProto)> extends DataValueObjectContainer implements IPrototypesCollection {
 	
-	public function new(inputKey:String) {
+	public function new(key:String) {
 		#if debug
-		if(inputKey.isNullOrEmpty()) throw new ArgumentNullError("inputKey");
+		if(key.isNullOrEmpty()) throw new ArgumentNullError("key");
 		#end
 		super();
 		_t = Type.getClass(new T());
 		_id2t = new Map();
-		_addKey = "+" + inputKey;
+		_addKey = "+" + key;
 	}
 	
 	var _t:Class<T>;
@@ -116,17 +116,17 @@ class UnknownData extends Unknown implements IStateMachineHolder {
  */
 @:generic class DataCollection<T:({public function new(proto:UnknownProto):Void;},UnknownData)> extends DataValueObjectContainer {
 
-	public function new(prototypes:IPrototypesCollection, inputKey:String) {
+	public function new(prototypes:IPrototypesCollection, key:String) {
 		#if debug
-		if(inputKey.isNullOrEmpty()) throw new ArgumentNullError("inputKey");
+		if(key.isNullOrEmpty()) throw new ArgumentNullError("key");
 		#end
 		super();
 		_t = Type.getClass(new T(Type.createEmptyInstance(UnknownProto)));
 		_id2t = new Map();
 		_prototypes = prototypes;
-		_addKey = "+" + inputKey;
-		_removeKey = "-" + inputKey;
-		_updateKey = "=" + inputKey;
+		_addKey = "+" + key;
+		_removeKey = "-" + key;
+		_updateKey = "=" + key;
 	}
 	
 	var _t:Class<T>;
