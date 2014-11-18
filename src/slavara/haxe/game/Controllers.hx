@@ -1,6 +1,7 @@
 package slavara.haxe.game;
 import openfl.display.DisplayObjectContainer;
 import slavara.haxe.core.controllers.BaseController;
+import slavara.haxe.core.Errors.NotImplementedError;
 import slavara.haxe.game.Enumerators.ServerCommand;
 import slavara.haxe.game.models.BaseUniverseData;
 
@@ -33,6 +34,7 @@ class BaseServerController extends AbstractController {
 	public function new(controller:BaseController) super(controller);
 	
 	public function send(command:String, ?data:Dynamic, ?onResponseReceived:Dynamic->Void, ?onResponseSavedData:Dynamic) {
+		throw new NotImplementedError();
 	}
 }
 
