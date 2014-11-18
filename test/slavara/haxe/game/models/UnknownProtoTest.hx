@@ -12,7 +12,8 @@ class UnknownProtoTest {
 	@Test
 	public function testDeserialize() {
 		var proto:UnknownProto = new UnknownProto();
-		proto.readExternal({"desc":"some proto"});
-		Assert.areEqual("some proto", proto.desc);
+		proto.readExternal({"ident":"t_ident", "desc":"t_desc"});
+		Assert.areEqual("t_ident", proto.ident);
+		Assert.areEqual("t_desc", proto.desc);
 	}
 }

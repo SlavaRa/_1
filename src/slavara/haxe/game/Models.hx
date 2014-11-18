@@ -35,14 +35,14 @@ class Unknown extends DataValueObjectContainer implements IUnknown {
  */
 class UnknownProto extends Unknown implements IUnknown {
 
-	public function new() {
-		super();
-	}
+	public function new() super();
 	
+	public var ident(default, null):String;
 	public var desc(default, null):String;
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
+		if(input.hasField("ident")) desc = input.getProperty("ident");
 		if(input.hasField("desc")) desc = input.getProperty("desc");
 	}
 }

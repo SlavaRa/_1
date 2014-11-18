@@ -1,6 +1,7 @@
 package slavara.haxe.game;
 import openfl.display.DisplayObjectContainer;
 import slavara.haxe.core.controllers.BaseController;
+import slavara.haxe.game.Enumerators.ServerCommand;
 import slavara.haxe.game.models.BaseUniverseData;
 
 /**
@@ -25,12 +26,14 @@ class BaseSystemController extends BaseController {
 		screen = Type.createInstance(getScreenType(), [this]);
 	}
 	
-	public function start() {
-	}
+	public function start() server.send(ServerCommand.START);
 }
 
 class BaseServerController extends AbstractController {
 	public function new(controller:BaseController) super(controller);
+	
+	public function send(command:String, ?data:Dynamic, ?onResponseReceived:Dynamic->Void, ?onResponseSavedData:Dynamic) {
+	}
 }
 
 class BaseStatController extends AbstractController {
