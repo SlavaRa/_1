@@ -10,14 +10,14 @@ class BaseSystemController extends BaseController {
 
 	public function new(container:DisplayObjectContainer) super(container, Type.createInstance(getUniverseDataType(), []));
 
-	var server(default, null):BaseServerController;
-	var stat(default, null):BaseStatController;
-	var screen(default, null):BaseScreenController;
+	public var server(default, null):BaseServerController;
+	public var stat(default, null):BaseStatController;
+	public var screen(default, null):BaseScreenController;
 	
 	function getUniverseDataType():Class<Dynamic> return BaseUniverseData;
 	function getServerType():Class<Dynamic> return BaseServerController;
 	function getStatType():Class<Dynamic> return BaseStatController;
-	function getScreenType():Class<Dynamic> return BaseStatController;
+	function getScreenType():Class<Dynamic> return BaseScreenController;
 	
 	public override function initialize() {
 		server = Type.createInstance(getServerType(), [this]);
