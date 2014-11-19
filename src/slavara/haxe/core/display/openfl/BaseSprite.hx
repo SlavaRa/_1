@@ -3,6 +3,7 @@ import openfl.display.DisplayObject;
 import openfl.display.DisplayObjectContainer;
 import openfl.display.Sprite;
 import openfl.events.Event;
+import openfl.text.TextField;
 import slavara.haxe.core.Interfaces.IDisposable;
 using Lambda;
 using Std;
@@ -68,6 +69,11 @@ using Std;
 		return child;
 	}
 	#end
+	
+	function getFieldByName(name:String):TextField {
+		var child = getChildByName(name);
+		return child != null && child.is(TextField) ? cast(child, TextField) : null;
+	}
 	
 	function render():Bool {
 		update();

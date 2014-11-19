@@ -10,6 +10,7 @@ import slavara.haxe.game.Interfaces.IUnknown;
 using slavara.haxe.core.Utils.StringUtil;
 using Reflect;
 using Std;
+using Lambda;
 
 /**
  * @author SlavaRa
@@ -42,7 +43,7 @@ class UnknownProto extends Unknown implements IUnknown {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		if(input.hasField("ident")) desc = input.getProperty("ident");
+		if(input.hasField("ident")) ident = input.getProperty("ident");
 		if(input.hasField("desc")) desc = input.getProperty("desc");
 	}
 }
@@ -78,17 +79,26 @@ class UnknownData extends Unknown implements IStateMachineHolder {
 		super();
 		_t = Type.getClass(new T());
 		_id2t = new Map();
+		_key = key;
 		_addKey = "+" + key;
 	}
 	
 	var _t:Class<T>;
 	var _id2t:Map<Int, T>;
+	var _key:String;
 	var _addKey:String;
 	
 	public function get(id:Int):T return _id2t.exists(id) ? _id2t.get(id) : null;
 	
+	public function getItems():Array<T> return _id2t.array();
+	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
+		if(input.hasField(_key)) {
+			_id2t = new Map();
+			removeChildren();
+			input.setProperty(_addKey, input.getProperty(_key));
+		}
 		if(input.hasField(_addKey)) {
 			var list:Array<Dynamic> = input.getProperty(_addKey);
 			for(it in list) {
@@ -138,7 +148,7 @@ class UnknownData extends Unknown implements IStateMachineHolder {
 	
 	public function get(id:Int):T return _id2t.exists(id) ? _id2t.get(id) : null;
 	
-	public function getItems():Iterator<T> return _id2t.iterator();
+	public function getItems():Array<T> return _id2t.array();
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);

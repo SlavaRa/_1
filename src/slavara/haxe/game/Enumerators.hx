@@ -5,4 +5,5 @@ package slavara.haxe.game;
  */
 class ServerCommand {
 	public static inline var START = "start";
+	public static inline var RESET = "reset";
 }

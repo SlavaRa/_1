@@ -14,7 +14,6 @@ class StringUtilsTest {
 		var s0 = "";
 		var s1:String = null;
 		var s2 = "abc";
-		
 		Assert.isTrue(s0.isNullOrEmpty());
 		Assert.isTrue(s1.isNullOrEmpty());
 		Assert.isFalse(s2.isNullOrEmpty());
