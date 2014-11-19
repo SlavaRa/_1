@@ -39,6 +39,6 @@ class BaseScreenView extends ResourceSprite {
 		super.update();
 		if(stage == null || data == null) return;
 		var field = getFieldByName("title");
-		field.text = data.ident;
+		//field.text = data.ident;
 	}
 }
