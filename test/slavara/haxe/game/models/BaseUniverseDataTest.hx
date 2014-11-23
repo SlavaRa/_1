@@ -1,5 +1,6 @@
 package slavara.haxe.game.models;
 import massive.munit.Assert;
+import slavara.haxe.game.Interfaces.IPrototypesCollection;
 import slavara.haxe.game.models.BaseUniverseData;
 
 /**
@@ -12,22 +13,9 @@ class BaseUniverseDataTest {
 	@Test
 	public function testDeserialize_screens() {
 		var data:BaseUniverseData = new BaseUniverseData();
-		data.readExternal({
-			"prototypes":{
-				"screens":[
-					{
-						"id":0,
-						"ident":"Main",
-						"to":["menu"]
-					},
-					{
-						"id":1,
-						"ident":"Menu",
-						"to":["new game", "settings"]
-					}
-				]
-			}
-		});
-		Assert.areEqual(2, data.numChildren);
+		data.readExternal({"prototypes":{"screens":[{"id":0},{"id":1}]}});
+		var screens:Dynamic = Reflect.getProperty(data.proto, "screens");
+		Assert.isNotNull(cast(screens, IPrototypesCollection).get(0));
+		Assert.isNotNull(cast(screens, IPrototypesCollection).get(1));
 	}
 }
