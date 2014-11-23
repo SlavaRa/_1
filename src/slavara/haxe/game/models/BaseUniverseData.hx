@@ -1,5 +1,6 @@
 package slavara.haxe.game.models;
 import slavara.haxe.game.models.prototypes.RewardProto;
+import slavara.haxe.game.models.prototypes.ScreenProto;
 import slavara.haxe.game.models.prototypes.UserProto;
 import slavara.haxe.game.models.prototypes.WorldProto;
 import slavara.haxe.game.Models.PrototypesCollection;
@@ -45,12 +46,14 @@ private class PrototypesCollectionData extends UnknownProto {
 	
 	public function new() super();
 	
+	public var screens(default, null):PrototypesCollection<ScreenProto>;
 	public var world(default, null):WorldProto;
 	public var user(default, null):UserProto;
 	public var rewards(default, null):PrototypesCollection<RewardProto>;
 	
 	override function initialize() {
 		super.initialize();
+		addChild(screens = new PrototypesCollection<ScreenProto>("screens"));
 		addChild(world = new WorldProto());
 		addChild(user = new UserProto());
 		addChild(rewards = new PrototypesCollection<RewardProto>("rewards"));
@@ -58,6 +61,7 @@ private class PrototypesCollectionData extends UnknownProto {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
+		if(input.hasField("screens")) screens.readExternal(input.getProperty("screens"));
 		if(input.hasField("world")) world.readExternal(input.getProperty("world"));
 		if(input.hasField("user")) user.readExternal(input.getProperty('user'));
 		if(input.hasField("rewards")) rewards.readExternal(input.getProperty("rewards"));
