@@ -64,6 +64,6 @@ private class PrototypesCollectionData extends UnknownProto {
 		if(input.hasField("screens")) screens.readExternal(input);
 		if(input.hasField("world")) world.readExternal(input.getProperty("world"));
 		if(input.hasField("user")) user.readExternal(input.getProperty('user'));
-		if(input.hasField("rewards")) rewards.readExternal(input;
+		if(input.hasField("rewards")) rewards.readExternal(input);
 	}
 }
