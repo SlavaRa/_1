@@ -22,9 +22,9 @@ class BaseUniverseData extends UnknownData {
 	
 	override function initialize() {
 		super.initialize();
-		var prototypes:PrototypesCollectionData = cast(proto, PrototypesCollectionData);
-		addChild(world = new WorldData(prototypes.world));
-		addChild(user = new UserData(prototypes.user));
+		var protos:PrototypesCollectionData = cast(proto, PrototypesCollectionData);
+		addChild(world = new WorldData(protos.world));
+		addChild(user = new UserData(protos.user));
 	}
 	
 	override function deserialize(input:Dynamic) {
@@ -42,7 +42,7 @@ class BaseUniverseData extends UnknownData {
 /**
  * @author SlavaRa
  */
-private class PrototypesCollectionData extends UnknownProto {
+@:final class PrototypesCollectionData extends UnknownProto {
 	
 	public function new() super();
 	

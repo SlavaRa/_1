@@ -34,7 +34,7 @@ class Unknown extends DataValueObjectContainer implements IUnknown {
 /**
  * @author SlavaRa
  */
-class UnknownProto extends Unknown implements IUnknown {
+class UnknownProto extends Unknown {
 
 	public function new() super();
 	
@@ -70,7 +70,7 @@ class UnknownData extends Unknown implements IStateMachineHolder {
 /**
  * @author SlavaRa
  */
-@:generic class PrototypesCollection<T:({public function new():Void;},UnknownProto)> extends DataValueObjectContainer implements IPrototypesCollection {
+@:generic class PrototypesCollection<T:({public function new():Void;},UnknownProto)> extends UnknownProto implements IPrototypesCollection {
 	
 	public function new(key:String) {
 		#if debug
