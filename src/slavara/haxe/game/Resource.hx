@@ -1,15 +1,18 @@
 package slavara.haxe.game;
-import slavara.haxe.game.Models.UnknownProto;
+import slavara.haxe.game.Models.Unknown;
 import slavara.haxe.game.Resource.ResRef;
 using Reflect;
+using slavara.haxe.core.Utils.StringUtil;
 
 /**
  * @author SlavaRa
  */
-class ResRef extends UnknownProto {
+class ResRef extends Unknown {
 	public function new() super();
 	
 	public var link(default, null):String;
+	
+	public function getIsEmpty() return link.isNullOrEmpty();
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);

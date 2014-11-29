@@ -1,5 +1,6 @@
 package slavara.haxe.game;
 import openfl.errors.ArgumentError;
+import openfl.events.Event;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.core.Interfaces.IStateMachineHolder;
 import slavara.haxe.core.Models.Data;
@@ -94,10 +95,12 @@ class UnknownData extends Unknown implements IStateMachineHolder {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
+		var changed = false;
 		if(input.hasField(_key)) {
 			_id2t = new Map();
 			removeChildren();
 			input.setProperty(_addKey, input.getProperty(_key));
+			changed = true;
 		}
 		if(input.hasField(_addKey)) {
 			var list:Array<Dynamic> = input.getProperty(_addKey);
@@ -106,7 +109,9 @@ class UnknownData extends Unknown implements IStateMachineHolder {
 				proto.readExternal(it);
 				addChild(proto);
 			}
+			changed = true;
 		}
+		if(changed && hasEventListener(Event.CHANGE)) dispatchEvent(new Event(Event.CHANGE));
 	}
 	
 	override function addChildBefore(child:Data) {

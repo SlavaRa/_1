@@ -1,4 +1,6 @@
 package slavara.haxe.core;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
 import openfl.display.DisplayObject;
 import slavara.haxe.core.Interfaces.IDisposable;
 using Reflect;
@@ -18,7 +20,14 @@ extern class DisposeUtil {
 					if(d.hasField("remove")) d.callMethod(d.field("remove"), [it]);
 					dispose(it);
 				}
-			}
+			} else if(d.is(DisplayObject)) {
+				var display:DisplayObject = cast(d, DisplayObject);
+				if(display.parent != null) display.parent.removeChild(display);
+				if(display.is(Bitmap)) {
+					if(!safe) cast(display, Bitmap).bitmapData.dispose();
+					cast(display, Bitmap).bitmapData = null;
+				}
+			} else if(!safe && d.is(BitmapData)) cast(d, BitmapData).dispose();
 		}
 		return null;
 	}

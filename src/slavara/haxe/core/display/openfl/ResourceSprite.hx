@@ -1,5 +1,6 @@
 package slavara.haxe.core.display.openfl;
 import openfl.Assets;
+import openfl.display.Bitmap;
 import slavara.haxe.core.Errors.ArgumentNullError;
 import slavara.haxe.game.Resource.ResRef;
 #if swf
@@ -15,7 +16,7 @@ class ResourceSprite extends BaseSprite {
 
 	public function new() super();
 	
-	public function hasResource(ref:ResRef):Bool {
+	function hasResource(ref:ResRef):Bool {
 		#if debug
 		if(ref == null) throw new ArgumentNullError("ref");
 		#end
@@ -25,15 +26,22 @@ class ResourceSprite extends BaseSprite {
 		return Assets.exists(ref.link);
 	}
 	
+	function getBitmap(ref:ResRef, useCache:Bool = true):Bitmap {
+		#if debug
+		if(ref == null) throw new ArgumentNullError("ref");
+		#end
+		return new Bitmap(Assets.getBitmapData(ref.link, useCache));
+	}
+	
 	#if swf
-	public function hasSWF(ref:SWFResRef):Bool {
+	function hasSWF(ref:SWFResRef):Bool {
 		#if debug
 		if(ref == null) throw new ArgumentNullError("ref");
 		#end
 		return Assets.exists(ref.swf);
 	}
 	
-	public function getSWF(ref:SWFResRef):SWF {
+	function getSWF(ref:SWFResRef):SWF {
 		return hasSWF(ref) ? new SWF(Assets.getBytes(ref.swf)) : null;
 	}
 	#end

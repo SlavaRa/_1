@@ -1,7 +1,16 @@
 package slavara.haxe.core;
 import msignal.Signal.Signal0;
 import slavara.haxe.core.Errors.ArgumentNullError;
+import slavara.haxe.core.Errors.NotImplementedError;
+import slavara.haxe.core.StateMachine.State;
 using Lambda;
+
+/**
+ * @author SlavaRa
+ */
+enum State {
+	Some(name:String);
+}
 
 /**
  * @author SlavaRa
@@ -13,41 +22,59 @@ class StateMachine {
 		reset();
 	}
 	
-	public var currentState(default, null):EnumValue;
-	public var previousState(default, null):EnumValue;
+	public var currentState(default, null):State;
+	public var previousState(default, null):State;
 	public var onChange(default, null):Signal0;
 	
-	var _transitions:EnumValueHash<EnumValue, EnumValueHash<EnumValue, StateTransition>>;
-	var _queuedState:EnumValue;
-	var _statesQueue:Array<EnumValue>;
-	var _transitionListeners:EnumValueHash<EnumValue, EnumValueHash<EnumValue, Array<Void -> Void>>>;
+	var _transitions:Map<State, Map<State, StateTransition>>;
+	var _queuedState:State;
+	var _statesQueue:Array<State>;
+	var _transitionListeners:Map<State, Map<State, Array<Void -> Void>>>;
 	var _inTransition:Bool;
 	
 	public function reset():StateMachine {
 		onChange.removeAll();
 		currentState = null;
 		previousState = null;
-		_transitions = new EnumValueHash<EnumValue, EnumValueHash<EnumValue, StateTransition>>();
+		_transitions = new Map<State, Map<State, StateTransition>>();
 		_queuedState = null;
 		_statesQueue = null;
-		_transitionListeners = new EnumValueHash<EnumValue, EnumValueHash<EnumValue, Array<Void -> Void>>>();
+		_transitionListeners = new Map<State, Map<State, Array<Void -> Void>>>();
 		_inTransition = false;
 		return this;
 	}
 	
-	public function add(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>):StateMachine {
+	public function has(from:State, to:State):Bool {
+		#if debug
+		if(from == null) throw new ArgumentNullError("from");
+		if(to == null) throw new ArgumentNullError("to");
+		#end
+		if(!_transitions.exists(from)) return false;
+		return _transitions.get(from).exists(to);
+	}
+	
+	public function hasFrom(from:State):Bool {
+		#if debug
+		if(from == null) throw new ArgumentNullError("from");
+		#end
+		return _transitions.exists(from) && !_transitions.get(from).empty();
+	}
+	
+	public function hasTo(to:State):Bool return currentState != null ? has(currentState, to) : false;
+	
+	public function add(from:State, to:State, ?via:Array<State>):StateMachine {
 		#if debug
 		if(from == null) throw new ArgumentNullError("from");
 		if(to == null) throw new ArgumentNullError("to");
 		#end
 		if(from == to) return this;
-		if(!_transitions.exists(from)) _transitions.set(from, new EnumValueHash<EnumValue, StateTransition>());
-		if(!_transitions.exists(to)) _transitions.set(to, new EnumValueHash<EnumValue, StateTransition>());
+		if(!_transitions.exists(from)) _transitions.set(from, new Map<State, StateTransition>());
+		if(!_transitions.exists(to)) _transitions.set(to, new Map<State, StateTransition>());
 		_transitions.get(from).set(to, new StateTransition(from, to, via));
 		return this;
 	}
 	
-	public function addOneToAll(from:EnumValue, to:Array<EnumValue>, ?via:Array<EnumValue>):StateMachine {
+	public function addOneToAll(from:State, to:Array<State>, ?via:Array<State>):StateMachine {
 		#if debug
 		if(from == null) throw new ArgumentNullError("from");
 		if(to == null) throw new ArgumentNullError("to");
@@ -56,7 +83,7 @@ class StateMachine {
 		return this;
 	}
 	
-	public function addAllToAll(all:Array<EnumValue>, ?via:Array<EnumValue>):StateMachine {
+	public function addAllToAll(all:Array<State>, ?via:Array<State>):StateMachine {
 		#if debug
 		if(all == null) throw new ArgumentNullError("all");
 		#end
@@ -64,7 +91,7 @@ class StateMachine {
 		return this;
 	}
 	
-	public function addTwoWay(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>):StateMachine {
+	public function addTwoWay(from:State, to:State, ?via:Array<State>):StateMachine {
 		#if debug
 		if(from == null) throw new ArgumentNullError("from");
 		if(to == null) throw new ArgumentNullError("to");
@@ -74,7 +101,7 @@ class StateMachine {
 		return this;
 	}
 	
-	public function setState(state:EnumValue):StateMachine {
+	public function setState(state:State):StateMachine {
 		#if debug
 		if(state == null) throw new ArgumentNullError("state");
 		#end
@@ -108,13 +135,13 @@ class StateMachine {
 		return this;
 	}
 	
-	public function addTransitionListener(from:EnumValue, to:EnumValue, listener:Void -> Void):StateMachine {
+	public function addTransitionListener(from:State, to:State, listener:Void -> Void):StateMachine {
 		#if debug
 		if(from == null) throw new ArgumentNullError("from");
 		if(to == null) throw new ArgumentNullError("to");
 		if(listener == null) throw new ArgumentNullError("listener");
 		#end
-		if(!_transitionListeners.exists(from)) _transitionListeners.set(from, new EnumValueHash<EnumValue, Array<Void -> Void>>());
+		if(!_transitionListeners.exists(from)) _transitionListeners.set(from, new Map<State, Array<Void -> Void>>());
 		var to2listeners = _transitionListeners.get(from);
 		if(!to2listeners.exists(to)) to2listeners.set(to, []);
 		var listeners = to2listeners.get(to);
@@ -122,7 +149,7 @@ class StateMachine {
 		return this;
 	}
 	
-	public function removeTransitionListener(from:EnumValue, to:EnumValue, listener:Void -> Void):StateMachine {
+	public function removeTransitionListener(from:State, to:State, listener:Void -> Void):StateMachine {
 		#if debug
 		if(from == null) throw new ArgumentNullError("from");
 		if(to == null) throw new ArgumentNullError("to");
@@ -157,7 +184,7 @@ class StateMachine {
 		}
 	}
 	
-	@:noCompletion inline function broadcastStateChange(from:EnumValue, to:EnumValue) {
+	@:noCompletion inline function broadcastStateChange(from:State, to:State) {
 		onChange.dispatch();
 		if(_transitionListeners.exists(from)) {
 			var listeners = _transitionListeners.get(from);
@@ -171,7 +198,7 @@ class StateMachine {
  */
 private class StateTransition {
 	
-	public function new(from:EnumValue, to:EnumValue, ?via:Array<EnumValue>) {
+	public function new(from:State, to:State, ?via:Array<State>) {
 		this.from = from;
 		this.to = to;
 		if(via != null) {
@@ -180,53 +207,14 @@ private class StateTransition {
 		}
 	}
 	
-	public var from(default, null):EnumValue;
-	public var to(default, null):EnumValue;
-	public var queue(get, null):Array<EnumValue>;
+	public var from(default, null):State;
+	public var to(default, null):State;
+	public var queue(get, null):Array<State>;
 	public var simple(get, null):Bool;
 	
-	var _queue:Array<EnumValue>;
+	var _queue:Array<State>;
 	
-	inline function get_queue():Array<EnumValue> return _queue != null ? _queue.copy() : [];
+	inline function get_queue():Array<State> return _queue != null ? _queue.copy() : [];
 	
 	inline function get_simple():Bool return _queue == null;
-}
-
-/**
- * @author SlavaRa
- */
-private class EnumValueHash<K, V> {
-	
-	public function new() {
-		_keys = [];
-		_values = [];
-	}
-	
-	var _keys:Array<K>;
-	var _values:Array<V>;
-	
-	public function set(k:K, v:V) {
-		var index = _keys.length;
-		_keys[index] = k;
-		_values[index] = v;
-	}
-	
-	public function get(k:K):V {
-		var index = _keys.indexOf(k);
-		return index != -1 ? _values[index] : null;
-	}
-	
-	public function exists(k:K):Bool {
-		var index = _keys.indexOf(k);
-		return index != -1 ? _values[index] != null : false;
-	}
-	
-	public function remove(k:K):Bool {
-		var index = _keys.indexOf(k);
-		if(index == -1) return false;
-		_values.remove(_values[index]);
-		return _keys.remove(k);
-	}
-	
-	public function empty():Bool return _keys != null || _keys.empty();
 }

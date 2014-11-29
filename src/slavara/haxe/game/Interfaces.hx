@@ -1,11 +1,13 @@
 package slavara.haxe.game;
+import openfl.events.IEventDispatcher;
 import slavara.haxe.game.Models.UnknownProto;
 
 /**
  * @author SlavaRa
  */
-interface IPrototypesCollection {
+interface IPrototypesCollection extends IEventDispatcher {
 	function get(id:Int):UnknownProto;
+	function getItems():Array<Dynamic>;
 }
 
 /**
