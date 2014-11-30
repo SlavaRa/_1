@@ -43,11 +43,11 @@ using Std;
 	}
 	
 	#if !cpp
-	@:final public override function getChildByName(name:String):DisplayObject return _getChildByName(this, name);
+	public override function getChildByName(name:String):DisplayObject return _getChildByName(this, name);
 	
 	@:final @:noCompletion function _getChildByName(container:DisplayObjectContainer, name:String):DisplayObject {
 		var child = super.getChildByName(name);
-		if (child == null) child = getChildByPath(this, name);
+		if (child == null && container == null) child = getChildByPath(this, name);
 		if (child == null && container != this) child = getChildByPath(container, name);
 		return child;
 	}
@@ -69,6 +69,11 @@ using Std;
 		return child;
 	}
 	#end
+	
+	function getContainerByName(name:String):DisplayObjectContainer {
+		var child = getChildByName(name);
+		return child != null && child.is(DisplayObjectContainer) ? cast(child, DisplayObjectContainer) : null;
+	}
 	
 	function getFieldByName(name:String):TextField {
 		var child = getChildByName(name);

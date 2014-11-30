@@ -3,6 +3,7 @@ import slavara.haxe.core.StateMachine.State;
 import slavara.haxe.game.models.prototypes.ScreenProto;
 import slavara.haxe.game.Models.UnknownData;
 import slavara.haxe.game.Resource.ResRef;
+import slavara.haxe.game.Resource.SWFResRef;
 
 /**
  * @author SlavaRa
@@ -20,5 +21,6 @@ class ScreenData extends UnknownData {
 		return result;
 	}
 	
+	public function getSWFRef():SWFResRef return cast(proto, ScreenProto).swf;
 	public function getBkgRef():ResRef return cast(proto, ScreenProto).bkg;
 }

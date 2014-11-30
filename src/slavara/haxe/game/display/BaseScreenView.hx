@@ -14,22 +14,29 @@ class BaseScreenView extends ResourceSprite {
 		this.data = data;
 	}
 	
-	public var data(null, set):ScreenData;
+	var _bkg:Bitmap;
 	
+	public var data(null, set):ScreenData;
 	function set_data(value:ScreenData):ScreenData {
 		if(value != data) {
 			data = value;
-			update();
+			render();
 		}
 		return data;
 	}
 	
-	#if swf
-	#else
-	var _bkg:Bitmap;
-	
 	override function render():Bool {
 		if(!super.render()) return false;
+		if(data != null) {
+			if(container == null && !data.getSWFRef().getIsEmpty()) {
+				container = createClipFromSWF(data.getSWFRef());
+				return false;
+			}
+			if(_bkg == null && !data.getBkgRef().getIsEmpty()) {
+				_bkg = getBitmap(data.getBkgRef());
+				addChild(_bkg);
+			}
+		}
 		update();
 		return true;
 	}
@@ -42,15 +49,13 @@ class BaseScreenView extends ResourceSprite {
 	override function update() {
 		super.update();
 		if(stage == null || data == null) return;
-		if(_bkg == null) {
-			var resRef = data.getBkgRef();
-			if(!resRef.getIsEmpty()) _bkg = getBitmap(resRef);
+		if(container != null) {
+			container.x = (stage.stageWidth - container.width) / 2;
+			container.y = (stage.stageHeight - container.height) / 2;
 		}
 		if(_bkg != null) {
 			_bkg.x = (stage.stageWidth - _bkg.width) / 2;
 			_bkg.y = (stage.stageHeight - _bkg.height) / 2;
-			addChild(_bkg);
 		}
 	}
-	#end
 }
