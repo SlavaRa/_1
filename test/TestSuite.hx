@@ -15,6 +15,8 @@ import slavara.haxe.game.models.PrototypesCollectionTest;
 import slavara.haxe.game.models.UnknownDataTest;
 import slavara.haxe.game.models.UnknownProtoTest;
 import slavara.haxe.game.models.UnknownTest;
+import slavara.haxe.game.ResRefTest;
+import slavara.haxe.game.SWFResRefTest;
 
 /**
  * Auto generated Test Suite for MassiveUnit.
@@ -43,5 +45,7 @@ class TestSuite extends massive.munit.TestSuite
 		add(slavara.haxe.game.models.UnknownDataTest);
 		add(slavara.haxe.game.models.UnknownProtoTest);
 		add(slavara.haxe.game.models.UnknownTest);
+		add(slavara.haxe.game.ResRefTest);
+		add(slavara.haxe.game.SWFResRefTest);
 	}
 }

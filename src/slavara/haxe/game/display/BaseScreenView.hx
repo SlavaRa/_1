@@ -14,7 +14,6 @@ class BaseScreenView extends ResourceSprite {
 		this.data = data;
 	}
 	
-	var _bkg:Bitmap;
 	public var data(null, set):ScreenData;
 	
 	function set_data(value:ScreenData):ScreenData {
@@ -24,6 +23,10 @@ class BaseScreenView extends ResourceSprite {
 		}
 		return data;
 	}
+	
+	#if swf
+	#else
+	var _bkg:Bitmap;
 	
 	override function render():Bool {
 		if(!super.render()) return false;
@@ -49,4 +52,5 @@ class BaseScreenView extends ResourceSprite {
 			addChild(_bkg);
 		}
 	}
+	#end
 }

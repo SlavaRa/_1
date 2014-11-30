@@ -28,8 +28,10 @@ class SWFResRef extends ResRef {
 	
 	public var swf(default, null):String;
 	
+	public override function getIsEmpty() return swf.isNullOrEmpty() && super.getIsEmpty();
+	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		if(input.hasField("swf")) swf = input.getProperty("swf").replace("@", "swf/") + ".swf";//TODO: hardcode
+		if(input.hasField("swf")) swf = input.getProperty("swf");
 	}
 }
