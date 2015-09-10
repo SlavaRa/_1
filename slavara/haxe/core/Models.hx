@@ -23,7 +23,7 @@ class DataValueObjectContainer extends DataContainer implements IExternalizableO
 	
 	@:final public function readExternal(input:Dynamic) deserialize(input);
 	@:final public function writeExternal(output:Dynamic) serialize(output);
-	
+
 	function deserialize(input:Dynamic) { }
 	function serialize(output:Dynamic) { }
 }

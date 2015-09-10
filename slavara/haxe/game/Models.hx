@@ -55,7 +55,8 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 /**
  * @author SlavaRa
  */
-@:generic class PrototypesCollection<T:({public function new():Void;},UnknownProto)> extends DataValueObjectContainer implements IPrototypesCollection {
+@:generic
+class PrototypesCollection<T:({public function new():Void;},UnknownProto)> extends DataValueObjectContainer implements IPrototypesCollection {
 	
 	public function new(inputKey:String) {
 		#if debug
@@ -63,18 +64,38 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 		#end
 		super();
 		_t = Type.getClass(new T());
-		_id2t = new Map();
+		this.inputKey = inputKey;
 		_addKey = "+" + inputKey;
 	}
 	
+	public var inputKey(default, null):String;
 	var _t:Class<T>;
-	var _id2t:Map<Int, T>;
+	var _id2t:Map<Int, T> = new Map();
 	var _addKey:String;
 	
 	public function get(id:Int):T return _id2t.exists(id) ? _id2t.get(id) : null;
 	
+	/**
+	 * @example rewrite items
+	 * input = {
+	 *   "items":[
+	 *     {"proto_id":10, ...}
+	 *   ]
+	 * }
+	 * 
+	 * @example add items
+	 * input = {
+	 *   "+items":[
+	 *     {"proto_id":10, ...}
+	 *   ]
+	 * }
+	 */
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
+		if(input.hasField(inputKey)) {
+			removeChildren();
+			input.setField(_addKey, input.getProperty(inputKey));
+		}
 		if(input.hasField(_addKey)) {
 			var list:Array<Dynamic> = input.getProperty(_addKey);
 			for(it in list) {
@@ -95,12 +116,22 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 			return;
 		}
 	}
+	
+	override function removeChildBefore(child:Data) {
+		super.removeChildBefore(child);
+		if(child.is(_t)) {
+			var data:T = cast child;
+			var id = data.id;
+			if(_id2t.exists(id)) _id2t.remove(id);
+		}
+	}
 }
 
 /**
  * @author SlavaRa
  */
-@:generic class DataCollection<T:({public function new(proto:UnknownProto):Void;},UnknownData)> extends DataValueObjectContainer {
+@:generic
+class DataCollection<T:({public function new(proto:UnknownProto):Void;},UnknownData)> extends DataValueObjectContainer {
 
 	public function new(prototypes:IPrototypesCollection, inputKey:String) {
 		#if debug
@@ -108,15 +139,16 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 		#end
 		super();
 		_t = Type.getClass(new T(Type.createEmptyInstance(UnknownProto)));
-		_id2t = new Map();
 		_prototypes = prototypes;
+		this.inputKey = inputKey;
 		_addKey = "+" + inputKey;
 		_removeKey = "-" + inputKey;
 		_updateKey = "=" + inputKey;
 	}
 	
+	public var inputKey(default, null):String;
 	var _t:Class<T>;
-	var _id2t:Map<Int, T>;
+	var _id2t:Map<Int, T> = new Map();
 	var _prototypes:IPrototypesCollection;
 	var _addKey:String;
 	var _removeKey:String;
@@ -126,8 +158,40 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 	
 	public function getItems():Iterator<T> return _id2t.iterator();
 	
+	/**
+	 * @example rewrite items
+	 * input = {
+	 *   "items":[
+	 *     {"proto_id":10, ...}
+	 *   ]
+	 * }
+	 * 
+	 * @example add items
+	 * input = {
+	 *   "+items":[
+	 *     {"proto_id":10, ...}
+	 *   ]
+	 * }
+	 * 
+	 * @example update items
+	 * input = {
+	 *   "=items":{
+	 *     "1":{...},
+	 *     "2":{...}
+	 *   }
+	 * }
+	 * 
+	 * @example remove items
+	 * input = {
+	 *   "-items":[1, 2, 3]
+	 * }
+	 */
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
+		if(input.hasField(inputKey)) {
+			removeChildren();
+			input.setField(_addKey, input.getProperty(inputKey));
+		}
 		if(input.hasField(_addKey)) {
 			var protoIdKey = "proto_id";
 			var list:Array<Dynamic> = input.getProperty(_addKey);
@@ -144,14 +208,7 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 		var idKey = "id";
 		if(input.hasField(_removeKey)) {
 			var list:Array<Dynamic> = input.getProperty(_removeKey);
-			for(it in list) {
-				if(it.hasField(idKey)) {
-					var id:Int = it.getProperty(idKey);
-					if(_id2t.exists(id)) removeChild(_id2t.get(id));
-				} else {
-					//TODO: throw error
-				}
-			}
+			for(it in list) if(_id2t.exists(it)) removeChild(_id2t.get(it));
 		}
 		if(input.hasField(_updateKey)) {
 			var list:Array<Dynamic> = input.getProperty(_updateKey);

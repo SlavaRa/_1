@@ -17,7 +17,6 @@ class ResChange extends DataValueObjectContainer {
 		super.deserialize(input);
 		var rawItems:Array<Dynamic> = cast input;
 		for(i in 0...rawItems.length) {
-			trace(rawItems[i]);
 			var item = new ResChangeItem();
 			item.readExternal(rawItems[i]);
 			addChild(item);
@@ -29,7 +28,9 @@ class ResChangeItemImpl extends DataValueObjectContainer {
 	public function new() super();
 	
 	public var resId(default, null):Int;
-	@:allow(slavara.haxe.game.models) public var amount(default, null):Int;
+	
+	@:allow(slavara.haxe.game.models)
+	public var amount(default, null):Int;
 	
 	public function clone():ResChangeItem {
 		var result = new ResChangeItem();
@@ -45,7 +46,8 @@ class ResChangeItemImpl extends DataValueObjectContainer {
 	}
 }
 
-@:forward abstract ResChangeItem(ResChangeItemImpl) from ResChangeItemImpl to ResChangeItemImpl {
+@:forward
+abstract ResChangeItem(ResChangeItemImpl) from ResChangeItemImpl to ResChangeItemImpl {
 	
 	public inline function new() this = new ResChangeItemImpl();
 	
