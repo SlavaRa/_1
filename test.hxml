@@ -5,7 +5,6 @@
 -lib munit
 -lib msignal
 -lib swf
--cp src
 -cp test
 -swf-version 12
 -swf-lib libs/datahelpers.swf
@@ -19,7 +18,6 @@
 -lib munit
 -lib msignal
 -lib swf
--cp src
 -cp test
 --remap flash:openfl
 -neko bin/test/neko_test.n
@@ -32,7 +30,6 @@
 -lib munit
 -lib msignal
 -lib swf
--cp src
 -cp test
 -D desktop
 ##-D HXCPP_M64

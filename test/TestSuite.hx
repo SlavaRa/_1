@@ -8,6 +8,8 @@ import slavara.haxe.core.models.DataEventBubblingTest;
 import slavara.haxe.core.models.DataTest;
 import slavara.haxe.core.utils.DestroyableTest;
 import slavara.haxe.core.utils.StringUtilsTest;
+import slavara.haxe.game.models.ResChangeItemTest;
+import slavara.haxe.game.models.ResChangeTest;
 
 /**
  * Auto generated Test Suite for MassiveUnit.
@@ -29,5 +31,7 @@ class TestSuite extends massive.munit.TestSuite
 		add(slavara.haxe.core.models.DataTest);
 		add(slavara.haxe.core.utils.DestroyableTest);
 		add(slavara.haxe.core.utils.StringUtilsTest);
+		add(slavara.haxe.game.models.ResChangeItemTest);
+		add(slavara.haxe.game.models.ResChangeTest);
 	}
 }
