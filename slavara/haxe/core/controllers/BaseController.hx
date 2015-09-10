@@ -54,7 +54,7 @@ class BaseController implements IBaseController implements IDisposable {
 /**
  * @author SlavaRa
  */
-class AbstractController extends EventDispatcher implements IController implements IDisposable {
+@:generic class AbstractController extends EventDispatcher implements IController implements IDisposable {
 	
 	public function new(controller:IController) {
 		super();
