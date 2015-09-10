@@ -12,9 +12,9 @@ class ResChangeItemTest {
 	@Test
 	public function testPlus() {
 		var a = new ResChangeItem();
-		a.readExternal({"resourceId":1, "amount":1});
+		a.readExternal({"resId":1, "amount":1});
 		var b = new ResChangeItem();
-		b.readExternal({"resourceId":1, "amount":1});
+		b.readExternal({"resId":1, "amount":1});
 		var c = a + b;
 		Assert.areEqual(2, c.amount);
 	}
@@ -22,9 +22,9 @@ class ResChangeItemTest {
 	@Test
 	public function testMinus() {
 		var a = new ResChangeItem();
-		a.readExternal({"resourceId":1, "amount":2});
+		a.readExternal({"resId":1, "amount":2});
 		var b = new ResChangeItem();
-		b.readExternal({"resourceId":1, "amount":1});
+		b.readExternal({"resId":1, "amount":1});
 		var c = a - b;
 		Assert.areEqual(1, c.amount);
 	}

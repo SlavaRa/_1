@@ -28,19 +28,19 @@ class ResChange extends DataValueObjectContainer {
 class ResChangeItemImpl extends DataValueObjectContainer {
 	public function new() super();
 	
-	public var resourceId(default, null):Int;
+	public var resId(default, null):Int;
 	@:allow(slavara.haxe.game.models) public var amount(default, null):Int;
 	
 	public function clone():ResChangeItem {
 		var result = new ResChangeItem();
-		result.resourceId = resourceId;
+		result.resId = resId;
 		result.amount = amount;
 		return result;
 	}
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		resourceId = input.getProperty("resourceId");
+		resId = input.getProperty("resId");
 		amount = input.getProperty("amount");
 	}
 }
