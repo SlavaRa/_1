@@ -7,13 +7,11 @@ import slavara.haxe.core.Models.DataValueObjectContainer;
 import slavara.haxe.core.StateMachine;
 import slavara.haxe.game.Interfaces.IPrototypesCollection;
 import slavara.haxe.game.Interfaces.IUnknown;
+import slavara.haxe.game.Models.UnknownProto;
 using slavara.haxe.core.Utils.StringUtil;
 using Reflect;
 using Std;
 
-/**
- * @author SlavaRa
- */
 class UnknownProto extends DataValueObjectContainer implements IUnknown {
 
 	public function new() {
@@ -28,14 +26,13 @@ class UnknownProto extends DataValueObjectContainer implements IUnknown {
 	
 	override function deserialize(input:Dynamic) {
 		super.deserialize(input);
-		if(input.hasField("id")) id = input.getProperty("id");
-		if(input.hasField("desc")) desc = input.getProperty("desc");
+		for(it in Type.getInstanceFields(UnknownProto)) {
+			if(!input.hasField(it)) continue;
+			this.setProperty(it, input.getProperty(it));
+		}
 	}
 }
 
-/**
- * @author SlavaRa
- */
 class UnknownData extends UnknownProto implements IStateMachineHolder {
 
 	function new(proto:UnknownProto) {
@@ -52,9 +49,6 @@ class UnknownData extends UnknownProto implements IStateMachineHolder {
 	override function initialize() stateMachine = new StateMachine();
 }
 
-/**
- * @author SlavaRa
- */
 @:generic
 class PrototypesCollection<T:({public function new():Void;},UnknownProto)> extends DataValueObjectContainer implements IPrototypesCollection {
 	
@@ -79,14 +73,14 @@ class PrototypesCollection<T:({public function new():Void;},UnknownProto)> exten
 	 * @example rewrite items
 	 * input = {
 	 *   "items":[
-	 *     {"proto_id":10, ...}
+	 *     {"protoId":10, ...}
 	 *   ]
 	 * }
 	 * 
 	 * @example add items
 	 * input = {
 	 *   "+items":[
-	 *     {"proto_id":10, ...}
+	 *     {"protoId":10, ...}
 	 *   ]
 	 * }
 	 */
@@ -127,9 +121,6 @@ class PrototypesCollection<T:({public function new():Void;},UnknownProto)> exten
 	}
 }
 
-/**
- * @author SlavaRa
- */
 @:generic
 class DataCollection<T:({public function new(proto:UnknownProto):Void;},UnknownData)> extends DataValueObjectContainer {
 
@@ -162,14 +153,14 @@ class DataCollection<T:({public function new(proto:UnknownProto):Void;},UnknownD
 	 * @example rewrite items
 	 * input = {
 	 *   "items":[
-	 *     {"proto_id":10, ...}
+	 *     {"protoId":10, ...}
 	 *   ]
 	 * }
 	 * 
 	 * @example add items
 	 * input = {
 	 *   "+items":[
-	 *     {"proto_id":10, ...}
+	 *     {"protoId":10, ...}
 	 *   ]
 	 * }
 	 * 
@@ -193,7 +184,7 @@ class DataCollection<T:({public function new(proto:UnknownProto):Void;},UnknownD
 			input.setField(_addKey, input.getProperty(inputKey));
 		}
 		if(input.hasField(_addKey)) {
-			var protoIdKey = "proto_id";
+			var protoIdKey = "protoId";
 			var list:Array<Dynamic> = input.getProperty(_addKey);
 			for(it in list) {
 				if(it.hasField(protoIdKey)) {
