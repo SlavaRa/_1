@@ -5,8 +5,6 @@ using Reflect;
 
 class ResChange extends DataValueObjectContainer {
 	
-	public function new() super();
-	
 	public function toList():Array<ResChangeItem> {
 		return [for(it in _list) cast(it, ResChangeItem)];
 	}
@@ -25,7 +23,6 @@ class ResChange extends DataValueObjectContainer {
 }
 
 class ResChangeItemImpl extends DataValueObjectContainer {
-	public function new() super();
 	
 	public var resId(default, null):Int;
 	

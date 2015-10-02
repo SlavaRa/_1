@@ -9,7 +9,6 @@ class ArgumentNullError extends openfl.errors.Error {
 }
 
 class NotImplementedError extends openfl.errors.Error {
-	public function new() super();
 }
 
 #else

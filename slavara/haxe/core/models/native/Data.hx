@@ -12,8 +12,6 @@ using Std;
  */
 class Data extends EventDispatcher {
 
-	public function new() super();
-	
 	public var name:String;
 	public var parent(default, null):DataContainer;
 	

@@ -19,8 +19,6 @@ typedef Data = slavara.haxe.core.models.flash.Data;
  */
 class DataValueObjectContainer extends DataContainer implements IExternalizableObject {
 	
-	function new() super();
-	
 	@:final public function readExternal(input:Dynamic) deserialize(input);
 	@:final public function writeExternal(output:Dynamic) serialize(output);
 

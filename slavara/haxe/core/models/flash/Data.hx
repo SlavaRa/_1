@@ -16,8 +16,6 @@ class Data extends EventDispatcher {
 	
 	@:noCompletion static var eventContainer:EventContainer = new EventContainer();
 	
-	function new() super();
-	
 	public var name:String;
 	public var parent(default, null):DataContainer;
 	

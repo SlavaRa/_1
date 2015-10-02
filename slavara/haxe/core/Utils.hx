@@ -7,6 +7,7 @@ using StringTools;
 
 /**
  * @author SlavaRa
+ * xxx: rename DisposeTool
  */
 extern class DisposeUtil {
 	public static inline function dispose(d:Dynamic, safe:Bool = true):Dynamic {

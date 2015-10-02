@@ -14,8 +14,6 @@ using StringTools;
  */
 class ResourceSprite extends BaseSprite {
 
-	public function new() super();
-	
 	public function hasResource(ref:ResRef):Bool {
 		#if debug
 		if(ref == null) throw new ArgumentNullError("ref");

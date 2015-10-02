@@ -7,7 +7,6 @@ using Reflect;
  * @author SlavaRa
  */
 class ResRef extends UnknownProto {
-	public function new() super();
 	
 	public var link(default, null):String;
 	
@@ -21,7 +20,6 @@ class ResRef extends UnknownProto {
  * @author SlavaRa
  */
 class SWFResRef extends ResRef {
-	public function new() super();
 	
 	public var swf(default, null):String;
 	
